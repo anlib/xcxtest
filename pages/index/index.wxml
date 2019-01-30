@@ -1,0 +1,25 @@
+<import src="../common/head.wxml" />
+<import src="../common/foot.wxml" />
+
+<view class="container">
+ 
+  <view class="page-body">
+   <template is="head" data="{{title: 'swiper'}}"/>
+  
+    <view class="page-section page-section-spacing swiper">
+      <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{background}}" wx:key="*this">
+          <swiper-item>
+            <view class="swiper-item">
+            <image class='sliderImage' src='{{item.pic}}' mode='aspectFit'/>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  
+  
+  </view>
+  <template is="foot" />
+</view>
