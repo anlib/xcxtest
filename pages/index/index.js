@@ -1,4 +1,4 @@
-
+var cityData = require('../common/city.js');
 Page({
   onShareAppMessage() {
     return {
@@ -27,12 +27,13 @@ Page({
       { name: '教员类型' },
       { name: '筛选' }
     ],
-    shownavindex: ''
+    shownavindex: '',
+    //所有车型
+    models: cityData.getmodels(),
 
   },
 
-
-  //选择
+  //幻灯片下面菜单选择
   list: function (e) {
     if (this.data.nzopen) {
       this.setData({
@@ -43,9 +44,10 @@ Page({
         shownavindex: e.currentTarget.dataset.nav
       })
     }
-
+    //选择的第几个
     console.log(e.currentTarget.dataset.nav);
   },
+
 
 })
 

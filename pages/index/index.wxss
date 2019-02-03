@@ -30,8 +30,7 @@ button:last-child{
   height: 100%;
 }
 
-/* nav */
-
+/* nav 幻灯片下面的菜单 */
 .nav {
   position: relative;
   z-index: 99;
@@ -40,7 +39,6 @@ button:last-child{
   border-bottom: 1px solid #d1d3d4;
   background: #fff;
 }
-
 .nav-son {
   display: flex;
   flex: 1;
@@ -70,3 +68,41 @@ button:last-child{
   border-bottom: 4px solid #fa871e;
   border-top: 0;
 }
+
+/* 下拉中内容 <!-- 未完 待 --> */
+.temp {
+  position: relative;
+  z-index: 4;
+  font-size: 14px;
+}
+
+.temp1 {
+  display: flex;
+  width: 100%;
+  height: 1150rpx;
+  overflow-y: scroll;
+  background: #fff;
+  color: #666;
+}
+
+.slidedown {
+  transform: translateY(0%);
+}
+
+.slidownbottom {
+  margin-top: 10rpx;
+  padding: 10rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.sdbitem {
+  width: auto;
+  text-align: center;
+  border: solid #ccc 1rpx;
+  border-radius: 60rpx;
+  margin: 12rpx;
+  justify-content: space-between;
+  padding: 12rpx 19rpx 12rpx 19rpx;
+}
+/* 下拉中内容 <!-- 未完 待 --> */

@@ -29,6 +29,20 @@
     
   </view>
 
+<!-- 未完 待 -->
+  <view class="temp temp2 {{pxopen ? 'slidown' : 'slidup'}} {{pxshow ? 'disappear':''}}">
+    <view class='tempheight'>
+  
+      <view class="slidownbottom">
+        <block wx:for="{{models}}" wx:key="unique">
+          <view class="sdbitem {{model==item ? ' active ' : ' '}}" data-model='{{item}}' bindtap='selectmdlitem'> {{item}}</view>
+        </block>
+      </view>
+
+    </view>
+
+  </view>
+<!-- 未完 待 -->
 
     <view class="btn-area">
       <navigator url="../test/test?title=navigate" hover-class="navigator-hover">
