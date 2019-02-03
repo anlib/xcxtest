@@ -2,14 +2,13 @@
 <import src="../common/foot.wxml" />
 
 <view class="container">
- 
   <view class="page-body">
    <template is="head" data="{{title: 'swiper'}}"/>
-  
-    <view class="page-section page-section-spacing swiper">
+   
+   <view class="page-section page-section-spacing swiper">
       <swiper indicator-dots="{{indicatorDots}}"
         autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{background}}" wx:key="*this">
+        <block wx:for="{{background}}" wx:key="swiper">
           <swiper-item>
             <view class="swiper-item">
             <image class='sliderImage' src='{{item.pic}}' mode='aspectFit'/>
@@ -18,7 +17,26 @@
         </block>
       </swiper>
     </view>
+
+  <view class="nav">
   
+   <block wx:for="{{menu}}" wx:key="menuKey">
+      <view class="nav-son {{shownavindex === index? 'active' : ''}}" bindtap="list" data-nav="{{index}}">
+        <view class="content">{{item.name}} </view>
+        <view class="icon"></view>
+      </view>
+    </block>
+    
+  </view>
+
+
+    <view class="btn-area">
+      <navigator url="../test/test?title=navigate" hover-class="navigator-hover">
+        <button type="default">跳转到新页面</button>
+      </navigator>
+ 
+    </view>
+
   
   </view>
   <template is="foot" />
