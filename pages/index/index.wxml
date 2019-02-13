@@ -2,24 +2,74 @@
 <import src="../common/foot.wxml" />
 
 <view class="container">
- 
   <view class="page-body">
-   <template is="head" data="{{title: 'swiper'}}"/>
-  
+    <!-- 幻灯片 -->
     <view class="page-section page-section-spacing swiper">
-      <swiper indicator-dots="{{indicatorDots}}"
-        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{background}}" wx:key="*this">
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{background}}" wx:key="swiper">
           <swiper-item>
             <view class="swiper-item">
-            <image class='sliderImage' src='{{item.pic}}' mode='aspectFit'/>
+              <image class='sliderImage' src='{{item.pic}}' mode='aspectFit' bindtap="slider" data-url="{{item.url}}" />
             </view>
           </swiper-item>
         </block>
       </swiper>
     </view>
-  
-  
+
+    <view class="nav">
+
+      <block wx:for="{{menu}}" wx:key="menuKey">
+        <view class="nav-son {{showNavIndex === index? 'active' : ''}}" bindtap="menuList" data-nav="{{index}}">
+          <view class="content">{{item}} </view>
+          <view class="icon"></view>
+        </view>
+      </block>
+    </view>
+
+    <view class="{{pxopen ? 'slidown' : 'slidup'}}">
+
+      <view class="{{showNavIndex === 0 ? 'show' : 'hidden'}}" data-nav="{{showNavIndex}}">
+        <view class="quyu-left">
+          <view class="{{subjectNext.per==item.i ? 'active' : ''}} {{index==0 ? 'frist' : ''}}" bindtap="selectNext" wx:for="{{menuData.subjectData}}" data-value="{{item.i}}" data-nav="{{index}}" wx:key="unique">
+            {{item.i}}
+          </view>
+        </view>
+        <view class="quyu-center">
+          <view class="sdbitem {{menu[showNavIndex]==subjectNext.per+':'+item ? ' active ' : ' '}}" wx:for="{{subjectNext.value}}" wx:key="unique" data-item='{{item}}' bindtap='selectitem'>
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="{{showNavIndex === 1 ? 'show' : 'hidden'}} slidownmargin" data-nav="{{showNavIndex}}">
+        <block wx:for="{{menuData.areaData}}" wx:key="unique">
+          <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" data-item='{{item}}' bindtap='selectitem'>{{item}}</view>
+        </block>
+      </view>
+      <view class="{{showNavIndex === 2 ? 'show' : 'hidden'}}" data-nav="{{showNavIndex}}">
+        <block wx:for="{{menuData.experience}}" wx:key="unique">
+          <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" data-item='{{item}}' bindtap='selectitem'>{{item}}</view>
+        </block>
+      </view>
+
+      <view class="{{showNavIndex === 3 ? 'show' : 'hidden'}}" data-nav="{{showNavIndex}}">
+        <block wx:for="{{menuData.gender}}" wx:key="unique">
+          <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" data-item='{{item}}' bindtap='selectitem'>{{item}}</view>
+        </block>
+      </view>
+
+    </view>
+
+
+    <view class="btn-area">
+      <navigator url="../test/test?title=navigate" hover-class="navigator-hover">
+        <button type="default">跳转到新页面</button>
+      </navigator>
+
+    </view>
+
   </view>
   <template is="foot" />
+  
+  <view class="fullbg {{pxopen ?'fullopacity':''}}" bindtap="hidebg"></view>
 </view>
