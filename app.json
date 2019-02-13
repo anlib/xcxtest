@@ -2,8 +2,6 @@
   "pages":[
     "pages/index/index",
     "pages/teacherlist/teacherlist",
-    "pages/test/test",
-    "pages/testcity/testcity",
     "pages/logs/logs"
   ],
   "window":{
