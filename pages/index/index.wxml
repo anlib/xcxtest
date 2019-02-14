@@ -62,32 +62,37 @@
       <view class="{{showNavIndex === 3 ? 'show' : 'hidden'}}" data-nav="{{showNavIndex}}">
         <view class='filter-list'>
           <view class="filter-left"> 老师姓名 ： </view>
-          <view class="filter-right">
-            <input class='filter-input' maxlength="10">最大输入长度为10</input>
+          <view class="filter-input">
+            <input maxlength="10">最大输入长度为10</input>
           </view>
         </view>
-                <view class='filter-list'>
-          <view class="filter-left"> 教学经验 ： </view>
-          <view class="filter-right">
-            <input class='filter-input' maxlength="10">最大输入长度为10</input>
-          </view>
-        </view>
-                        <view class='filter-list'>
+
+        <view class='filter-list'>
           <view class="filter-left"> 性别 ： </view>
           <view class="filter-right">
-             <block wx:for="{{menuData.gender}}" wx:key="unique">
-          <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" data-item='{{item}}' bindtap='selectitem'>{{item}}</view>
-        </block>
+
+            <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" wx:for="{{menuData.gender}}" wx:key="unique" data-item='{{item}}' bindtap='filteritem'>{{item}}</view>
+
           </view>
         </view>
-        
-       
-        <view> 重置 </view>
-        <view> 确定 </view>
+
+        <view class='filter-list'>
+          <view class="filter-left"> 教学经验 ： </view>
+          <view class="filter-right">
+
+            <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" wx:for="{{menuData.experience}}" wx:key="unique" data-item='{{item}}' bindtap='filteritem'>{{item}}</view>
+
+          </view>
+        </view>
+
+
+
+        <view class='filter-reset'> 重置 </view>
+        <view class='filter-confirm'> 确定 </view>
       </view>
 
     </view>
-
+    <view>11111111111111</view>
     <view class="btn-area">
       <navigator url="../test/test?title=navigate" hover-class="navigator-hover">
         <button type="default">跳转到新页面</button>
