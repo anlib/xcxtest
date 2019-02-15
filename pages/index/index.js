@@ -57,8 +57,8 @@ Page({
       //获取地区
       areaData: ["不限", "东城", "西城", "崇文", "宣武", "朝阳", "丰台", "石景山", "海淀", "门头沟", "房山", "通州", "顺义", "昌平", "大兴", "怀柔", "平谷", "密云", "延庆"],
       //获取老师类型
-      gender: ["不限", "男", "女"],
-      experience: ["不限", "在校生", "5年以下", "5-10年", "10年以上", "其他"],
+      gender: ["男", "女"],
+      experience: ["5年以下", "5-10年", "10年以上"],
     },
   },
 
@@ -135,8 +135,8 @@ Page({
     }
     //console.log(this.data.subjectNext);
     if (e.currentTarget.dataset.item) {
-      if (this.data.subjectNext.per 
-          && this.data.subjectNext.showNavIndex === this.data.showNavIndex) {
+      if (this.data.subjectNext.per &&
+        this.data.subjectNext.showNavIndex === this.data.showNavIndex) {
         //有二级
         if (e.currentTarget.dataset.item == "不限") {
           this.data.menu[this.data.showNavIndex] = this.data.subjectNext.per;
@@ -161,7 +161,41 @@ Page({
     });
     //console.log(this.data.menu);
   },
-  hidebg: function (e) {
+
+  /* 
+   * 选中区域添加input值
+   */
+  filteritem: function(e) {
+    var dataName = e.currentTarget.dataset.input;
+    //console.log(dataName);
+    var data = {};
+    data[dataName] = e.currentTarget.dataset.item; // key 可以是任何字符串
+    //console.log(data);
+    //重新赋值全局变量
+    this.setData(data);
+  },
+
+  /* 
+   * 提交form
+   */
+  formSubmit(e) {
+    // 提交
+    console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    // 关闭筛选菜单
+    this.setData({
+      showNavIndex: '',
+      pxopen: false,
+    });
+  },
+
+  formReset(e) {
+    console.log('form发生了reset事件，携带数据为：', e.detail.value)
+    this.setData({
+      chosen: ''
+    })
+  },
+
+  hidebg: function(e) {
     //重新赋值全局变量
     this.setData({
       showNavIndex: '',
