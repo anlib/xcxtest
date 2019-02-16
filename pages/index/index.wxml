@@ -97,24 +97,22 @@
         <view class='list-right-row'>
           <view class='list-name'>{{item.teacherName}}</view>
           <image class='list-gender' src='{{item.genderPic}}'></image>
-          <view class='list-distance'>0.77km</view>
+          <view class='list-distance'>{{item.distance}}</view>
         </view>
         <view class='list-right-row'>
           <view class='list-university'>{{item.university}}</view>
-          <view class='list-education'>本科</view>
+          <view class='list-education'>{{item.education}}</view>
         </view>
 
         <view class='list-right-row'>
-          <view class='list-grade'>初中</view>
-          <view class='list-subject'>语文</view>
-          <view class='list-subject'>英语</view>
+          <view class='list-grade'>{{item.grade}}</view>
+          <view class='list-subject' wx:for="{{item.subject}}" wx:key="unique">{{item}}</view>
         </view>
 
         <view class='list-right-row'>
-          <view class='list-graduation'>专职教师</view>
-          <view class='list-auth'>已认证</view>
-          
-          <view class='list-price'>￥300/小时 起</view>
+          <view class="{{ item.graduation == '专职教师' ? 'list-graduation-tch' : 'list-graduation-std'}}">{{item.graduation}}</view>
+          <view class='list-auth'>{{item.auth}}</view>
+          <view class='list-price'>{{item.price}}</view>
         </view>
 
       </view>
@@ -122,7 +120,6 @@
 
   </view>
   <!--    
-    <view>11111111111111</view>
     <view class="btn-area">
       <navigator url="../test/test?title=navigate" hover-class="navigator-hover">
         <button type="default">跳转到新页面</button>

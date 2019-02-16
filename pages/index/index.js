@@ -8,6 +8,7 @@ Page({
   data: {
     //设置初始化
     serverUrl: app.globalData.serverUrl, //初始服务器地址
+    hasHiddenTabBar: false,
     //幻灯片
     indicatorDots: true,
     vertical: false,
@@ -19,20 +20,20 @@ Page({
     showNavIndex: '',
     weiZhi: "北京市",
     subjectNext: null,
-    selected: [{}, {}, {}, {} ], //筛选中选中第几个记录
+    selected: [{}, {}, {}, {}], //筛选中选中第几个记录
 
     //首页上部切换北京图片
     background: [{
-      pic: '../image/banner_01.png',
-        url: '../teacherlist/teacherlist',
+        pic: '../../image/banner_01.png',
+        url: '../myinfo/myinfo',
       },
       {
-        pic: '../image/banner_02.png',
-        url: '../test/test',
+        pic: '../../image/banner_02.png',
+        url: '../index/index',
       },
       {
-        pic: '../image/banner_03.png',
-        url: 'index',
+        pic: '../../image/banner_03.png',
+        url: '../logs/logs',
       }
     ],
 
@@ -192,7 +193,7 @@ Page({
       pxopen: false,
     });
   },
- /* 
+  /* 
    * 重置form表单
    */
   formReset(e) {
@@ -233,29 +234,75 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    
+
     //list赋值
-    var teacherList = [
-        {
-        avatar: "../image/avatar_01.png",
-        genderPic: "../image/gender_1.png",
+    var teacherList = [{
+        avatar: "../../image/avatar_01.png",
         teacherName: "张老师",
+        genderPic: "../../image/gender_1.png",
+        distance: "0.77km",
         university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
+        education: "本科",
+        graduation: "专职教师",
+        grade: "初中",
+        subject: ["语文", "英语"],
+        auth: "已认证",
+        price: "￥300 / 小时 起",
       },
       {
-        avatar: "../image/avatar_01.png",
-        genderPic: "../image/gender_2.png",
+        avatar: "../../image/avatar_01.png",
+        genderPic: "../../image/gender_2.png",
+        distance: "0.77km",
         teacherName: "李老师",
         university: "北京外国语大学",
+        education: "本科",
+        graduation: "大学生/毕业生",
+        grade: "音乐",
+        subject: ["钢琴", "小提琴", "尤克里里"],
+        auth: "已认证",
+        price: "￥500 / 小时 起",
       },
       {
-        avatar: "../image/avatar_01.png",
-        genderPic: "../image/gender_2.png",
-        teacherName: "李老师",
-        university: "北京外国语大学",
+        avatar: "../../image/avatar_01.png",
+        teacherName: "张老师",
+        genderPic: "../../image/gender_1.png",
+        distance: "0.77km",
+        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
+        education: "本科",
+        graduation: "专职教师",
+        grade: "小学",
+        subject: ["语文", "英语"],
+        auth: "已认证",
+        price: "￥200 / 小时 起",
       },
-      ];
-    console.log(teacherList);
+      {
+        avatar: "../../image/avatar_01.png",
+        teacherName: "张老师",
+        genderPic: "../../image/gender_1.png",
+        distance: "0.77km",
+        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
+        education: "本科",
+        graduation: "专职教师",
+        grade: "小学",
+        subject: ["语文", "英语"],
+        auth: "已认证",
+        price: "￥200 / 小时 起",
+      },
+      {
+        avatar: "../../image/avatar_01.png",
+        teacherName: "张老师",
+        genderPic: "../../image/gender_1.png",
+        distance: "0.77km",
+        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
+        education: "本科",
+        graduation: "专职教师",
+        grade: "小学",
+        subject: ["语文", "英语"],
+        auth: "已认证",
+        price: "￥200 / 小时 起",
+      },
+    ];
+    //console.log(teacherList);
     this.setData({
       teacherList: teacherList
     })
@@ -307,8 +354,28 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh() {
+    wx.showToast({
+      title: 'loading...',
+      icon: 'loading'
+    });
+    setTimeout(function() {
+      wx.stopPullDownRefresh();
+    }, 1000);
+    console.log('onPullDownRefresh', new Date());
+  },
 
+  /**
+   * 页面相关事件处理函数--停止监听用户下拉动作
+   * <button bindtap="stopPullDownRefresh">停止刷新</button>
+   */
+  stopPullDownRefresh() {
+    wx.stopPullDownRefresh({
+      complete(res) {
+        wx.hideToast()
+        console.log(res, new Date())
+      }
+    })
   },
 
   /**
@@ -318,7 +385,18 @@ Page({
 
   },
 
+
 })
+wx.showTabBar();
+/*
+wx.setTabBarStyle({
+  "color": "#7A7E83",
+  "selectedColor": "#3cc51f",
+  "borderStyle": "black",
+  "backgroundColor": "#ffffff",
+})
+*/
+
 /*//..... 参考 语法
  this.data.numberArray = [this.data.numberArray.length + 1].concat(this.data.numberArray)
 */
