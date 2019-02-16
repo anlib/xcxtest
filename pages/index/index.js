@@ -19,18 +19,19 @@ Page({
     showNavIndex: '',
     weiZhi: "北京市",
     subjectNext: null,
+    selected: [{}, {}, {}, {} ], //筛选中选中第几个记录
 
     //首页上部切换北京图片
     background: [{
-        pic: '../image/test1.png',
+      pic: '../image/banner_01.png',
         url: '../teacherlist/teacherlist',
       },
       {
-        pic: '../image/test2.png',
+        pic: '../image/banner_02.png',
         url: '../test/test',
       },
       {
-        pic: '../image/test3.png',
+        pic: '../image/banner_03.png',
         url: 'index',
       }
     ],
@@ -166,10 +167,14 @@ Page({
    * 选中区域添加input值
    */
   filteritem: function(e) {
+    var data = {}; //设置一个data变量，开始赋值
+    //选中给隐藏input赋值
     var dataName = e.currentTarget.dataset.input;
-    //console.log(dataName);
-    var data = {};
-    data[dataName] = e.currentTarget.dataset.item; // key 可以是任何字符串
+    data[dataName] = e.currentTarget.dataset.item;
+    //选中变色标识
+    //console.log(this.data.selected);
+    this.data.selected[this.data.showNavIndex][dataName] = e.currentTarget.dataset.item;
+    data["selected"] = this.data.selected;
     //console.log(data);
     //重新赋值全局变量
     this.setData(data);
@@ -187,11 +192,15 @@ Page({
       pxopen: false,
     });
   },
-
+ /* 
+   * 重置form表单
+   */
   formReset(e) {
     console.log('form发生了reset事件，携带数据为：', e.detail.value)
+    this.data.selected[this.data.showNavIndex] = {};
+    //重新赋值全局变量
     this.setData({
-      chosen: ''
+      selected: this.data.selected,
     })
   },
 
@@ -202,6 +211,7 @@ Page({
       pxopen: false,
     });
   },
+
   /**
    * 用户点击右上角分享
    */
@@ -223,7 +233,32 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    
+    //list赋值
+    var teacherList = [
+        {
+        avatar: "../image/avatar_01.png",
+        genderPic: "../image/gender_1.png",
+        teacherName: "张老师",
+        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
+      },
+      {
+        avatar: "../image/avatar_01.png",
+        genderPic: "../image/gender_2.png",
+        teacherName: "李老师",
+        university: "北京外国语大学",
+      },
+      {
+        avatar: "../image/avatar_01.png",
+        genderPic: "../image/gender_2.png",
+        teacherName: "李老师",
+        university: "北京外国语大学",
+      },
+      ];
+    console.log(teacherList);
+    this.setData({
+      teacherList: teacherList
+    })
   },
 
   /**
