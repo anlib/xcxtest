@@ -1,8 +1,0 @@
-
-<text>我的资料</text>
-
-<view class="btn-area">
-  <navigator url="../index/index?title=redirect" open-type="switchTab" hover-class="navigator-hover">
-    <button type="default">跳转到“找老师”页</button>
-  </navigator>
-</view>

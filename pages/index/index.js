@@ -8,7 +8,6 @@ Page({
   data: {
     //设置初始化
     serverUrl: app.globalData.serverUrl, //初始服务器地址
-    hasHiddenTabBar: false,
     //幻灯片
     indicatorDots: true,
     vertical: false,
@@ -20,20 +19,19 @@ Page({
     showNavIndex: '',
     weiZhi: "北京市",
     subjectNext: null,
-    selected: [{}, {}, {}, {}], //筛选中选中第几个记录
 
     //首页上部切换北京图片
     background: [{
-        pic: '../../image/banner_01.png',
-        url: '../myinfo/myinfo',
+        pic: '../image/test1.png',
+        url: '../teacherlist/teacherlist',
       },
       {
-        pic: '../../image/banner_02.png',
-        url: '../index/index',
+        pic: '../image/test2.png',
+        url: '../test/test',
       },
       {
-        pic: '../../image/banner_03.png',
-        url: '../logs/logs',
+        pic: '../image/test3.png',
+        url: 'index',
       }
     ],
 
@@ -59,8 +57,8 @@ Page({
       //获取地区
       areaData: ["不限", "东城", "西城", "崇文", "宣武", "朝阳", "丰台", "石景山", "海淀", "门头沟", "房山", "通州", "顺义", "昌平", "大兴", "怀柔", "平谷", "密云", "延庆"],
       //获取老师类型
-      gender: ["男", "女"],
-      experience: ["5年以下", "5-10年", "10年以上"],
+      gender: ["不限", "男", "女"],
+      experience: ["不限", "在校生", "5年以下", "5-10年", "10年以上", "其他"],
     },
   },
 
@@ -137,8 +135,8 @@ Page({
     }
     //console.log(this.data.subjectNext);
     if (e.currentTarget.dataset.item) {
-      if (this.data.subjectNext.per &&
-        this.data.subjectNext.showNavIndex === this.data.showNavIndex) {
+      if (this.data.subjectNext.per 
+          && this.data.subjectNext.showNavIndex === this.data.showNavIndex) {
         //有二级
         if (e.currentTarget.dataset.item == "不限") {
           this.data.menu[this.data.showNavIndex] = this.data.subjectNext.per;
@@ -163,56 +161,13 @@ Page({
     });
     //console.log(this.data.menu);
   },
-
-  /* 
-   * 选中区域添加input值
-   */
-  filteritem: function(e) {
-    var data = {}; //设置一个data变量，开始赋值
-    //选中给隐藏input赋值
-    var dataName = e.currentTarget.dataset.input;
-    data[dataName] = e.currentTarget.dataset.item;
-    //选中变色标识
-    //console.log(this.data.selected);
-    this.data.selected[this.data.showNavIndex][dataName] = e.currentTarget.dataset.item;
-    data["selected"] = this.data.selected;
-    //console.log(data);
-    //重新赋值全局变量
-    this.setData(data);
-  },
-
-  /* 
-   * 提交form
-   */
-  formSubmit(e) {
-    // 提交
-    console.log('form发生了submit事件，携带数据为：', e.detail.value);
-    // 关闭筛选菜单
-    this.setData({
-      showNavIndex: '',
-      pxopen: false,
-    });
-  },
-  /* 
-   * 重置form表单
-   */
-  formReset(e) {
-    console.log('form发生了reset事件，携带数据为：', e.detail.value)
-    this.data.selected[this.data.showNavIndex] = {};
-    //重新赋值全局变量
-    this.setData({
-      selected: this.data.selected,
-    })
-  },
-
-  hidebg: function(e) {
+  hidebg: function (e) {
     //重新赋值全局变量
     this.setData({
       showNavIndex: '',
       pxopen: false,
     });
   },
-
   /**
    * 用户点击右上角分享
    */
@@ -235,77 +190,6 @@ Page({
    */
   onReady: function() {
 
-    //list赋值
-    var teacherList = [{
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "初中",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥300 / 小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        genderPic: "../../image/gender_2.png",
-        distance: "0.77km",
-        teacherName: "李老师",
-        university: "北京外国语大学",
-        education: "本科",
-        graduation: "大学生/毕业生",
-        grade: "音乐",
-        subject: ["钢琴", "小提琴", "尤克里里"],
-        auth: "已认证",
-        price: "￥500 / 小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "小学",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥200 / 小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "小学",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥200 / 小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "小学",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥200 / 小时 起",
-      },
-    ];
-    //console.log(teacherList);
-    this.setData({
-      teacherList: teacherList
-    })
   },
 
   /**
@@ -354,28 +238,8 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
-    wx.showToast({
-      title: 'loading...',
-      icon: 'loading'
-    });
-    setTimeout(function() {
-      wx.stopPullDownRefresh();
-    }, 1000);
-    console.log('onPullDownRefresh', new Date());
-  },
+  onPullDownRefresh: function() {
 
-  /**
-   * 页面相关事件处理函数--停止监听用户下拉动作
-   * <button bindtap="stopPullDownRefresh">停止刷新</button>
-   */
-  stopPullDownRefresh() {
-    wx.stopPullDownRefresh({
-      complete(res) {
-        wx.hideToast()
-        console.log(res, new Date())
-      }
-    })
   },
 
   /**
@@ -385,18 +249,7 @@ Page({
 
   },
 
-
 })
-wx.showTabBar();
-/*
-wx.setTabBarStyle({
-  "color": "#7A7E83",
-  "selectedColor": "#3cc51f",
-  "borderStyle": "black",
-  "backgroundColor": "#ffffff",
-})
-*/
-
 /*//..... 参考 语法
  this.data.numberArray = [this.data.numberArray.length + 1].concat(this.data.numberArray)
 */
