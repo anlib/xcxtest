@@ -5,10 +5,10 @@
   <view class="page-body">
     <!-- 幻灯片 -->
     <view class="page-section page-section-spacing swiper">
-      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <swiper class="swiper-item" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
         <block wx:for="{{background}}" wx:key="swiper">
           <swiper-item>
-            <view class="swiper-item">
+            <view>
               <image class='sliderImage' src='{{item.pic}}' mode='aspectFit' bindtap="slider" data-url="{{item.url}}" />
             </view>
           </swiper-item>
@@ -53,48 +53,80 @@
 
       <!-- 区域 -->
       <view class="{{showNavIndex === 2 ? 'show' : 'hidden'}} slidownmargin" data-nav="{{showNavIndex}}">
-
         <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" wx:for="{{menuData.areaData}}" wx:key="unique" data-item='{{item}}' bindtap='selectitem'>{{item}}</view>
-
       </view>
 
       <!-- 筛选 -->
       <view class="{{showNavIndex === 3 ? 'show' : 'hidden'}}" data-nav="{{showNavIndex}}">
-        <view class='filter-list'>
-          <view class="filter-left"> 老师姓名 ： </view>
-          <view class="filter-right">
-            <input class='filter-input' maxlength="10">最大输入长度为10</input>
+        <form catchsubmit="formSubmit" catchreset="formReset">
+          <view class='filter-list'>
+            <view class="filter-left"> 老师姓名 ： </view>
+            <view class="filter-input">
+              <input maxlength="10" name="input">最大输入长度为10</input>
+            </view>
           </view>
-        </view>
-                <view class='filter-list'>
-          <view class="filter-left"> 教学经验 ： </view>
-          <view class="filter-right">
-            <input class='filter-input' maxlength="10">最大输入长度为10</input>
+          <view class='filter-list'>
+            <view class="filter-left"> 性别 ： </view>
+            <view class="filter-right">
+              <input hidden="hidden" name="gender" value="{{gender}}"></input>
+              <view class="sdbitem {{selected[showNavIndex]['gender']==item ? ' active ' : ' '}}" wx:for="{{menuData.gender}}" wx:key="unique" data-input='gender' data-item='{{item}}' bindtap='filteritem'>
+                {{item}}
+              </view>
+            </view>
           </view>
-        </view>
-                        <view class='filter-list'>
-          <view class="filter-left"> 性别 ： </view>
-          <view class="filter-right">
-             <block wx:for="{{menuData.gender}}" wx:key="unique">
-          <view class="sdbitem {{menu[showNavIndex]==item ? ' active ' : ' '}}" data-item='{{item}}' bindtap='selectitem'>{{item}}</view>
-        </block>
+          <view class='filter-list'>
+            <view class="filter-left"> 教学经验 ： </view>
+            <view class="filter-right">
+              <input hidden="hidden" name="experience" value="{{experience}}"></input>
+              <view class="sdbitem {{selected[showNavIndex]['experience']==item ? ' active ' : ' '}}" wx:for="{{menuData.experience}}" wx:key="unique" data-input='experience' data-item='{{item}}' bindtap='filteritem'>{{item}}</view>
+            </view>
           </view>
-        </view>
-        
-       
-        <view> 重置 </view>
-        <view> 确定 </view>
+          <view class="btn-area">
+            <button class='filter-reset' formType="reset">重置</button>
+            <button class='filter-confirm' type="primary" formType="submit">确定</button>
+          </view>
+        </form>
       </view>
-
     </view>
 
+    <!-- list -->
+    <view class='list-item' wx:for="{{teacherList}}" wx:key="unique">
+
+      <image class='list-avatar' src='{{item.avatar}}'></image>
+      <view class="list-right  {{index==0 ? 'border-top-none' : ''}}">
+        <view class='list-right-row'>
+          <view class='list-name'>{{item.teacherName}}</view>
+          <image class='list-gender' src='{{item.genderPic}}'></image>
+          <view class='list-distance'>{{item.distance}}</view>
+        </view>
+        <view class='list-right-row'>
+          <view class='list-university'>{{item.university}}</view>
+          <view class='list-education'>{{item.education}}</view>
+        </view>
+
+        <view class='list-right-row'>
+          <view class='list-grade'>{{item.grade}}</view>
+          <view class='list-subject' wx:for="{{item.subject}}" wx:key="unique">{{item}}</view>
+        </view>
+
+        <view class='list-right-row'>
+          <view class="{{ item.graduation == '专职教师' ? 'list-graduation-tch' : 'list-graduation-std'}}">{{item.graduation}}</view>
+          <view class='list-auth'>{{item.auth}}</view>
+          <view class='list-price'>{{item.price}}</view>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+  <!--    
     <view class="btn-area">
       <navigator url="../test/test?title=navigate" hover-class="navigator-hover">
         <button type="default">跳转到新页面</button>
       </navigator>
     </view>
+-->
 
-  </view>
   <template is="foot" />
 
   <view class="fullbg {{pxopen ?'fullopacity':''}}" bindtap="hidebg"></view>
