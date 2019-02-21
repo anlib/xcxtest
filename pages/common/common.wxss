@@ -1,11 +1,4 @@
-view{
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.container {
-  background: #fff;
-}
+
 /* head */
 .page-head{
   text-align: center;
@@ -27,7 +20,6 @@ view{
   color: #9B9B9B;
   font-size: 32rpx;
 }
-
 
 /* foot */
 .page-foot{
