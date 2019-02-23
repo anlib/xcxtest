@@ -131,20 +131,15 @@
   margin: 15rpx 0;
   border-top: 1rpx solid #e5e5e5;
 }
-
-.detail-cell {
+.detail-cell{
   margin: 20rpx;
-  /* border-bottom: 1rpx solid #e5e5e5; */
-  
 }
-
-.detail-cell-cell {
+.detail-cell-cell{
   float: left;
   width: 95%;
   height: auto;
   margin-bottom: 10rpx;
 }
-
 .detail-cell-line {
   float: left;
   width: 3rpx;
@@ -153,99 +148,62 @@
   margin-top: 10rpx;
   background: rgb(13, 194, 58);
 }
-
-.detail-cell-title {
+.detail-cell-title{
   float: left;
   font-weight: bold;
 }
+.detail-certificate{
 
-.detail-certificate {
 }
-
-.detail-score-count {
+.detail-score-count{
   float: left;
   margin: 10rpx 10rpx 10rpx 80rpx;
   font-size: 50rpx;
 }
-
-.detail-cell-score {
+.detail-cell-score{
   float: left;
   margin: 25rpx;
 }
-
-.detail-score {
+.detail-score{
   height: 50rpx;
   width: 50rpx;
 }
-
-.detail-score-avatar {
+.detail-score-avatar{
   float: left;
   width: 80rpx;
   height: 80rpx;
   margin: 30rpx 30rpx 30rpx 25rpx;
-  border-radius: 50%;
-  overflow: hidden;
+  border-radius:50%;
+  overflow:hidden;
 }
-
-.detail-score-detail {
+.detail-score-detail{
+  height: 60rpx;
   margin: 30rpx 30rpx 30rpx 25rpx;
 }
-
-.detail-score-user {
+.detail-score-user{
   float: left;
   font-size: 30rpx;
   width: 120rpx;
-  height: 55rpx;
 }
-
-.detail-score-grader {
+.detail-score-grader{
   float: left;
   width: 300rpx;
-  height: 55rpx;
   font-size: 24rpx;
-  color: #999;
+  color: #999999;
 }
-
-.detail-score-date {
-  height: 55rpx;
+.detail-score-date{
   float: right;
   font-size: 24rpx;
-  color: #999;
-}
+  color: #999999;
 
-.detail-score-content {
-  width: 600rpx;
-  height: auto;
-  display: flex;
-  margin-bottom:30rpx; 
 }
+.detail-score-content{
 
-.detail-navigator {
-  display: flex;
-  justify-content: center;
 }
-
-.detail-score-all {
-  float: center;
-  width: 275rpx;
-  height: 70rpx;
-  background: #fff;
-  border-radius: 30rpx;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  color: #25b972;
-  font-size: 30rpx;
-  margin-left: 20rpx;
-  border: 1rpx solid #25b972;
-}
-
 /* bottom self menu */
-
-.bottom-menu-place {
-  height: 150rpx;
+.bottom-menu-place{
+  height: 100rpx;
 }
-
 .bottom-menu {
   position: fixed;
   left: 0px;
