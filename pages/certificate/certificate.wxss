@@ -1,0 +1,90 @@
+.certificate-detail {
+  width: 690rpx;
+  height: auto;
+  font-size: 22rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #e5e5e5;
+  padding: 30rpx;
+  margin: 15rpx 0 30rpx 0;
+}
+
+.detail-certificate{
+  width: 222rpx;
+  height: 222rpx;
+  border-radius: 12rpx;
+  margin: 5rpx;
+}
+.detail-certificate-add{
+  
+  width: 222rpx;
+  height: 222rpx;
+  border-radius: 12rpx;
+  margin: 5rpx;
+  font-size: 130rpx;
+  text-align: center;
+  background: #ccc;
+  color: #fff;
+}
+
+/* bottom self menu */
+
+.bottom-menu {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  z-index: 9999;
+  background: #fff;
+}
+
+.bottom-menu-back {
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+.bottom-menu-follow {
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+.bottom-menu-wechat {
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+.bottom-menu-phone {
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+}
+
+.navigator-arrow {
+  float: left;
+  margin-left: 15rpx;
+  margin-right: 10rpx;
+  padding-right: 26rpx;
+  position: relative;
+}
+
+.navigator-arrow:after {
+  content: " ";
+  display: inline-block;
+  height: 18rpx;
+  width: 18rpx;
+  border-width: 2rpx 2rpx 0 0;
+  border-color: #888;
+  border-style: solid;
+  transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
+  margin-bottom: 3rpx;
+}

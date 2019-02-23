@@ -1,122 +1,43 @@
-<view class="page">
-  <view class="nav">
-    <view class="nav-son {{shownavindex == 1? 'active' : ''}}" bindtap="listqy" data-nav="1">
-      <view class="content">{{city}}</view>
-      <view class="icon"></view>
+<view class="section">
+  <view class="section__title">普通选择器</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+    <view class="picker">
+      当前选择：{{array[index]}}
     </view>
-    <view class="nav-son borders {{shownavindex == 2? 'active' : ''}}" bindtap="list" data-nav="2">
-      <view class="content">{{city1}}</view>
-      <view class="icon"></view>
-    </view>
-    <view class="nav-son {{shownavindex == 3? 'active' : ''}}" bindtap="listpx" data-nav="3">
-      <view class="content">{{model}}</view>
-      <view class="icon"></view>
-    </view>
-  </view>
-  <view class="quyu {{qyopen ? 'slidown' : 'slidup'}} {{qyshow ? 'disappear':''}}">
-    <view class="qy quyu-left">
-      <view class="{{select1 == index ? 'current' : ''}}" wx:for="{{cityleft}}" bindtap="selectleft" data-city='{{index}}' wx:key="unique">
-        {{index}}
-      </view>
-    </view>
-    <view class="qy quyu-center">
-      <view class="{{select2 == index ? 'current2' : ''}}" wx:for="{{citycenter}}" bindtap="selectcenter" data-city='{{index}}' wx:key="unique">
-        {{index}}
-      </view>
-    </view>
-    <view class="qy quyu-right">
-      <view wx:for="{{cityright}}" wx:key="unique" bindtap='selectcity' data-city='{{index}}'>
-        {{item}}
-      </view>
-    </view>
+  </picker>
+</view>
 
-  </view>
-
-  <view class="temp temp1 {{nzopen ? 'slidown' : 'slidup'}} {{nzshow ? 'disappear':''}}">
-    <view class='tempheight'>
-      <view class='slidowntop'>
-        <view>
-          <text>已选地区 </text>
-        </view>
-        <view class='emptyall'>
-          <view class='emptyallright' bindtap='emptyallendcity'>
-            <text>清空</text>
-          </view>
-        </view>
-      </view>
-      <view class='emptyendcitys'>
-        <block wx:for="{{endcitys}}" wx:key="index">
-          <view class='emptyendcitysitem' bindtap='emptyitem' data-endcity='{{index}}'>{{item}}</view>
-        </block>
-      </view>
-      <view class='slidowncenter'>
-        <view class='endselect'>
-          <text>选择：{{endselect}}</text>
-        </view>
-        <block wx:if="{{displaycity!=0}}">
-          <view class="return">
-            <view bindtap='returnupper'>
-              <text>返回上一级</text>
-            </view>
-          </view>
-        </block>
-      </view>
-
-      <block wx:if="{{displaycity==0?true:false}}">
-        <view class="slidownbottom">
-          <block wx:for="{{cityleft}}" wx:key="unique">
-            <view class='sdbitem' data-city='{{index}}' bindtap='selectsdbitem'> {{index}}</view>
-          </block>
-        </view>
-      </block>
-      <block wx:if="{{displaycity==1?true:false}}">
-        <view class="slidownbottom">
-          <block wx:for="{{endkeys}}" wx:key="unique">
-            <view class='sdbitem' data-city='{{index}}' bindtap='selectsdbendkey'> {{index}}</view>
-          </block>
-        </view>
-      </block>
-      <block wx:if="{{displaycity==2?true:false}}">
-        <view class="slidownbottom">
-          <block wx:for="{{town}}" wx:key="unique">
-            <view class="sdbitem" data-city='{{item}}' bindtap='selectcityend'> {{item}}</view>
-          </block>
-        </view>
-      </block>
+<view class="section">
+  <view class="section__title">多列选择器</view>
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view class="picker">
+      当前选择：{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
     </view>
-    <view class='queding' bindtap='determineend'>
-      <text class='qdtext'>确定</text>
-    </view>
-  </view>
+  </picker>
+</view>
 
-
-  <view class="temp temp2 {{pxopen ? 'slidown' : 'slidup'}} {{pxshow ? 'disappear':''}}">
-    <view class='tempheight'>
-      <view class='slidowntop'>
-        <view>
-          <text>车长</text>
-        </view>
-      </view>
-      <view class="commanders">
-        <block wx:for="{{commanders}}" wx:key="unique">
-          <view class="sdbitem {{commander==item ? ' active ' : ' '}}" data-commander='{{item}}' bindtap='selectcmditem'> {{item}}</view>
-        </block>
-      </view>
-      <view class='slidowncenter'>
-        <view class='endselect'>
-          <text>车型</text>
-        </view>
-      </view>
-      <view class="slidownbottom">
-        <block wx:for="{{models}}" wx:key="unique">
-          <view class="sdbitem {{model==item ? ' active ' : ' '}}" data-model='{{item}}' bindtap='selectmdlitem'> {{item}}</view>
-        </block>
-      </view>
+<view class="section">
+  <view class="section__title">时间选择器</view>
+  <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+    <view class="picker">
+      当前选择: {{time}}
     </view>
-    <view class='queding' bindtap='determinecar'>
-      <text class='qdtext'>确定</text>
-    </view>
-  </view>
+  </picker>
+</view>
 
-  <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
+<view class="section">
+  <view class="section__title">日期选择器</view>
+  <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-12-01" bindchange="bindDateChange">
+    <view class="picker">
+      当前选择: {{date}}
+    </view>
+  </picker>
+</view>
+<view class="section">
+  <view class="section__title">省市区选择器</view>
+  <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+    <view class="picker">
+      当前选择：{{region[0]}}，{{region[1]}}，{{region[2]}}
+    </view>
+  </picker>
 </view>

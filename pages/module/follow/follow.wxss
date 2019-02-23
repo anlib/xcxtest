@@ -1,0 +1,137 @@
+/* 列表显示 */
+
+.list-item {
+  width: 100%;
+  font-size: 22rpx;
+}
+
+.list-avatar {
+  float: left;
+  height: 140rpx;
+  width: 140rpx;
+  margin-top: 30rpx;
+  margin-right: 16rpx;
+  margin-left: 28rpx;
+  border: 1rxp solid #ccc;
+  border-radius: 12rpx;
+}
+
+.list-right {
+  float: left;
+  width: 520rpx;
+  height: auto;
+  padding-bottom: 20rpx;
+  padding-top: 28rpx;
+  border-top: 1rpx solid #ccc;
+}
+
+.list-right.border-top-none {
+  border-top: 0;
+}
+
+.list-right-row {
+  float: left;
+  width: 520rpx;
+}
+
+.list-name {
+  font-size: 30rpx;
+  float: left;
+  max-width: 350rpx;
+  margin-right: 8rpx;
+}
+
+.list-gender {
+  float: left;
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 8rpx;
+}
+
+.list-followed {
+  float: right;
+  text-align: center;
+  width: 120rpx;
+  background: #6ac89a;
+  color: #fff;
+  border-radius: 12rpx;
+}
+
+.list-university {
+  max-width: 400rpx;
+  margin-right: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+}
+
+.list-education {
+  float: left;
+}
+
+.list-grade {
+  float: left;
+  margin-right: 8rpx;
+  /* font-weight: bold; */
+}
+
+.list-subject {
+  float: left;
+  margin-right: 8rpx;
+}
+
+.list-graduation-tch {
+  background: #58bbe1;
+  color: #fff;
+  float: left;
+  margin-right: 8rpx;
+  width: 92rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
+
+.list-graduation-std {
+  background: #6ac89a;
+  color: #fff;
+  float: left;
+  margin-right: 8rpx;
+  width: 142rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
+
+.list-auth {
+  background: #fa6d6d;
+  color: #fff;
+  float: left;
+  width: 72rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
+
+.list-price {
+  float: right;
+  text-align: right;
+  width: 260rpx;
+  font-size: 28rpx;
+  color: #db0000;
+}
+
+.list-link {
+  background: #58bbe1;
+  color: #fff;
+  float: right;
+  text-align: center;
+  width: 130rpx;
+  margin-top: -20rpx; 
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 12rpx;
+}

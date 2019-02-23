@@ -1,0 +1,40 @@
+
+<view class='detail-ext'>
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'></view>
+      <view class='detail-cell-title'> 学生评价 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-score'>9.8</view>
+      <view class='detail-cell-score'>
+        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
+        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
+        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
+        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
+        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
+      </view>
+    </view>
+
+  </view>
+
+  <view class='detail-score-cell'>
+    <image class='detail-score-genderPic' src='{{teacherDetail.genderPic}}'></image>
+    <view class='detail-score-detail'>
+      <view class='detail-score-user'>黄小鹏</view>
+      <view class='detail-score-grader'>小学三年级</view>
+      <view class='detail-score-date'>2018-02-19</view>
+      <view class='detail-score-content'>
+        三大发送到发送到发送到发送到 发送到发送到发送到发送到发斯蒂芬三大发送到发 送到发送到发送到发送到发送到发送到发送到发斯蒂芬 三大发送到发送到发送到发送到发送到发送到发送到发 送到发斯蒂芬
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<view class='bottom-menu'>
+  <view class="navigator-arrow"></view>
+  <view class='bottom-menu-follow'>关注</view>
+  <view class='bottom-menu-wechat'>微信</view>
+  <view class='bottom-menu-phone'>电话</view>
+</view>

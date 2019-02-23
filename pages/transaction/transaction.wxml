@@ -1,0 +1,42 @@
+<!-- 交易 transaction -->
+
+<view class='transaction-cell'>
+  <view class='transaction-cell-date'>2019-2-21 12:12:12</view>
+  <view class='transaction-cell-detail'>
+    <image class='transaction-cell-avatar' src='{{teacherDetail.avatar}}'></image>
+    <view class='detail-right-row'>
+      <view class='detail-name'>{{teacherDetail.teacherName}}</view>
+      <view class="{{ teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation}}</view>
+    </view>
+    <view class='detail-right-row'>
+      <view class='detail-grade'>微信联系方式(VIP免费查看）</view>
+      <view class='detail-price'>评价老师</view>
+    </view>
+
+    <view class='detail-right-row'>
+      <view class='detail-grade'>账单总额</view>
+      <view class='detail-price'>￥0.00</view>
+    </view>
+  </view>
+</view>
+
+<view class='transaction-cell'>
+  <view class='transaction-cell-date'>2019-2-21 12:12:12</view>
+  <view class='transaction-cell-detail'>
+    <view class='detail-right-row'>
+      <view class='detail-name'>VIP会员1个月</view>
+      <view class='detail-grade'>可在1个月内免费查看联系方式，不限次数</view>
+    </view>
+    <view class='detail-right-row'>
+      <view class='detail-grade'>账单总额</view>
+      <view class='detail-price'>￥0.00</view>
+    </view>
+  </view>
+</view>
+
+<view class='bottom-menu'>
+  <view class="navigator-arrow"></view>
+  <view class='bottom-menu-follow'>关注</view>
+  <view class='bottom-menu-wechat'>微信</view>
+  <view class='bottom-menu-phone'>电话</view>
+</view>

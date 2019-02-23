@@ -1,9 +1,14 @@
 {
   "pages":[
+    "pages/teacher/teacher",
+    "pages/score/score",
+    "pages/transaction/transaction",
+    "pages/certificate/certificate",
+    "pages/question-ask/question-ask",
+    "pages/myinfo/myinfo",
     "pages/index/index",
-    "pages/teacherlist/teacherlist",
-    "pages/test/test",
     "pages/testcity/testcity",
+    "pages/test/test",
     "pages/logs/logs"
   ],
   "window":{
@@ -11,5 +16,25 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#6ac89a",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/menu_bottom_1.png",
+        "selectedIconPath": "image/menu_bottom_1_HL.png",
+        "text": "找老师"
+      },
+      {
+        "pagePath": "pages/myinfo/myinfo",
+        "iconPath": "image/menu_bottom_2.png",
+        "selectedIconPath": "image/menu_bottom_2_HL.png",
+        "text": "我的"
+      }
+    ]
   }
 }

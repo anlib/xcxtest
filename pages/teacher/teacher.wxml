@@ -1,0 +1,126 @@
+<!-- 教师 detail -->
+<view class='detail-base'>
+
+  <image class='detail-avatar' src='{{teacherDetail.avatar}}'></image>
+  <view class="detail-right  {{index==0 ? 'border-top-none' : ''}}">
+    <view class='detail-right-row'>
+      <view class='detail-name'>{{teacherDetail.teacherName}}</view>
+      <image class='detail-gender' src='../../image/score-gray.png'></image>
+    </view>
+
+    <view class='detail-right-row'>
+      <view class="{{ teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation}}</view>
+      <view class='detail-auth'>{{teacherDetail.auth}}</view>
+    </view>
+
+    <view class='detail-right-row'>
+      <view class='detail-grade'>{{teacherDetail.grade}}</view>
+      <view class='detail-subject' wx:for="{{teacherDetail.subject}}" wx:key="unique">{{item}}</view>
+    </view>
+
+    <view class='detail-right-row'>
+      <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
+      <view class='detail-distance'> ▪ {{teacherDetail.distance}}</view>
+      <view class='detail-price'>{{teacherDetail.price}}</view>
+    </view>
+  </view>
+
+</view>
+<view class='detail-ext'>
+
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'> </view>
+      <view class='detail-cell-title'> 毕业院校 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-subject'>北京交通大学</view>
+      <view class='detail-cell-subject'> 2009.9 -2013.7 计算机与信息技术 本科 </view>
+    </view>
+  </view>
+
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'> </view>
+      <view class='detail-cell-title'> 教育经历 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-subject'>2014.3-2017.05</view>
+      <view class='detail-cell-subject'> 嘻嘻嘻信 息想寻 嘻嘻嘻信 </view>
+      <view class='detail-cell-subject'> 嘻嘻嘻信 息想寻 嘻嘻嘻信 </view>
+    </view>
+  </view>
+
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'> </view>
+      <view class='detail-cell-title'> 教学特点 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-subject'>嘻嘻嘻信 嘻嘻嘻信 嘻嘻嘻信 嘻嘻嘻信 嘻嘻嘻信 息想寻 息想寻 息想寻 息想寻 息想寻 嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信嘻嘻嘻信 </view>
+    </view>
+  </view>
+
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'></view>
+      <view class='detail-cell-title'> 可授科目 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-subject'>嘻嘻嘻信 嘻嘻嘻信 嘻嘻嘻 </view>
+    </view>
+  </view>
+
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'></view>
+      <view class='detail-cell-title'> 相关证书 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-subject'>
+        <image class='detail-certificate' src='../../image/sys-place.png'></image>
+       <image class='detail-certificate' src='../../image/sys-place.png'></image>
+      </view>
+    </view>
+  </view>
+
+  <view class='detail-cell'>
+    <view class='detail-cell-cell'>
+      <view class='detail-cell-line'></view>
+      <view class='detail-cell-title'> 学生评价 </view>
+    </view>
+    <view class='detail-cell-cell'>
+      <view class='detail-score-count'>{{teacherDetail.score}}分</view>
+      <view class='detail-cell-score'>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-gray.png'></image>
+      </view>
+    </view>
+
+  </view>
+
+  <view class='detail-score-cell'>
+    <image class='detail-score-avatar' src='../../image/avatar_place.png'></image>
+    <view class='detail-score-detail'>
+      <view class='detail-score-user'>黄小鹏</view>
+      <view class='detail-score-grader'>小学三年级</view>
+      <view class='detail-score-date'>2018-02-19</view>
+    </view>
+      <view class='detail-score-content'>
+        11111三大发送到发送到发送到发送到 发送到发送到发送到发送到发斯蒂芬三大发送到发 送到发送到发送到发送到发送到发送到发送到发斯蒂芬 三大发送到发送到发送到发送到发送到发送到发送到发 送到发斯蒂芬
+      </view>
+  </view>
+  <navigator url="../score/score" hover-class="navigator-hover">
+    <view class='detail-score-all' bindtap=''>查看全部</view>
+  </navigator>
+</view>
+<view class='bottom-menu-place'></view>
+<view class='bottom-menu'>
+  <view class="navigator-arrow"></view>
+  <view class='bottom-menu-follow'>关注</view>
+  <view class='bottom-menu-wechat'>微信</view>
+  <view class='bottom-menu-phone'>电话</view>
+</view>
