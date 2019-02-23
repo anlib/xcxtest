@@ -113,11 +113,12 @@
         11111三大发送到发送到发送到发送到 发送到发送到发送到发送到发斯蒂芬三大发送到发 送到发送到发送到发送到发送到发送到发送到发斯蒂芬 三大发送到发送到发送到发送到发送到发送到发送到发 送到发斯蒂芬
       </view>
   </view>
-  <navigator url="../score/score" hover-class="navigator-hover">
+  <navigator class='detail-navigator' url="../score/score" hover-class="navigator-hover">
     <view class='detail-score-all' bindtap=''>查看全部</view>
   </navigator>
-</view>
+  
 <view class='bottom-menu-place'></view>
+</view>
 <view class='bottom-menu'>
   <view class="navigator-arrow"></view>
   <view class='bottom-menu-follow'>关注</view>
