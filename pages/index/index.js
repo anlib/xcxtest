@@ -1,19 +1,21 @@
-//var cityData = require('../common/city.js');
+const cm = require('../module/common/common.js');
+const util = require('../../utils/util.js');
 const app = getApp();
-const menuFirst = ['综合排序', '科目', '区域', '筛选'];
+const serverUrl = app.globalData.serverUrl; //初始服务器地址
+const srcUrl = app.globalData.srcUrl; //初始服务器地址
+
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     //设置初始化
-    serverUrl: app.globalData.serverUrl, //初始服务器地址
     hasHiddenTabBar: false,
     //幻灯片
     indicatorDots: true,
     vertical: false,
-    autoplay: true, 
-    circular: true,//是否采用衔接滑动
+    autoplay: true,
+    circular: true, //是否采用衔接滑动
     interval: 2000,
     duration: 500,
     //过滤选择
@@ -22,47 +24,25 @@ Page({
     weiZhi: "北京市",
     subjectNext: null,
     selected: [{}, {}, {}, {}], //筛选中选中第几个记录
-
+    formData: {},
     //首页上部切换北京图片
-    background: [{
-        pic: '../../image/banner_01.png',
-        url: '../myinfo/myinfo',
-      },
-      {
-        pic: '../../image/banner_02.png',
-        url: '../index/index',
-      },
-      {
-        pic: '../../image/banner_03.png',
-        url: '../logs/logs',
-      }
-    ],
-
+    background: cm.indexBackground,
     //幻灯片下面的导航数据
-    menu: menuFirst,
+    menu: cm.menuFirst,
     menuData: {
       //排序
-      order: ["综合排序", "距离最近", "教学经验", "评价最高", "价格最低", "价格最高"],
+      order: cm.menuOrder,
       //获取科目
-      subjectData: [{
-          "i": "不限",
-          "v": ""
-        },
-        {
-          "i": "小学",
-          "v": ["不限", "数学", "英语", "语文"]
-        },
-        {
-          "i": "初中",
-          "v": ["不限", "数学", "英语", "语文", "物理", "化学", "地理", "历史"]
-        }
-      ],
+      subjectData: cm.menuSubjectData,
       //获取地区
-      areaData: ["不限", "东城", "西城", "崇文", "宣武", "朝阳", "丰台", "石景山", "海淀", "门头沟", "房山", "通州", "顺义", "昌平", "大兴", "怀柔", "平谷", "密云", "延庆"],
+      areaData: cm.menuAreaData,
       //获取老师类型
-      gender: ["男", "女"],
-      experience: ["5年以下", "5-10年", "10年以上"],
+      gender: cm.menuGender,
+      experience: cm.menuExperience,
     },
+    //分页设置
+    currentPage: 1,
+    pageSize: 5,
   },
 
   /**
@@ -101,7 +81,7 @@ Page({
   selectNext: function(e) {
     var value = null;
     if (e.currentTarget.dataset.value == "不限") {
-      this.data.menu[this.data.showNavIndex] = menuFirst[this.data.showNavIndex];
+      this.data.menu[this.data.showNavIndex] = cm.menuFirst[this.data.showNavIndex];
       //赋全局变量，收回下拉菜单
       this.setData({
         showNavIndex: "",
@@ -150,12 +130,13 @@ Page({
       } else {
         //没有二级
         if (e.currentTarget.dataset.item == "不限") {
-          this.data.menu[this.data.showNavIndex] = menuFirst[this.data.showNavIndex];
+          this.data.menu[this.data.showNavIndex] = cm.menuFirst[this.data.showNavIndex];
         } else {
           this.data.menu[this.data.showNavIndex] = e.currentTarget.dataset.item;
         }
       }
     }
+
     //重新赋值全局变量
     this.setData({
       menu: this.data.menu,
@@ -163,6 +144,7 @@ Page({
       pxopen: false,
     });
     //console.log(this.data.menu);
+    this.searchTeacher();
   },
 
   /* 
@@ -187,23 +169,27 @@ Page({
    */
   formSubmit(e) {
     // 提交
-    console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    //console.log('form发生了submit事件，携带数据为：', e.detail.value);
     // 关闭筛选菜单
     this.setData({
+      formData: e.detail.value,
       showNavIndex: '',
       pxopen: false,
     });
+    this.searchTeacher();
   },
   /* 
    * 重置form表单
    */
   formReset(e) {
-    console.log('form发生了reset事件，携带数据为：', e.detail.value)
+    //console.log('form发生了reset事件，携带数据为：', e.detail.value)
     this.data.selected[this.data.showNavIndex] = {};
     //重新赋值全局变量
     this.setData({
       selected: this.data.selected,
+      formData: e.detail.value,
     })
+
   },
 
   hidebg: function(e) {
@@ -235,107 +221,52 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
     //list赋值
+    /* 静态测试数据
     var teacherList = [{
+        'id': 1,
         avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
+        gender: "../../image/gender_2.png",
         distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "初中",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥300/小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        genderPic: "../../image/gender_2.png",
-        distance: "0.77km",
-        teacherName: "李老师",
+        teacher: "李老师",
         university: "北京外国语大学",
         education: "本科",
         graduation: "大学生/毕业生",
         grade: "音乐",
-        subject: ["钢琴", "小提琴", "尤克里里"],
+        taught: "钢琴 小提琴 尤克里里",
         auth: "已认证",
-        price: "￥500 / 小时 起",
+        price: "500",
+        pricetime: "小时"
       },
       {
+        'id': 2,
         avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
+        teacher: "张老师",
+        gender: "../../image/gender_2.png",
         distance: "0.77km",
         university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
         education: "本科",
         graduation: "专职教师",
         grade: "小学",
-        subject: ["语文", "英语"],
+        taught: "语文 英语",
         auth: "已认证",
-        price: "￥200 / 小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "小学",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥200 / 小时 起",
-      },
-      {
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "小学",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        price: "￥200 / 小时 起",
+        price: "200",
+        pricetime: "45分钟"
       },
     ];
-    //console.log(teacherList);
     this.setData({
       teacherList: teacherList
     })
+    //*/
+    //* 动态读取数据
+    this.searchTeacherBase();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    //var that = this;
-    /*
-    wx.request({
-      url: that.data.serverUrl + 'superadmin/listarea',
-      method: 'GET',
-      data: {},
-      success: function (res) {
-        var list = res.data.areaList;
-        if (list == null) {
-          var toastText = '获取数据失败' + res.data.errMsg;
-          wx.showToast({
-            title: toastText,
-            icon: '',
-            duration: 2000 //弹出时间
-          })
-        } else {
-          that.setData({
-            list: list
-          })
-        }
-      }
-    })
-    */
+
   },
 
   /**
@@ -360,10 +291,14 @@ Page({
       title: 'loading...',
       icon: 'loading'
     });
+    this.setData({
+      currentPage: this.data.currentPage + 1,
+    });
+    this.searchTeacher();
     setTimeout(function() {
       wx.stopPullDownRefresh();
-    }, 1000);
-    console.log('onPullDownRefresh', new Date());
+    }, 2000);
+    //console.log('onPullDownRefresh', new Date());
   },
 
   /**
@@ -374,7 +309,7 @@ Page({
     wx.stopPullDownRefresh({
       complete(res) {
         wx.hideToast()
-        console.log(res, new Date())
+        //console.log(res, new Date())
       }
     })
   },
@@ -386,36 +321,151 @@ Page({
 
   },
 
+  /**
+   * 自定义查询老师列表的处理函数
+   */
+  searchTeacher: function () {
+    var p = {};
+    p['order'] = this.data.menu[0];
+    //if (this.data.menu[1] != '科目') {
+    var gradeTaught = this.data.menu[1].split(":");
+    p['grade'] = this.data.menu[1] != '科目' ? gradeTaught[0] : '';
+    p['taught'] = gradeTaught[1];
+    //}
+    p['area'] = this.data.menu[2] != '区域' ? this.data.menu[2] : '';
+    p['form'] = this.data.formData;
+    var that = this;
+    if (this.data.menu[0] == '距离最近') {
+      //获取地理位置
+      wx.getLocation({
+        type: 'wgs84',
+        success: function (res) {
+          //console.log(res);
+          //latitude longitude
+          p['latitude'] = res.latitude;
+          p['longitude'] = res.longitude;
+          that.searchTeacherBase(p);
+        }
+      })
+    } else {
+      this.searchTeacherBase(p);
+    }
+  },
+
+  /**
+   * 自定义查询老师列表的基础查询base处理函数
+   */
+  searchTeacherBase: function (p) {
+    //console.log(p);
+    if (p == undefined) { p = {}; }
+    //* 动态读取数据
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacher/list/' + that.data.currentPage + '/' + that.data.pageSize,
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log(res.data);
+        var list = res.data;
+        //console.log(list[0]);
+        //如果没数据
+        if (!list[0]){
+          //console.log('没数据了别拉了');
+          that.setData({
+            listBottom: true,
+          })
+          //console.log(that.data.listBottom);
+          return;
+        }
+        for (var x in list) {
+          list[x]['avatar'] = srcUrl + list[x]['avatar'];
+          list[x]['grade'] = list[x]['grade'].replace(/,/g, ' ');
+          list[x]['taught'] = list[x]['taught'].replace(/,/g, ' ');
+          list[x]['gender'] = cm.dataDict.genderPic[list[x]['gender']];
+          if (p.latitude) {
+            list[x]['distance'] = util.distance(p.latitude, p.longitude, list[x]['latitude'], list[x]['longitude']);
+          }
+          list[x]['distance'] = '-';
+        }
+        //console.log(list)
+        //console.log(p.latitude);
+        if (p.latitude == undefined) {
+          //获取地理位置
+          wx.getLocation({
+            type: 'wgs84',
+            success: function (res) {
+              //console.log(res);
+              for (var x in list) {
+                list[x]['distance'] = util.distance(res.latitude, res.longitude, list[x]['latitude'], list[x]['longitude']);
+              }
+              that.setTeacherList(list);
+            }
+          })
+        } else {
+          that.setTeacherList(list);
+        }
+
+        if (list == null) {
+          var toastText = '获取数据失败' + res.data.errMsg;
+          wx.showToast({
+            title: toastText,
+            icon: '',
+            duration: 2000 //弹出时间
+          })
+        }
+      }
+    })
+  },
+
+  /* 
+   * set data teacherList
+   */
+  setTeacherList: function (list) {
+    //把已加载的数据与新数据拼接
+    var teacherList = this.data.teacherList;
+    if (this.data.currentPage > 0 && teacherList != null) {
+      //console.log("teacherList : " + teacherList)
+      list = teacherList.concat(list);
+    } else {
+      teacherList = list;
+    }
+    this.setData({
+      teacherList: list
+    })
+  },
 
 })
-
 
 /*//..... 参考 语法
  this.data.numberArray = [this.data.numberArray.length + 1].concat(this.data.numberArray)
 */
 
-  /**
-   * switch setFlag转换成文字
+/**
+ * switch setFlag转换成文字
   
-  switchFlag(flag) {
-    switch (flag) {
-      case 1:
-        return '完善资料';
-        break;
-      case 2:
-        return '完善资料';
-        break;
-      default:
-        return '我的';
-    }
-  }, */
+switchFlag(flag) {
+  switch (flag) {
+    case 1:
+      return '完善资料';
+      break;
+    case 2:
+      return '完善资料';
+      break;
+    default:
+      return '我的';
+  }
+}, */
 
- /* 全局赋值代码(需要传入this) */
-  /*
-  that.setData({
-    subjectData: followList,
-  });
-  */
+/* 全局赋值代码(需要传入this) */
+/*
+that.setData({
+  subjectData: followList,
+});
+*/
 
 /* 显示底部导航条 */
 /*

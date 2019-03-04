@@ -1,202 +1,106 @@
-.detail-base {
-  width: 690rpx;
-  height: 200rpx;
-  font-size: 22rpx;
-  background: #fff;
-  border-bottom: 1rpx solid #e5e5e5;
-  padding: 0 30rpx 0 30rpx;
-}
-
-.detail-avatar {
-  float: left;
-  height: 140rpx;
-  width: 140rpx;
-  margin-top: 30rpx;
-  margin-right: 16rpx;
-  border: 1rxp solid #ccc;
-  border-radius: 12rpx;
-}
-
-.detail-right {
-  float: left;
-  width: 520rpx;
-  height: auto;
-  padding-bottom: 30rpx;
-  padding-top: 28rpx;
-}
-
-.detail-right.border-top-none {
-  border-top: 0;
-}
-
-.detail-right-row {
-  float: left;
-  height: 38rpx;
-  width: 520rpx;
-}
-
-.detail-name {
-  font-size: 30rpx;
-  float: left;
-  max-width: 350rpx;
-  margin-right: 8rpx;
-}
-
-.detail-gender {
-  float: left;
-  height: 30rpx;
-  width: 30rpx;
-  margin-top: 8rpx;
-}
-
-.detail-grade {
-  float: left;
-  margin-right: 8rpx;
-  /* font-weight: bold; */
-}
-
-/*
-.detail-subject {
-  float: left;
-  margin-right: 8rpx;
-}
-*/
-
-.detail-graduation-tch {
-  background: #58bbe1;
-  color: #fff;
-  float: left;
-  margin-right: 8rpx;
-  margin-top: 8rpx;
-  width: 92rpx;
-  height: 28rpx;
-  font-size: 20rpx;
-  text-align: center;
-  border-radius: 5rpx;
-}
-
-.detail-graduation-std {
-  background: #6ac89a;
-  color: #fff;
-  float: left;
-  margin-right: 8rpx;
-  margin-top: 8rpx;
-  width: 142rpx;
-  height: 28rpx;
-  font-size: 20rpx;
-  text-align: center;
-  border-radius: 5rpx;
-}
-
-.detail-auth {
-  background: #fa6d6d;
-  color: #fff;
-  float: left;
-  width: 72rpx;
-  height: 28rpx;
-  margin-top: 8rpx;
-  font-size: 20rpx;
-  text-align: center;
-  border-radius: 5rpx;
-}
-
-.detail-grade {
-  float: left;
-  margin-right: 8rpx;
-  /* font-weight: bold; */
-}
-
-.detail-subject {
-  float: left;
-  margin-right: 8rpx;
-}
-
-.detail-distance {
-  float: left;
-  width: 120rpx;
-}
-
-.detail-price {
-  float: right;
-  text-align: right;
-  width: 260rpx;
-  font-size: 28rpx;
-  color: #db0000;
-}
-
-/* 毕业院校 */
+/* 引用css */
+@import "../module/bottom-menu/bottom-menu.wxss";
+@import "../module/foot/foot.wxss";
 
 .detail-ext {
   background: #fff;
-  margin: 15rpx 0;
+  margin: 0;
   border-top: 1rpx solid #e5e5e5;
 }
 
-.detail-cell-line {
-  width: 10rpx;
-  height: 60rpx;
-  background: rgb(13, 194, 58);
+.detail-cell {
+  float: left;
+  width: 710rpx;
+  height: auto;
+  margin: 20rpx;
+  border-bottom: 1rpx solid #e5e5e5;
 }
 
-/* bottom self menu */
+.detail-cell-cell {
+  float: left;
+  width: 95%;
+  height: auto;
+  margin-bottom: 10rpx;
+}
 
-.bottom-menu {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-  width: 100%;
-  z-index: 9999;
+.detail-score-count {
+  float: left;
+  margin: 10rpx 10rpx 10rpx 80rpx;
+  font-size: 50rpx;
+}
+
+.detail-cell-score {
+  float: left;
+  margin: 25rpx;
+}
+
+.detail-score {
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.detail-score-cell{
+  margin-bottom: 18rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.detail-score-avatar {
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  margin: 30rpx 30rpx 30rpx 25rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.detail-score-detail {
+  margin: 30rpx 30rpx 30rpx 25rpx;
+}
+
+.detail-score-user {
+  float: left;
+  font-size: 30rpx;
+  width: 120rpx;
+  height: 55rpx;
+}
+
+.detail-score-grader {
+  float: left;
+  width: 300rpx;
+  height: 55rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.detail-score-date {
+  height: 55rpx;
+  float: right;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.detail-score-content {
+  width: 600rpx;
+  height: auto;
+  display: flex;
+  margin-bottom:30rpx; 
+}
+
+.detail-navigator {
+  display: flex;
+  justify-content: center;
+}
+
+.detail-score-all {
+  float: center;
+  width: 275rpx;
+  height: 70rpx;
   background: #fff;
-}
-
-.bottom-menu-back {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.bottom-menu-follow {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.bottom-menu-wechat {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.bottom-menu-phone {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.navigator-arrow {
-  float: left;
-  margin-left: 15rpx;
-  margin-right: 10rpx;
-  padding-right: 26rpx;
-  position: relative;
-}
-
-.navigator-arrow:after {
-  content: " ";
-  display: inline-block;
-  height: 18rpx;
-  width: 18rpx;
-  border-width: 2rpx 2rpx 0 0;
-  border-color: #888;
-  border-style: solid;
-  transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
-  margin-bottom: 3rpx;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #25b972;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+  border: 1rpx solid #25b972;
 }

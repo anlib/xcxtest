@@ -1,5 +1,5 @@
 <!-- 交易 transaction -->
-
+<import src="../module/bottom-menu/bottom-menu.wxml" />
 <view class='transaction-cell'>
   <view class='transaction-cell-date'>2019-2-21 12:12:12</view>
   <view class='transaction-cell-detail'>
@@ -34,9 +34,5 @@
   </view>
 </view>
 
-<view class='bottom-menu'>
-  <view class="navigator-arrow"></view>
-  <view class='bottom-menu-follow'>关注</view>
-  <view class='bottom-menu-wechat'>微信</view>
-  <view class='bottom-menu-phone'>电话</view>
-</view>
+
+<template is="bottom-menu" />

@@ -1,40 +1,32 @@
-
+<import src="../module/bottom-menu/bottom-menu.wxml" />
+<import src="../module/foot/foot.wxml" />
 <view class='detail-ext'>
   <view class='detail-cell'>
     <view class='detail-cell-cell'>
-      <view class='detail-cell-line'></view>
-      <view class='detail-cell-title'> 学生评价 </view>
-    </view>
-    <view class='detail-cell-cell'>
-      <view class='detail-score'>9.8</view>
+      <view class='detail-score-count'>{{teacherDetail.score}}分</view>
       <view class='detail-cell-score'>
-        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
-        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
-        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
-        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
-        <image class='detail-score' src='{{teacherDetail.genderPic}}'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-light.png'></image>
+        <image class='detail-score' src='../../image/score-gray.png'></image>
       </view>
     </view>
-
   </view>
-
-  <view class='detail-score-cell'>
-    <image class='detail-score-genderPic' src='{{teacherDetail.genderPic}}'></image>
+  <view class='detail-score-cell'  wx:for="{{teacherScore}}" wx:key="unique">
+    <image class='detail-score-avatar' src='../../image/avatar_place.png'></image>
     <view class='detail-score-detail'>
-      <view class='detail-score-user'>黄小鹏</view>
-      <view class='detail-score-grader'>小学三年级</view>
-      <view class='detail-score-date'>2018-02-19</view>
-      <view class='detail-score-content'>
-        三大发送到发送到发送到发送到 发送到发送到发送到发送到发斯蒂芬三大发送到发 送到发送到发送到发送到发送到发送到发送到发斯蒂芬 三大发送到发送到发送到发送到发送到发送到发送到发 送到发斯蒂芬
-      </view>
+      <view class='detail-score-user'>{{item.username}}</view>
+      <view class='detail-score-grader'>{{item.grade}}</view>
+      <view class='detail-score-date'>{{item.date}}</view>
+    </view>
+    <view class='detail-score-content'>
+     {{item.content}}
     </view>
   </view>
-
+  <view class='bottom-menu-place'></view>
 </view>
 
-<view class='bottom-menu'>
-  <view class="navigator-arrow"></view>
-  <view class='bottom-menu-follow'>关注</view>
-  <view class='bottom-menu-wechat'>微信</view>
-  <view class='bottom-menu-phone'>电话</view>
-</view>
+
+<template is="foot" data='{{listBottom}}'/>
+<template is="bottom-menu" />

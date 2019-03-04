@@ -1,0 +1,25 @@
+/* head */
+
+.page-head {
+  text-align: center;
+}
+
+.page-head-title {
+  display: inline-block;
+  padding: 0 40rpx 20rpx 40rpx;
+  font-size: 32rpx;
+  color: #bebebe;
+}
+
+.page-head-line {
+  margin: 0 auto;
+  width: 150rpx;
+  height: 2rpx;
+  background-color: #d8d8d8;
+}
+
+.page-head-desc {
+  padding-top: 20rpx;
+  color: #9b9b9b;
+  font-size: 32rpx;
+}

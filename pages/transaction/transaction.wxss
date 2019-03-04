@@ -1,3 +1,6 @@
+/* 引用css */
+@import "../module/bottom-menu/bottom-menu.wxss";
+
 .detail-base {
   width: 690rpx;
   height: 200rpx;
@@ -136,67 +139,4 @@
   width: 10rpx;
   height: 60rpx;
   background: rgb(13, 194, 58);
-}
-
-/* bottom self menu */
-
-.bottom-menu {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-  width: 100%;
-  z-index: 9999;
-  background: #fff;
-}
-
-.bottom-menu-back {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.bottom-menu-follow {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.bottom-menu-wechat {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.bottom-menu-phone {
-  float: left;
-  width: 80rpx;
-  height: 80rpx;
-  text-align: center;
-  line-height: 80rpx;
-}
-
-.navigator-arrow {
-  float: left;
-  margin-left: 15rpx;
-  margin-right: 10rpx;
-  padding-right: 26rpx;
-  position: relative;
-}
-
-.navigator-arrow:after {
-  content: " ";
-  display: inline-block;
-  height: 18rpx;
-  width: 18rpx;
-  border-width: 2rpx 2rpx 0 0;
-  border-color: #888;
-  border-style: solid;
-  transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
-  margin-bottom: 3rpx;
 }

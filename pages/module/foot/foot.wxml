@@ -1,0 +1,6 @@
+<template name="foot">
+  <view class="page-list-bottom {{listBottom == true ? '' : 'page-foot-hidden'}}">已经到底了</view>
+  <navigator class="page-foot" openType="switchTab" url="/page/component/index" hover-class="none">
+    <image class="icon-foot" src="../../image/icon_foot.png"></image>
+  </navigator>
+</template>

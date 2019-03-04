@@ -91,5 +91,7 @@ function linkTa(e, that) {
 }
 
 //这样暴露接口，这里不暴露是不能引用的，
-module.exports.followList = followList;
-module.exports.linkTa = linkTa;
+module.exports = {
+  followList: followList,
+  linkTa: linkTa
+}

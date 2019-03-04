@@ -1,4 +1,15 @@
-@import "../common/common.wxss";
+@import "../module/head/head.wxss";
+@import "../module/foot/foot.wxss";
+
+view {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.container {
+  background: #fff;
+}
 
 /* 共用 */
 

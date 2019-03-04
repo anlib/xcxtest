@@ -1,14 +1,14 @@
 {
   "pages":[
-    "pages/teacher/teacher",
-    "pages/score/score",
-    "pages/transaction/transaction",
-    "pages/certificate/certificate",
-    "pages/question-ask/question-ask",
     "pages/myinfo/myinfo",
     "pages/index/index",
-    "pages/testcity/testcity",
-    "pages/test/test",
+    "pages/score/score",
+    "pages/teacher/teacher",
+    "pages/transaction/transaction",
+    "pages/certificate/certificate",
+    "pages/demo/question-ask/question-ask",
+    "pages/demo/testcity/testcity",
+    "pages/demo/test/test",
     "pages/logs/logs"
   ],
   "window":{
@@ -36,5 +36,11 @@
         "text": "我的"
       }
     ]
+  },
+
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   }
 }

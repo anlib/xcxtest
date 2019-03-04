@@ -1,3 +1,6 @@
+const app = getApp();
+const serverUrl = app.globalData.serverUrl; //初始服务器地址
+const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const followList = require('../module/follow/follow.js');
 //初始化可接受科目选择
 let subjectDataInit = null;
@@ -44,7 +47,6 @@ Page({
   },
 
   /**
-   * 
    * //前端选择显示内容
    */
   setFlag: function(e) {
@@ -211,11 +213,84 @@ Page({
   },
 
   /**
+     * 自定义查询老师的处理函数
+     */
+  searchTeacher: function (p) {
+    //console.log(p);
+    if (p == undefined) { p = {}; }
+    //* 动态读取数据
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacher/list/1/1',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log(res.data);
+        var list = res.data;
+        //console.log(list[0]);
+        //如果没数据
+        if (!list[0]) {
+          //console.log('没数据');
+          return;
+        }
+        for (var x in list) {
+          var id = list[x]['id'];
+          var myFlag = list[x]['myflag'];
+        }
+        if (id) {
+          that.getTeacher(id);
+        }
+        that.setData({
+          myFlag: myFlag,
+        })
+      }
+    })
+  },
+
+  getTeacher: function (id) {
+    //* 动态读取数据
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacher/id/' + id,
+      method: 'GET',
+      data: {},
+      success: function (res) {
+        console.log(res.data);
+        var dt = res.data['teacher'][0];
+        var myFlag = dt['myflag'];
+        console.log(dt);
+        that.setData({
+          teacherDetail: dt,
+          myFlag: myFlag,
+        })
+      }
+    })
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     //get 后端 身份 选择值
-    var myFlag = 123;
+
+    var openid = app.globalData.openid;
+    console.log(openid);
+    if (!openid){
+      wx.showToast({
+        title: "需要微信登录授权",
+        duration: 9999999,
+        mask: true,
+      })
+      return;
+    }
+    var p = {};
+    p['openid'] = openid;
+    this.searchTeacher(p);
+    var myFlag = this.data.myFlag;
     //从端取数据
     subjectDataInit = [
       {
@@ -305,52 +380,4 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })

@@ -1,0 +1,122 @@
+<view class="page">
+  <view class="nav">
+    <view class="nav-son {{shownavindex == 1? 'active' : ''}}" bindtap="listqy" data-nav="1">
+      <view class="content">{{city}}</view>
+      <view class="icon"></view>
+    </view>
+    <view class="nav-son borders {{shownavindex == 2? 'active' : ''}}" bindtap="list" data-nav="2">
+      <view class="content">{{city1}}</view>
+      <view class="icon"></view>
+    </view>
+    <view class="nav-son {{shownavindex == 3? 'active' : ''}}" bindtap="listpx" data-nav="3">
+      <view class="content">{{model}}</view>
+      <view class="icon"></view>
+    </view>
+  </view>
+  <view class="quyu {{qyopen ? 'slidown' : 'slidup'}} {{qyshow ? 'disappear':''}}">
+    <view class="qy quyu-left">
+      <view class="{{select1 == index ? 'current' : ''}}" wx:for="{{cityleft}}" bindtap="selectleft" data-city='{{index}}' wx:key="unique">
+        {{index}}
+      </view>
+    </view>
+    <view class="qy quyu-center">
+      <view class="{{select2 == index ? 'current2' : ''}}" wx:for="{{citycenter}}" bindtap="selectcenter" data-city='{{index}}' wx:key="unique">
+        {{index}}
+      </view>
+    </view>
+    <view class="qy quyu-right">
+      <view wx:for="{{cityright}}" wx:key="unique" bindtap='selectcity' data-city='{{index}}'>
+        {{item}}
+      </view>
+    </view>
+
+  </view>
+
+  <view class="temp temp1 {{nzopen ? 'slidown' : 'slidup'}} {{nzshow ? 'disappear':''}}">
+    <view class='tempheight'>
+      <view class='slidowntop'>
+        <view>
+          <text>已选地区 </text>
+        </view>
+        <view class='emptyall'>
+          <view class='emptyallright' bindtap='emptyallendcity'>
+            <text>清空</text>
+          </view>
+        </view>
+      </view>
+      <view class='emptyendcitys'>
+        <block wx:for="{{endcitys}}" wx:key="index">
+          <view class='emptyendcitysitem' bindtap='emptyitem' data-endcity='{{index}}'>{{item}}</view>
+        </block>
+      </view>
+      <view class='slidowncenter'>
+        <view class='endselect'>
+          <text>选择：{{endselect}}</text>
+        </view>
+        <block wx:if="{{displaycity!=0}}">
+          <view class="return">
+            <view bindtap='returnupper'>
+              <text>返回上一级</text>
+            </view>
+          </view>
+        </block>
+      </view>
+
+      <block wx:if="{{displaycity==0?true:false}}">
+        <view class="slidownbottom">
+          <block wx:for="{{cityleft}}" wx:key="unique">
+            <view class='sdbitem' data-city='{{index}}' bindtap='selectsdbitem'> {{index}}</view>
+          </block>
+        </view>
+      </block>
+      <block wx:if="{{displaycity==1?true:false}}">
+        <view class="slidownbottom">
+          <block wx:for="{{endkeys}}" wx:key="unique">
+            <view class='sdbitem' data-city='{{index}}' bindtap='selectsdbendkey'> {{index}}</view>
+          </block>
+        </view>
+      </block>
+      <block wx:if="{{displaycity==2?true:false}}">
+        <view class="slidownbottom">
+          <block wx:for="{{town}}" wx:key="unique">
+            <view class="sdbitem" data-city='{{item}}' bindtap='selectcityend'> {{item}}</view>
+          </block>
+        </view>
+      </block>
+    </view>
+    <view class='queding' bindtap='determineend'>
+      <text class='qdtext'>确定</text>
+    </view>
+  </view>
+
+
+  <view class="temp temp2 {{pxopen ? 'slidown' : 'slidup'}} {{pxshow ? 'disappear':''}}">
+    <view class='tempheight'>
+      <view class='slidowntop'>
+        <view>
+          <text>车长</text>
+        </view>
+      </view>
+      <view class="commanders">
+        <block wx:for="{{commanders}}" wx:key="unique">
+          <view class="sdbitem {{commander==item ? ' active ' : ' '}}" data-commander='{{item}}' bindtap='selectcmditem'> {{item}}</view>
+        </block>
+      </view>
+      <view class='slidowncenter'>
+        <view class='endselect'>
+          <text>车型</text>
+        </view>
+      </view>
+      <view class="slidownbottom">
+        <block wx:for="{{models}}" wx:key="unique">
+          <view class="sdbitem {{model==item ? ' active ' : ' '}}" data-model='{{item}}' bindtap='selectmdlitem'> {{item}}</view>
+        </block>
+      </view>
+    </view>
+    <view class='queding' bindtap='determinecar'>
+      <text class='qdtext'>确定</text>
+    </view>
+  </view>
+
+  <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
+</view>

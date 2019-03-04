@@ -1,0 +1,8 @@
+<template name="bottom-menu">
+  <view class='bottom-menu'>
+    <view class="navigator-arrow"></view>
+    <view class='bottom-menu-follow'>关注</view>
+    <view class='bottom-menu-wechat'>微信</view>
+    <view class='bottom-menu-phone'>电话</view>
+  </view>
+</template>

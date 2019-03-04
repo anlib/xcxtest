@@ -1,0 +1,21 @@
+/* foot */
+.page-foot-hidden {
+  display: none;
+}
+.page-list-bottom {
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+}
+.page-foot {
+  margin: 100rpx 0 30rpx 0;
+  text-align: center;
+  color: #1aad19;
+  font-size: 0;
+}
+
+.icon-foot {
+  width: 152rpx;
+  height: 23rpx;
+}
+

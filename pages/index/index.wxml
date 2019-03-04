@@ -1,11 +1,11 @@
-<import src="../common/head.wxml" />
-<import src="../common/foot.wxml" />
+<import src="../module/head/head.wxml" />
+<import src="../module/foot/foot.wxml" />
 
 <view class="container">
   <view class="page-body">
     <!-- 幻灯片 -->
     <view class="page-section page-section-spacing swiper">
-      <swiper class="swiper-item" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <swiper class="swiper-item" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
         <block wx:for="{{background}}" wx:key="swiper">
           <swiper-item>
             <view>
@@ -15,7 +15,7 @@
         </block>
       </swiper>
     </view>
-      <!-- 上中部导航菜单 -->
+    <!-- 上中部导航菜单 -->
     <view class="nav">
       <block wx:for="{{menu}}" wx:key="menuKey">
         <view class="nav-son {{showNavIndex === index? 'active' : ''}}" bindtap="menuList" data-nav="{{index}}">
@@ -24,7 +24,7 @@
         </view>
       </block>
     </view>
-<!-- 上中部导航菜单点击后下拉内容 -->
+    <!-- 上中部导航菜单点击后下拉内容 -->
     <view class="{{pxopen ? 'slidown' : 'slidup'}}">
 
       <!-- 排序 -->
@@ -62,7 +62,7 @@
           <view class='filter-list'>
             <view class="filter-left"> 老师姓名 ： </view>
             <view class="filter-input">
-              <input maxlength="10" name="input">最大输入长度为10</input>
+              <input maxlength="10" name="teacher">最大输入长度为10</input>
             </view>
           </view>
           <view class='filter-list'>
@@ -91,31 +91,32 @@
 
     <!-- 教师列表 list -->
     <view class='list-item' wx:for="{{teacherList}}" wx:key="unique">
+      <navigator url="../teacher/teacher?id={{item.id}}" hover-class="navigator-hover">
+        <image class='list-avatar' src='{{item.avatar}}'></image>
+        <view class="list-right  {{index==0 ? 'border-top-none' : ''}}">
+          <view class='list-right-row'>
+            <view class='list-name'>{{item.teacher}}</view>
+            <image class='list-gender' src='{{item.gender}}'></image>
+            <view class='list-distance'>{{item.distance}}km</view>
+          </view>
+          <view class='list-right-row'>
+            <view class='list-university'>{{item.university}}</view>
+            <view class='list-education'>{{item.education}}</view>
+          </view>
 
-      <image class='list-avatar' src='{{item.avatar}}'></image>
-      <view class="list-right  {{index==0 ? 'border-top-none' : ''}}">
-        <view class='list-right-row'>
-          <view class='list-name'>{{item.teacherName}}</view>
-          <image class='list-gender' src='{{item.genderPic}}'></image>
-          <view class='list-distance'>{{item.distance}}</view>
-        </view>
-        <view class='list-right-row'>
-          <view class='list-university'>{{item.university}}</view>
-          <view class='list-education'>{{item.education}}</view>
-        </view>
+          <view class='list-right-row'>
+            <view class='list-grade'>{{item.grade}}</view>
+            <view class='list-subject'>{{item.taught}}</view>
+          </view>
 
-        <view class='list-right-row'>
-          <view class='list-grade'>{{item.grade}}</view>
-          <view class='list-subject' wx:for="{{item.subject}}" wx:key="unique">{{item}}</view>
-        </view>
+          <view class='list-right-row'>
+            <view class="{{ item.graduation == '专职教师' ? 'list-graduation-tch' : 'list-graduation-std'}}">{{item.graduation}}</view>
+            <view class='list-auth'>{{item.auth}}</view>
+            <view class='list-price'>￥{{item.price}}/{{item.pricetime}}</view>
+          </view>
 
-        <view class='list-right-row'>
-          <view class="{{ item.graduation == '专职教师' ? 'list-graduation-tch' : 'list-graduation-std'}}">{{item.graduation}}</view>
-          <view class='list-auth'>{{item.auth}}</view>
-          <view class='list-price'>{{item.price}}</view>
         </view>
-
-      </view>
+      </navigator>
     </view>
 
   </view>
@@ -126,6 +127,6 @@
       </navigator>
     </view>
 -->
-  <template is="foot" />
+  <template is="foot" data='{{listBottom}}'/>
   <view class="fullbg {{pxopen ?'fullopacity':''}}" bindtap="hidebg"></view>
 </view>
