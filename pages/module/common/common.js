@@ -16,6 +16,8 @@ var indexBackground = [{
   }
 ];
 
+//性别选择
+genderArray = ['男', '女'];
 //menutop 排序
 var menuOrder = ["综合排序", "距离最近", "教学经验", "评价最高", "价格最低", "价格最高"];
 //menutop 获取科目
@@ -32,6 +34,54 @@ var menuSubjectData = [{
     "v": ["不限", "数学", "英语", "语文", "物理", "化学", "地理", "历史"]
   }
 ];
+
+
+//供选择的可授科目
+subjectDataInit = [{
+  "i": "小学",
+  "v": [{
+    'name': '数学',
+  },
+  {
+    'name': '英语',
+  },
+  {
+    'name': '语文',
+  }
+  ],
+},
+{
+  "i": "初中",
+  "v": [{
+    'name': '数学',
+  },
+  {
+    'name': '英语',
+  },
+  {
+    'name': '语文',
+  },
+  {
+    'name': '物理',
+  },
+  {
+    'name': '化学',
+  },
+  {
+    'name': '地理',
+  },
+  {
+    'name': '历史',
+  }
+  ],
+},
+{
+  "i": "高中",
+  "v": [{
+    'name': '数学',
+  }],
+},
+];
 //menutop 获取地区
 menuAreaData = ["不限", "东城", "西城", "崇文", "宣武", "朝阳", "丰台", "石景山", "海淀", "门头沟", "房山", "通州", "顺义", "昌平", "大兴", "怀柔", "平谷", "密云", "延庆"];
 //menutop 获取老师类型
@@ -40,12 +90,39 @@ menuExperience = ["5年以下", "5-10年", "10年以上"];
 
 //data dict
 dataDict = {
-  gender: { 1: "男", 2: "女" },
-  genderPic: { "男": "../../image/gender_1.png", "女": "../../image/gender_2.png" },
-  graduation: { 1: "专职教师", 2: "大学生/毕业生" },
-  education: { 1: "大专", 2: "本科", 3: '研究生', 4: '博士' },
-  auth: { 0: "未认证", 1: "已认证"},
-}
+  gender: {
+    1: "男",
+    2: "女"
+  },
+  genderPic: {
+    "男": "../../image/gender_1.png",
+    "女": "../../image/gender_2.png"
+  },
+  graduation: {
+    1: "专职教师",
+    2: "大学生/毕业生"
+  },
+  education: {
+    1: "大专",
+    2: "本科",
+    3: '研究生',
+    4: '博士'
+  },
+  auth: {
+    0: "未认证",
+    1: "已认证"
+  },
+};
+//课时费
+priceData = [
+  ['0', '50', '100', '200', '300', '400', '500', '700', '1000', '2000', '5000', '10000+'],
+  ["小时", "45分钟"]
+];
+//可预约授课时间
+scheduleData = [
+  ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+  ["全天", "上午", "下午", "晚上"]
+];
 
 /* 
  * index background
@@ -60,12 +137,42 @@ function menuFirst() {
   return menuFirst;
 }
 
-function menuOrder() { return menuOrder; }
-function menuSubjectData() { return menuSubjectData; }
-function menuAreaData() { return menuAreaData; }
-function menuGender() { return menuGender; }
-function menuExperience() { return menuExperience; }
-function dataDict() { return dataDict; }
+function menuOrder() {
+  return menuOrder;
+}
+
+function menuSubjectData() {
+  return menuSubjectData;
+}
+
+function menuAreaData() {
+  return menuAreaData;
+}
+
+function menuGender() {
+  return menuGender;
+}
+
+function menuExperience() {
+  return menuExperience;
+}
+
+function dataDict() {
+  return dataDict;
+}
+function priceData() {
+  return priceData;
+}
+function scheduleData() {
+  return scheduleData;
+}
+function genderArray() {
+  return genderArray;
+}
+function subjectDataInit() {
+  return subjectDataInit;
+}
+
 
 //这样暴露接口，这里不暴露是不能引用的，
 module.exports = {
@@ -77,5 +184,9 @@ module.exports = {
   menuGender: menuGender,
   menuExperience: menuExperience,
   dataDict: dataDict,
+  priceData: priceData,
+  scheduleData: scheduleData,
+  genderArray: genderArray,
+  subjectDataInit: subjectDataInit,
   
 }

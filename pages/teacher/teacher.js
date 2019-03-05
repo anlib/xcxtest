@@ -48,7 +48,7 @@ Page({
     //* 动态获取该id老师信息
     var id = options.id;
     //id = 1; 
-    if (!id){
+    if (!id) {
       wx.showToast({
         title: "请首页进入",
         duration: 9999999,

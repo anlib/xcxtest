@@ -17,14 +17,14 @@
   </view>
   <view class='name-cell'>
     <view class='name-name'>性别</view>
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{genderArray}}" data-type='genderSelected'>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{genderArray}}" data-input='gender' data-type='genderSelected'>
       <view class='name-value'>{{genderSelected != 1 && genderSelected != 0 ? '请选择' : genderArray[genderSelected]}}</view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
   <view class='name-cell'>
     <view class='name-name'>所在城市</view>
-    <picker mode="region" bindchange="bindPickerChange" value="{{region}}" data-type='region'>
+    <picker mode="region" bindchange="bindPickerChange" value="{{region}}" data-type='region' data-input='area' >
       <view class='name-value'> {{region[0]}} {{region[1]}} {{region[2]}}</view>
       <view class="navigator-arrow"></view>
     </picker>
@@ -40,19 +40,18 @@
   <view class='name-cell'>
     <view class='name-name'>可授课时间</view>
     <view class='name-value' data-flag='13' bindtap='setFlag'>
-      {{formData['teachTime'] ? formData['teachTime']: '请输入您可授课的时间'}}
+      {{formDataTime['teachTime'] ? formDataTime['teachTime']: '请输入您可授课的时间'}}
     </view>
     <view class="navigator-arrow"></view>
   </view>
   <view class='name-cell'>
     <view class='name-name'>课时费</view>
-    <picker mode="multiSelector" bindchange="bindPickerChange" value="{{priceDataIndex}}" range="{{priceData}}" data-type='price'>
+    <picker mode="multiSelector" bindchange="bindPickerChange" value="{{priceDataIndex}}" range="{{priceData}}" data-type='price'  data-input='price'>
       <view class='name-value'>
         {{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : '每课时费用(人民币)'}} {{}}</view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
-
   <!-- 带箭头的样式
   <view class='name-cell'>
     <view class='name-name'>姓名</view>
@@ -60,15 +59,15 @@
     <view class="navigator-arrow"></view>
   </view>
   -->
-  <button class='commit-data' type="primary" bindtap='setFlag' data-flagdata='teacherBase' data-flag='{{myFlag}}'>完成</button>
+  <button class='commit-data' type="primary" bindtap='setFlag' data-flagdata='teacherBase' data-flag='{{myflag}}'>完 成</button>
 </view>
 
 <!-- 修改姓名 -->
 <view hidden="{{flag == 11 ? false : true}}">
-  <form catchsubmit="formSubmit" catchreset="formReset">
+  <form catchsubmit="formSubmitName" catchreset="formReset">
     <view class='base-info modify-cell'>
-      <button class='cancel' formType="reset" bindtap='setName' data-flag='{{myFlag}}'>取消</button>
-      <button class='commit' type="primary" formType="submit" bindtap='setName' data-flag='{{myFlag}}'>完成</button>
+      <button class='cancel' formType="reset" bindtap='setName' data-flag='{{myflag}}'>取消</button>
+      <button class='commit' type="primary" formType="submit" bindtap='setName' data-flag='{{myflag}}'>完成</button>
     </view>
     <view class='name-cell name-modify'>
       <view class='name-input'>
@@ -109,10 +108,10 @@
 </view>
 <!-- 修改授课时间 -->
 <view hidden="{{flag == 13 ? false : true}}">
-  <form catchsubmit="formSubmit" catchreset="formReset">
+  <form catchsubmit="formSubmitTime" catchreset="formReset">
     <view class='base-info modify-cell'>
-      <button class='cancel' formType="reset" bindtap='setName' data-flag='{{myFlag}}'>取消</button>
-      <button class='commit' type="primary" formType="submit" bindtap='setName' data-flag='{{myFlag}}'>完成</button>
+      <button class='cancel' formType="reset" bindtap='setName' data-flag='{{myflag}}'>取消</button>
+      <button class='commit' type="primary" formType="submit" bindtap='setName' data-flag='{{myflag}}'>完成</button>
     </view>
     <view class='name-cell name-modify'>
       <view class='name-input'>
@@ -127,9 +126,7 @@
 
 <!-- 教师身份我的界面 -->
 <view hidden="{{flag == 3 ? false : true}}">
-
   <!-- detail -->
-
   <view class='detail-top'>
     <view class='detail-item'>
       <image class='detail-avatar' src='{{teacherDetail.avatar}}'></image>
@@ -138,23 +135,19 @@
           <view class='detail-name'>{{teacherDetail.teacherName}}</view>
           <image class='detail-gender' src='{{teacherDetail.genderPic}}'></image>
         </view>
-
         <view class='detail-right-row'>
           <view class="{{ teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation}}</view>
           <view class='detail-auth'>{{teacherDetail.auth}}</view>
         </view>
-
         <view class='detail-right-row'>
           <view class='detail-university'>评分： {{teacherDetail.score}}</view>
         </view>
-
         <view class='detail-right-row'>
           <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
           <view class='detail-distance'>{{teacherDetail.distance}}</view>
           <view class='detail-price'>{{teacherDetail.price}}</view>
         </view>
       </view>
-
       <view class='detail-bottom-row'>
         <view class='detail-vip'>我的VIP会员</view>
         <view class='detail-vip-price'>会员首月仅12元</view>
@@ -162,14 +155,12 @@
       </view>
     </view>
   </view>
-
   <view class='detail-list'>
     <view class='detail-cell'>
       <image class="detail-icon" src='../../image/mydata-base.png'></image>
       <view class='detail-mydata'>我的资料</view>
       <view class="navigator-arrow"></view>
     </view>
-
     <view class='detail-cell'>
       <image class="detail-icon" src='../../image/mydata-follow.png'></image>
       <view class='detail-follow'>我的关注</view>
@@ -183,43 +174,37 @@
       </view>
       <view class="navigator-arrow"></view>
     </view>
-
     <view class='detail-cell'>
       <image class="detail-icon" src='../../image/mydata-transaction.png'></image>
       <view class='detail-mydata'>我的交易</view>
       <view class="navigator-arrow"></view>
     </view>
-
     <view class='detail-cell'>
       <image class="detail-icon" src='../../image/mydata-appraise.png'></image>
       <view class='detail-follow'>我的评价</view>
       <view class='detail-appraise-count'>(28888)</view>
       <view class="navigator-arrow"></view>
     </view>
-
     <view class='detail-cell border-bottom-none'>
       <image class="detail-icon" src='../../image/mydata-certificate.png'></image>
       <view class='detail-follow'>我的证书</view>
       <view class='detail-appraise-count'>(888)</view>
       <view class="navigator-arrow"></view>
     </view>
-
     <view class='detail-cell-certificate'>
       <image class="detail-certificate" src='../../image/sys-place.png'></image>
       <image class="detail-certificate" src='../../image/sys-place.png'></image>
       <image class="detail-certificate" src='../../image/sys-place.png'></image>
     </view>
-
   </view>
-
 </view>
 
 
-<!-- 初始设置身份 -->
-<view class="first-set" hidden="{{flag == 0 ? false : true}}">
-  <image class="first-set-bg" src='../../image/first-set.png'></image>
-  <view class='first-set-teacher' bindtap='setFlag' data-flag='1' data-flagdata='first'>教师</view>
-  <view class='first-set-student' bindtap='setFlag' data-flag='2' data-flagdata='first'>学生</view>
+
+<!-- 学生身份完善资料 -->
+<view hidden="{{flag == 123 ? false : true}}">
+  <import src="../module/follow/follow.wxml" />
+  <template is="follow" data='{{teacherDetail,flag}}' />
 </view>
 
 
@@ -228,9 +213,9 @@
   学生
 </view>
 
-<!-- 学生身份完善资料 -->
-<view hidden="{{flag == 123 ? false : true}}">
-  <import src="../module/follow/follow.wxml" />
-  <template is="follow" data='{{teacherDetail,flag}}' />
+<!-- 初始设置身份 -->
+<view class="first-set" hidden="{{flag == 0 ? false : true}}">
+  <image class="first-set-bg" src='../../image/first-set.png'></image>
+  <view class='first-set-teacher' bindtap='setFlag' data-flag='1' data-flagdata='first'>教师</view>
+  <view class='first-set-student' bindtap='setFlag' data-flag='2' data-flagdata='first'>学生</view>
 </view>
-

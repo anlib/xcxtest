@@ -2,21 +2,24 @@ const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const followList = require('../module/follow/follow.js');
+const cm = require('../module/common/common.js');
 //初始化可接受科目选择
-let subjectDataInit = null;
+let subjectDataInit = cm.subjectDataInit;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    id: null, //老师id
     motto: '微信遮罩层显示',
-    flag: 0,
-    myFlag: 0, //身份设置，初始:0,老师1,学生2
+    flag: -1, //页面显示标识，和后端数据没关系
+    //myflag: 0, //注册流程状态，初始:0,老师1,学生2
     flagName: {
+      '-1': '我的',
       '0': '我的',
       1: '完善资料',
       2: '完善资料',
-      //3: '我的',
+      3: '我的',
       11: '设置姓名',
       12: '可授科目',
       13: '可授课时间',
@@ -25,67 +28,124 @@ Page({
     //生日设置选择
     birthday: '请输入您的年龄',
     startDay: '1900-01-01',
-    today: '2019-02-19',
-    //性别选择
-    genderArray: ['男', '女'],
+    today: Date.today,
+    genderArray: cm.genderArray, //性别选择
     genderSelected: null,
     //城市选择
     region: ['请选择', '', ''], //默认城市
     subjectData: subjectDataInit,
     subjectNext: null,
     //可预约授课时间
-    scheduleData: [
-      ['周一', '周二'],
-      ["全天", "上午", "下午", "晚上"]
-    ],
+    scheduleData: cm.scheduleData,
     //课时费
-    priceData: [
-      ['0', '50', '100', '200', '300', '400', '500', '700', '1000', '2000', '5000', '10000+'],
-      ["小时", "45分钟"]
-    ],
+    priceData: cm.priceData,
     priceDataIndex: [3, 0],
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    //get 后端 身份 选择值
+    var openid = app.globalData.openid;
+    openid = '1551752958247';
+    //console.log(openid);
+    if (!openid) {
+      wx.showToast({
+        title: "需要微信登录授权",
+        duration: 9999999,
+        mask: true,
+      })
+      return;
+    }
+    var p = {
+      'openid': openid
+    };
+    //从后端读出老师资料，赋值flag前台展示标识
+    this.searchTeacher(p);
+
+    // 下面部分还没有处理
+    //从端取数据
+    //subjectDataInit = subjectDataInit;
+
+    var teacherDetail = {
+      avatar: "../../image/avatar_01.png",
+      teacherName: "张老师",
+      graduation: "大学生/毕业生",
+      auth: "已认证",
+      genderPic: "../../image/gender_1.png",
+      distance: "0.77km",
+      score: 4.5,
+      lastLongin: "7分钟前",
+      price: "￥300/小时 起",
+    };
+
+    var flag = this.data.flag; //需要动态数据调整，暂时赋值；
+
+    if (flag == 123) {
+      teacherDetail = followList.followList(this);
+    }
+    //console.log(flag)
+    //console.log(subjectDataInit)
+    this.setData({
+      subjectData: subjectDataInit,
+      teacherDetail: teacherDetail,
+    });
+
+    //设置抬头标题
+    //console.log(this.data.flagName)
+    //console.log(flag)
+    wx.setNavigationBarTitle({
+      title: this.data.flagName[this.data.flag]
+    });
   },
 
   /**
    * //前端选择显示内容
    */
-  setFlag: function (e) {
+  setFlag: function(e) {
     // get code wating 
     var flag = parseInt(e.currentTarget.dataset.flag);
     //初始页面选择身份url跳转
     var flagData = e.currentTarget.dataset.flagdata;
     if (flagData == 'first') {
       //post set 后端 选择身份 
+      var p = {
+        'id': this.data.id,
+        'myflag': flag
+      };
+      this.updateTeacher(p);
     }
     if (flagData == 'teacherBase') {
       //post set 后端 完善老师资料
       flag = 3;
     }
-
     this.setData({
-      flag: flag
+      flag: flag,
     });
     wx.setNavigationBarTitle({
-      title: this.data.flagName[flag]
+      title: this.data.flagName[this.data.flag]
     });
   },
 
   /*
-  * 取消可授科目
+   * 取消可授科目
    */
-  subjectCancel: function (e) {
+  subjectCancel: function(e) {
     this.setData({
       subjectData: subjectDataInit,
       flag: parseInt(e.currentTarget.dataset.flag),
     })
   },
   /*
- * 完成并提交可授科目的选择
-  */
-  subjectcommit: function (e) {
+   * 完成并提交可授科目的选择
+   */
+  subjectcommit: function(e) {
     var items = this.data.subjectData;
-    //console.log(items)
+    console.log(items)
     // 循环取出为true subjectData;
+    var grade = new Array();
+    var taught = new Array();
     var subjectPost = [];
     var subjectPostLength = 0;
     for (var index in items) {
@@ -97,6 +157,8 @@ Page({
             subjectPost[itemI] = {};
             subjectPostLength++;
           }
+          grade.push(itemI);
+          taught.push(item[idx].name);
           subjectPost[itemI][idx] = item[idx].name;
         }
       }
@@ -114,10 +176,31 @@ Page({
       }
       num++;
     }
-    console.log(subjectValue);
+    //console.log(subjectValue);
+    //console.log('-----------------grade');
+    //console.log(grade);
+    var n = []; //临时数组
+    for (var i = 0; i < grade.length; i++) {
+      if (n.indexOf(grade[i]) == -1) n.push(grade[i]);
+    }
+    grade = n.join(',');
+    var n = [];
+    for (var i = 0; i < taught.length; i++) {
+      if (n.indexOf(taught[i]) == -1) n.push(taught[i]);
+    }
+    taught = n.join(',');
     //post 后端 subjectPost
-    //waiting code
-
+    if (subjectValue) {
+      // post 提交 e.detail.value 到后端
+      console.log(this.data.myflag);
+      var p = {
+        'id': this.data.id,
+        'grade': grade,
+        'taught': taught,
+        'gradetaught': subjectValue
+      };
+      this.updateTeacher(p);
+    }
     this.setData({
       subjectValue: subjectValue,
       flag: parseInt(e.currentTarget.dataset.flag),
@@ -126,12 +209,21 @@ Page({
   /* 
    * 提交form
    */
-  formSubmit(e) {
+  //修改姓名
+  formSubmitName(e) {
     //console.log(e)
-    // post 提交 e.detail.value 到后端
     //console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    if (e.detail.value) {
+      // post 提交 e.detail.value 到后端
+      console.log(this.data.myflag);
+      var p = {
+        'id': this.data.id,
+        'teacher': e.detail.value.name
+      };
+      this.updateTeacher(p);
+    }
     //console.log('flag：', e.detail.target.dataset.flag);
-    var flag = this.data.myFlag;
+    var flag = this.data.myflag;
     if (e.detail.target.dataset.flag) {
       flag = parseInt(e.detail.target.dataset.flag);
     }
@@ -140,20 +232,73 @@ Page({
       formData: e.detail.value
     });
   },
+//修改可授时间
+  formSubmitTime(e) {
+    //console.log(e)
+    //console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    if (e.detail.value) {
+      // post 提交 e.detail.value 到后端
+      var p = {
+        'id': this.data.id,
+        'teachtime': e.detail.value.teachTime
+      };
+      this.updateTeacher(p);
+    }
+    //console.log('flag：', e.detail.target.dataset.flag);
+    var flag = this.data.myflag;
+    if (e.detail.target.dataset.flag) {
+      flag = parseInt(e.detail.target.dataset.flag);
+    }
+    console.log(this.data.myflag);
+    this.setData({
+      flag: flag,
+      formDataTime: e.detail.value
+    });
+  },
+
   /* 
    * 重置form表单
    */
   formReset(e) {
     //重新赋值全局变量
-    //console.log(this.data.myFlag)
+    //console.log(this.data.myflag)
     this.setData({
-      flag: this.data.myFlag,
+      flag: this.data.myflag,
+    })
+  },
+
+  /* 
+   * 日期选择
+   */
+  bindDateChange(e) {
+    //post 后端
+    console.log(e.detail.value);
+    if (e.detail.value) {
+      // post 提交 e.detail.value 到后端
+      console.log(this.data.myflag);
+      var p = {
+        'id': this.data.id,
+        'birthday': e.detail.value
+      };
+      this.updateTeacher(p);
+    }
+
+    this.setData({
+      birthday: e.detail.value
     })
   },
 
   //选择checkbox
   checkboxChange(e) {
-    //console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+    //console.log('checkbox发生change事件，携带value值为：', e.detail.value);
+    //console.log(e.detail.value);
+    //if (e.detail.value) {
+    // post 提交 e.detail.value 到后端
+    //  console.log(this.data.myflag);
+    //  var p = { 'id': this.data.id, 'checkbox': e.detail.value };
+    //  this.updateTeacher(p);
+    //}
+
     var subjectNext = this.data.subjectNext;
     var items = this.data.subjectData[subjectNext]['v'];
     var values = e.detail.value
@@ -174,16 +319,6 @@ Page({
   },
 
   /* 
-   * 日期选择
-   */
-  bindDateChange(e) {
-    //post 后端
-    this.setData({
-      birthday: e.detail.value
-    })
-  },
-
-  /* 
    * 选择器 （性别，城市）
    */
   bindPickerChange(e) {
@@ -191,7 +326,26 @@ Page({
     console.log('picker发送选择改变，region携带值为', e.currentTarget.dataset.type);
     var type = e.currentTarget.dataset.type;
     var value = e.detail.value;
+    var input = e.currentTarget.dataset.input;
     //post 后端 
+    if (e.detail.value) {
+      // post 提交 e.detail.value 到后端
+      console.log(this.data.myflag);
+      var p = {
+        'id': this.data.id
+      };
+      if (input == 'gender') {
+        p['gender'] = this.data.genderArray[value];
+      } else if (input == 'area') {
+        p['city'] = value[1];
+        p['area'] = value[2];
+      } else if (input == 'price') {
+        //console.log(value);
+        p['price'] = this.data.priceData[0][value[0]];
+        p['pricetime'] = this.data.priceData[1][value[1]];
+      }
+      this.updateTeacher(p);
+    }
     //waiting
     var data = {};
     data[type] = value;
@@ -202,7 +356,7 @@ Page({
   /**
    * 选择科目二级菜单
    */
-  selectNext: function (e) {
+  selectNext: function(e) {
     //console.log(e.currentTarget.dataset.flag);
     //console.log(e.currentTarget.dataset.nav);
     this.setData({
@@ -213,11 +367,13 @@ Page({
   },
 
   /**
-     * 自定义查询老师的处理函数
-     */
-  searchTeacher: function (p) {
-    console.log(p);
-    if (p == undefined) { p = {}; }
+   * 自定义查询老师的处理函数
+   */
+  searchTeacher: function(p) {
+    //console.log('searchTeacher{p}:'); console.log(p);
+    if (!p) {
+      return;
+    }
     //* 动态读取数据
     var that = this;
     wx.request({
@@ -228,53 +384,35 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
+        console.log("searchTeacher{res.data}:");
         console.log(res.data);
         var list = res.data;
-        //console.log(list[0]);
         //如果没数据
         if (!list[0]) {
           console.log('没数据');
           that.insertTeacher(p);
           return;
+        } else {
+          //Teacher - data 赋值 coding wating
+          that.setData({
+            id: list[0]['id'],
+            flag: list[0]['myflag'],
+            myflag: list[0]['myflag'],
+          })
         }
-        for (var x in list) {
-          var id = list[x]['id'];
-          var myFlag = list[x]['myflag'];
-        }
-        if (id) {
-          //that.getTeacher(id);
-        }
-        that.setData({
-          myFlag: myFlag,
-        })
       }
     })
   },
 
-  getTeacher: function (id) {
-    //* 动态读取数据
-    var that = this;
-    wx.request({
-      url: serverUrl + 'teacher/id/' + id,
-      method: 'GET',
-      data: {},
-      success: function (res) {
-        console.log(res.data);
-        var dt = res.data['teacher'][0];
-        var myFlag = dt['myflag'];
-        console.log(dt);
-        that.setData({
-          teacherDetail: dt,
-          myFlag: myFlag,
-        })
-      }
-    })
-  },
-  //insert
-  insertTeacher: function (p) {
-    console.log(p);
-    if (p == undefined) { p = {}; }
+  /*
+   * 新增老师
+   */
+  insertTeacher: function(p) {
+    //console.log(p);
+    if (p == undefined) {
+      return;
+    }
     //* 动态读取数据
     var that = this;
     wx.request({
@@ -285,125 +423,45 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
-        console.log(res.data);
-        var list = res.data;
-        //console.log(list[0]);
-        //如果没数据
-        if (!list[0]) {
-          console.log('没数据');
-
-          return;
-        }
-        for (var x in list) {
-          var id = list[x]['id'];
-          var myFlag = list[x]['myflag'];
-        }
+      success: function(res) {
+        //console.log("insertTeacher res.data");
+        //console.log(res.data);
         that.setData({
-          myFlag: myFlag,
+          id: res.data['insertId'],
+          flag: 0,
         })
       }
     })
   },
-  
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    //get 后端 身份 选择值
 
-    var openid = app.globalData.openid;
-    console.log(openid);
-    if (!openid) {
-      wx.showToast({
-        title: "需要微信登录授权",
-        duration: 9999999,
-        mask: true,
-      })
+  /*
+   * 更新老师资料
+   */
+  updateTeacher: function(p) {
+    console.log('updateTeacher:');
+    console.log(p); //需要id为条件的；
+    if (p == undefined) {
       return;
     }
-    var p = {};
-    p['openid'] = openid;
-    this.searchTeacher(p);
-    var myFlag = this.data.myFlag;
-    //从端取数据
-    subjectDataInit = [
-      {
-        "i": "小学",
-        "v": [{
-          'name': '数学',
-          'checked': true,
-        },
-        {
-          'name': '英语',
-        },
-        {
-          'name': '语文',
-        }
-        ],
+    //* 动态读取数据
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacher/update',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
       },
-      {
-        "i": "初中",
-        "v": [{
-          'name': '数学',
-        },
-        {
-          'name': '英语',
-        },
-        {
-          'name': '语文',
-        },
-        {
-          'name': '物理',
-        },
-        {
-          'name': '化学',
-        },
-        {
-          'name': '地理',
-        },
-        {
-          'name': '历史',
-        }
-        ],
-      },
-      {
-        "i": "高中",
-        "v": [{
-          'name': '数学',
-        }
-        ],
-      },
-    ];
-    var teacherDetail = {
-      avatar: "../../image/avatar_01.png",
-      teacherName: "张老师",
-      graduation: "大学生/毕业生",
-      auth: "已认证",
-      genderPic: "../../image/gender_1.png",
-      distance: "0.77km",
-      score: 4.5,
-      lastLongin: "7分钟前",
-      price: "￥300/小时 起",
-    };
-    var flag = myFlag;
-    if (flag == 123) {
-      teacherDetail = followList.followList(this);
-    }
-    //console.log(flag)
-    //console.log(subjectDataInit)
-    this.setData({
-      flag: flag,
-      myFlag: myFlag,
-      subjectData: subjectDataInit,
-      teacherDetail: teacherDetail,
-    });
-    //设置抬头标题
-    //console.log(this.data.flagName)
-    //console.log(flag)
-    wx.setNavigationBarTitle({
-      title: this.data.flagName[flag]
-    });
+      success: function(res) {
+        console.log("update res.data");
+        console.log(res.data);
+        that.setData({
+          //flag: res.data['myflag'],
+          //myflag: res.data['myflag'],
+        })
+      }
+    })
   },
 
   /* 
