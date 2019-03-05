@@ -49,7 +49,7 @@ Page({
   /**
    * //前端选择显示内容
    */
-  setFlag: function(e) {
+  setFlag: function (e) {
     // get code wating 
     var flag = parseInt(e.currentTarget.dataset.flag);
     //初始页面选择身份url跳转
@@ -73,7 +73,7 @@ Page({
   /*
   * 取消可授科目
    */
-  subjectCancel: function(e) {
+  subjectCancel: function (e) {
     this.setData({
       subjectData: subjectDataInit,
       flag: parseInt(e.currentTarget.dataset.flag),
@@ -93,7 +93,7 @@ Page({
       var itemI = items[index]['i'];
       for (var idx in item) {
         if (item[idx].checked == true) {
-          if (subjectPost[itemI] == undefined){
+          if (subjectPost[itemI] == undefined) {
             subjectPost[itemI] = {};
             subjectPostLength++;
           }
@@ -202,7 +202,7 @@ Page({
   /**
    * 选择科目二级菜单
    */
-  selectNext: function(e) {
+  selectNext: function (e) {
     //console.log(e.currentTarget.dataset.flag);
     //console.log(e.currentTarget.dataset.nav);
     this.setData({
@@ -216,7 +216,7 @@ Page({
      * 自定义查询老师的处理函数
      */
   searchTeacher: function (p) {
-    //console.log(p);
+    console.log(p);
     if (p == undefined) { p = {}; }
     //* 动态读取数据
     var that = this;
@@ -229,12 +229,13 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
-        //console.log(res.data);
+        console.log(res.data);
         var list = res.data;
         //console.log(list[0]);
         //如果没数据
         if (!list[0]) {
-          //console.log('没数据');
+          console.log('没数据');
+          that.insertTeacher(p);
           return;
         }
         for (var x in list) {
@@ -242,7 +243,7 @@ Page({
           var myFlag = list[x]['myflag'];
         }
         if (id) {
-          that.getTeacher(id);
+          //that.getTeacher(id);
         }
         that.setData({
           myFlag: myFlag,
@@ -270,16 +271,50 @@ Page({
       }
     })
   },
+  //insert
+  insertTeacher: function (p) {
+    console.log(p);
+    if (p == undefined) { p = {}; }
+    //* 动态读取数据
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacher/add',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        var list = res.data;
+        //console.log(list[0]);
+        //如果没数据
+        if (!list[0]) {
+          console.log('没数据');
 
+          return;
+        }
+        for (var x in list) {
+          var id = list[x]['id'];
+          var myFlag = list[x]['myflag'];
+        }
+        that.setData({
+          myFlag: myFlag,
+        })
+      }
+    })
+  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     //get 后端 身份 选择值
 
     var openid = app.globalData.openid;
     console.log(openid);
-    if (!openid){
+    if (!openid) {
       wx.showToast({
         title: "需要微信登录授权",
         duration: 9999999,
@@ -331,7 +366,7 @@ Page({
           'name': '历史',
         }
         ],
-      }, 
+      },
       {
         "i": "高中",
         "v": [{
@@ -340,7 +375,7 @@ Page({
         ],
       },
     ];
-    var teacherDetail = { 
+    var teacherDetail = {
       avatar: "../../image/avatar_01.png",
       teacherName: "张老师",
       graduation: "大学生/毕业生",
@@ -352,7 +387,7 @@ Page({
       price: "￥300/小时 起",
     };
     var flag = myFlag;
-    if (flag == 123){
+    if (flag == 123) {
       teacherDetail = followList.followList(this);
     }
     //console.log(flag)
