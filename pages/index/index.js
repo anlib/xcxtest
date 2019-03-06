@@ -1,4 +1,4 @@
-const cm = require('../module/common/common.js');
+const cd = require('../module/common/config-data.js');
 const util = require('../../utils/util.js');
 const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
@@ -26,19 +26,19 @@ Page({
     selected: [{}, {}, {}, {}], //筛选中选中第几个记录
     formData: {},
     //首页上部切换北京图片
-    background: cm.indexBackground,
+    background: cd.indexBackground,
     //幻灯片下面的导航数据
-    menu: cm.menuFirst,
+    menu: cd.menuFirst,
     menuData: {
       //排序
-      order: cm.menuOrder,
+      order: cd.menuOrder,
       //获取科目
-      subjectData: cm.menuSubjectData,
+      subjectData: cd.menuSubjectData,
       //获取地区
-      areaData: cm.menuAreaData,
+      areaData: cd.menuAreaData,
       //获取老师类型
-      gender: cm.menuGender,
-      experience: cm.menuExperience,
+      gender: cd.menuGender,
+      experience: cd.menuExperience,
     },
     //分页设置
     currentPage: 1,
@@ -81,7 +81,7 @@ Page({
   selectNext: function(e) {
     var value = null;
     if (e.currentTarget.dataset.value == "不限") {
-      this.data.menu[this.data.showNavIndex] = cm.menuFirst[this.data.showNavIndex];
+      this.data.menu[this.data.showNavIndex] = cd.menuFirst[this.data.showNavIndex];
       //赋全局变量，收回下拉菜单
       this.setData({
         showNavIndex: "",
@@ -130,7 +130,7 @@ Page({
       } else {
         //没有二级
         if (e.currentTarget.dataset.item == "不限") {
-          this.data.menu[this.data.showNavIndex] = cm.menuFirst[this.data.showNavIndex];
+          this.data.menu[this.data.showNavIndex] = cd.menuFirst[this.data.showNavIndex];
         } else {
           this.data.menu[this.data.showNavIndex] = e.currentTarget.dataset.item;
         }
@@ -385,7 +385,7 @@ Page({
           list[x]['avatar'] = srcUrl + list[x]['avatar'];
           list[x]['grade'] = list[x]['grade'].replace(/,/g, ' ');
           list[x]['taught'] = list[x]['taught'].replace(/,/g, ' ');
-          list[x]['gender'] = cm.dataDict.genderPic[list[x]['gender']];
+          list[x]['gender'] = cd.dataDict.genderPic[list[x]['gender']];
           if (p.latitude) {
             list[x]['distance'] = util.distance(p.latitude, p.longitude, list[x]['latitude'], list[x]['longitude']);
           }

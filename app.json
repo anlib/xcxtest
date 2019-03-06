@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/myinfo/myinfo",
     "pages/index/index",
     "pages/score/score",
@@ -11,11 +11,11 @@
     "pages/demo/test/test",
     "pages/logs/logs"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#7A7E83",
@@ -37,7 +37,6 @@
       }
     ]
   },
-
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"

@@ -1,10 +1,10 @@
 const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
-const followList = require('../module/follow/follow.js');
-const cm = require('../module/common/common.js');
+const followList = require('../module/myinfo/follow/follow.js');
+const cd = require('../module/common/config-data.js');
 //初始化可接受科目选择
-let subjectDataInit = cm.subjectDataInit;
+let subjectDataInit = cd.subjectDataInit;
 Page({
   /**
    * 页面的初始数据
@@ -29,17 +29,18 @@ Page({
     birthday: '请输入您的年龄',
     startDay: '1900-01-01',
     today: Date.today,
-    genderArray: cm.genderArray, //性别选择
+    genderArray: cd.genderArray, //性别选择
     genderSelected: null,
     //城市选择
     region: ['请选择', '', ''], //默认城市
     subjectData: subjectDataInit,
     subjectNext: null,
     //可预约授课时间
-    scheduleData: cm.scheduleData,
+    scheduleData: cd.scheduleData,
     //课时费
-    priceData: cm.priceData,
-    priceDataIndex: [3, 0],
+    priceData: cd.priceData,
+    //priceDataIndex: [3, 0],
+    pricedf: '每课时费用(人民币)',
   },
 
   /**
@@ -118,6 +119,11 @@ Page({
     }
     if (flagData == 'teacherBase') {
       //post set 后端 完善老师资料
+      var p = {
+        'id': this.data.id,
+        'myflag': 3
+      };
+      this.updateTeacher(p);
       flag = 3;
     }
     this.setData({
@@ -229,7 +235,7 @@ Page({
     }
     this.setData({
       flag: flag,
-      formData: e.detail.value
+      formData: e.detail.value.name
     });
   },
 //修改可授时间
@@ -252,7 +258,7 @@ Page({
     console.log(this.data.myflag);
     this.setData({
       flag: flag,
-      formDataTime: e.detail.value
+      formDataTime: e.detail.value.teachTime
     });
   },
 
@@ -395,7 +401,24 @@ Page({
           return;
         } else {
           //Teacher - data 赋值 coding wating
+          var teacherDetail = list[0];
+          
+          var genderSelected = null;
+          if (teacherDetail['gender'] == '男'){
+            genderSelected = 0;
+          } else if (teacherDetail['gender'] == '女'){
+            genderSelected = 1;
+          }
+          var region = ['', teacherDetail['city'], teacherDetail['area']];
+          var pricedf = '￥' + teacherDetail['price'] + '元/' + teacherDetail['pricetime'];
           that.setData({
+            formDataName: teacherDetail['teacher'],
+            formDataTime: teacherDetail['teachtime'],
+            subjectValue: teacherDetail['gradetaught'],
+            birthday: teacherDetail['birthday'],
+            genderSelected: genderSelected,
+            region: region,
+            pricedf: pricedf,
             id: list[0]['id'],
             flag: list[0]['myflag'],
             myflag: list[0]['myflag'],

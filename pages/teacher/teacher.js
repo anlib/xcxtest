@@ -1,4 +1,4 @@
-const cm = require('../module/common/common.js');
+const cd = require('../module/common/config-data.js');
 const util = require('../../utils/util.js');
 const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
@@ -88,7 +88,7 @@ Page({
           dt['avatar'] = srcUrl + dt['avatar'];
           dt['grade'] = dt['grade'].replace(/,/g, ' ');
           dt['taught'] = dt['taught'].replace(/,/g, ' ');
-          dt['gender'] = cm.dataDict.genderPic[dt['gender']];
+          dt['gender'] = cd.dataDict.genderPic[dt['gender']];
           dt['distance'] = '';
           //获取地理位置
           wx.getLocation({
