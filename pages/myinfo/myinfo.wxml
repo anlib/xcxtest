@@ -11,7 +11,7 @@
   <view class='name-cell'>
     <view class='name-name'>出生日期</view>
     <picker mode="date" value="{{birthday}}" start="{{startDay}}" end="{{today}}" bindchange="bindDateChange">
-      <view class='name-value'>{{birthday}}</view>
+      <view class='name-value'>{{birthday ? birthday: '请选择'}}</view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
@@ -25,7 +25,9 @@
   <view class='name-cell'>
     <view class='name-name'>所在城市</view>
     <picker mode="region" bindchange="bindPickerChange" value="{{region}}" data-type='region' data-input='area' >
-      <view class='name-value'> {{region[0]}} {{region[1]}} {{region[2]}}</view>
+      <view class='name-value'>
+       {{!region[1] && !region[2] ? '请选择' : region[0] + region[1] + region[2] }}
+       </view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
@@ -47,8 +49,7 @@
   <view class='name-cell'>
     <view class='name-name'>课时费</view>
     <picker mode="multiSelector" bindchange="bindPickerChange" value="{{priceDataIndex}}" range="{{priceData}}" data-type='price'  data-input='price'>
-      <view class='name-value'>
-        {{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : pricedf}} </view>
+      <view class='name-value'>{{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : pricedf}}</view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
@@ -133,7 +134,7 @@
 <!-- 学生身份完善资料 -->
 <view hidden="{{flag == 123 ? false : true}}">
   <import src="../module/myinfo/follow/follow.wxml" />
-  <template is="follow" data='{{teacherDetail,flag}}' />
+  <template is="follow" data='{{followList,flag}}' />
 </view>
 
 <!-- 学生身份完善资料 -->

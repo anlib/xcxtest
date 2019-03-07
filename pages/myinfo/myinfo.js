@@ -49,15 +49,10 @@ Page({
   onLoad: function(options) {
     //get 后端 身份 选择值
     var openid = app.globalData.openid;
-    openid = '1551752958247';
+    //openid = '1551752958247';
     //console.log(openid);
     if (!openid) {
-      wx.showToast({
-        title: "需要微信登录授权",
-        duration: 9999999,
-        mask: true,
-      })
-      return;
+      
     }
     var p = {
       'openid': openid
@@ -68,7 +63,7 @@ Page({
     // 下面部分还没有处理
     //从端取数据
     //subjectDataInit = subjectDataInit;
-
+/*
     var teacherDetail = {
       avatar: "../../image/avatar_01.png",
       teacherName: "张老师",
@@ -80,21 +75,11 @@ Page({
       lastLongin: "7分钟前",
       price: "￥300/小时 起",
     };
-
-    var flag = this.data.flag; //需要动态数据调整，暂时赋值；
-
-    if (flag == 123) {
-      teacherDetail = followList.followList(this);
-    }
-    //console.log(flag)
-    //console.log(subjectDataInit)
+*/
     this.setData({
       subjectData: subjectDataInit,
-      teacherDetail: teacherDetail,
     });
-
     //设置抬头标题
-    //console.log(this.data.flagName)
     //console.log(flag)
     wx.setNavigationBarTitle({
       title: this.data.flagName[this.data.flag]
@@ -125,6 +110,10 @@ Page({
       };
       this.updateTeacher(p);
       flag = 3;
+    }
+    //需要动态数据调整，暂时赋值；
+    if (flag == 123) {
+      followList.followList(this);
     }
     this.setData({
       flag: flag,
@@ -391,8 +380,8 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log("searchTeacher{res.data}:");
-        console.log(res.data);
+        //console.log("searchTeacher{res.data}:");
+        //console.log(res.data);
         var list = res.data;
         //如果没数据
         if (!list[0]) {
@@ -402,15 +391,16 @@ Page({
         } else {
           //Teacher - data 赋值 coding wating
           var teacherDetail = list[0];
-          
           var genderSelected = null;
           if (teacherDetail['gender'] == '男'){
             genderSelected = 0;
           } else if (teacherDetail['gender'] == '女'){
             genderSelected = 1;
           }
+          teacherDetail['genderPic'] = cd.dataDict.genderPic[teacherDetail['gender']];
           var region = ['', teacherDetail['city'], teacherDetail['area']];
           var pricedf = '￥' + teacherDetail['price'] + '元/' + teacherDetail['pricetime'];
+          console.log(pricedf);
           that.setData({
             formDataName: teacherDetail['teacher'],
             formDataTime: teacherDetail['teachtime'],
@@ -422,6 +412,7 @@ Page({
             id: list[0]['id'],
             flag: list[0]['myflag'],
             myflag: list[0]['myflag'],
+            teacherDetail: teacherDetail,
           })
         }
       }
