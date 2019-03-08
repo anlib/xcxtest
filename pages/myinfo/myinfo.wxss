@@ -136,6 +136,5 @@ border: none;
 /* 设置背景遮罩层样式 - 暂无 */
 
 /* 引用关注等css */
-@import "../module/myinfo/follow/follow.wxss" ;
 @import "../module/myinfo/first/first.wxss" ;
 @import "../module/myinfo/teacher-detail/teacher-detail.wxss" ;

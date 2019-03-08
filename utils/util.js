@@ -43,7 +43,14 @@ function distance(la1, lo1, la2, lo2) {
   s = s.toFixed(2) //保留小数点后面两位
   return s
 }
-
+/**
+  * 返回前一页
+  */
+function goBack () {
+  wx.navigateBack({
+    delta: 2
+  })
+}
 /*
  * 返回接口给应用程序
  */
@@ -51,4 +58,5 @@ module.exports = {
   formatDateTime: formatDateTime,
   formatTime: formatTime,
   distance: distance,
+  goBack: goBack,
 }

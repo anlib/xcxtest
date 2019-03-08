@@ -1,9 +1,9 @@
 <!-- 教师身份完善资料 -->
-<view hidden="{{flag == 1 ? false : true}}">
+<view hidden="{{(flag == 1 || flag == 111) ? false : true}}">
   <view class='base-info'>基本信息 </view>
   <view class='name-cell'>
     <view class='name-name'>姓名</view>
-    <view class='name-value' data-flag='11' bindtap='setFlag'>
+    <view class='name-value' data-flag='11' data-myflag='{{flag}}' bindtap='setFlag'>
       {{formDataName ? formDataName : '请输入您的真实姓名'}}
     </view>
     <view class="navigator-arrow" data-flag='11' bindtap='setFlag'></view>
@@ -49,7 +49,9 @@
   <view class='name-cell'>
     <view class='name-name'>课时费</view>
     <picker mode="multiSelector" bindchange="bindPickerChange" value="{{priceDataIndex}}" range="{{priceData}}" data-type='price'  data-input='price'>
-      <view class='name-value'>{{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : pricedf}}</view>
+      <view class='name-value'>
+      {{priceData[0][price[0]]}}
+      {{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : pricedf}}</view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
@@ -72,7 +74,7 @@
     </view>
     <view class='name-cell name-modify'>
       <view class='name-input'>
-        <input name='name'></input>
+        <input name='name' value="{{formDataName ? formDataName : ''}}"></input>
       </view>
     </view>
     <view class='modify-prompt'>
@@ -132,11 +134,12 @@
 </view>
 
 <!-- 学生身份完善资料 -->
+<!-- 
 <view hidden="{{flag == 123 ? false : true}}">
   <import src="../module/myinfo/follow/follow.wxml" />
   <template is="follow" data='{{followList,flag}}' />
 </view>
-
+-->
 <!-- 学生身份完善资料 -->
 <view hidden="{{flag == 2 ? false : true}}">
   学生

@@ -286,7 +286,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
+  onPullDownRefresh: function() {
     wx.showToast({
       title: 'loading...',
       icon: 'loading'
@@ -299,6 +299,19 @@ Page({
       wx.stopPullDownRefresh();
     }, 2000);
     //console.log('onPullDownRefresh', new Date());
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
+    this.setData({
+      currentPage: this.data.currentPage + 1,
+    });
+    this.searchTeacher();
+    setTimeout(function() {
+      wx.stopPullDownRefresh();
+    }, 2000);
   },
 
   /**
@@ -315,16 +328,9 @@ Page({
   },
 
   /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
    * 自定义查询老师列表的处理函数
    */
-  searchTeacher: function () {
+  searchTeacher: function() {
     var p = {};
     p['order'] = this.data.menu[0];
     //if (this.data.menu[1] != '科目') {
@@ -339,7 +345,7 @@ Page({
       //获取地理位置
       wx.getLocation({
         type: 'wgs84',
-        success: function (res) {
+        success: function(res) {
           //console.log(res);
           //latitude longitude
           p['latitude'] = res.latitude;
@@ -355,9 +361,11 @@ Page({
   /**
    * 自定义查询老师列表的基础查询base处理函数
    */
-  searchTeacherBase: function (p) {
+  searchTeacherBase: function(p) {
     //console.log(p);
-    if (p == undefined) { p = {}; }
+    if (p == undefined) {
+      p = {};
+    }
     //* 动态读取数据
     var that = this;
     wx.request({
@@ -368,12 +376,12 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
         //console.log(res.data);
         var list = res.data;
         //console.log(list[0]);
         //如果没数据
-        if (!list[0]){
+        if (!list[0]) {
           //console.log('没数据了别拉了');
           that.setData({
             listBottom: true,
@@ -383,8 +391,12 @@ Page({
         }
         for (var x in list) {
           list[x]['avatar'] = srcUrl + list[x]['avatar'];
-          list[x]['grade'] = list[x]['grade'].replace(/,/g, ' ');
-          list[x]['taught'] = list[x]['taught'].replace(/,/g, ' ');
+          if (list[x]['grade']) {
+            list[x]['grade'] = list[x]['grade'].replace(/,/g, ' ');
+          }
+          if (list[x]['taught']) {
+            list[x]['taught'] = list[x]['taught'].replace(/,/g, ' ');
+          }
           list[x]['gender'] = cd.dataDict.genderPic[list[x]['gender']];
           if (p.latitude) {
             list[x]['distance'] = util.distance(p.latitude, p.longitude, list[x]['latitude'], list[x]['longitude']);
@@ -397,7 +409,7 @@ Page({
           //获取地理位置
           wx.getLocation({
             type: 'wgs84',
-            success: function (res) {
+            success: function(res) {
               //console.log(res);
               for (var x in list) {
                 list[x]['distance'] = util.distance(res.latitude, res.longitude, list[x]['latitude'], list[x]['longitude']);
@@ -424,7 +436,7 @@ Page({
   /* 
    * set data teacherList
    */
-  setTeacherList: function (list) {
+  setTeacherList: function(list) {
     //把已加载的数据与新数据拼接
     var teacherList = this.data.teacherList;
     if (this.data.currentPage > 0 && teacherList != null) {

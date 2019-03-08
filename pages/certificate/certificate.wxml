@@ -2,16 +2,9 @@
   <block wx:for="{{teacherDetail}}" wx:key="unique">
     <image class='detail-certificate' src='{{item.certificate}}'></image>
   </block>
-
   <view class='detail-certificate-add' bindtap='chooseImage'>
     +
   </view>
 </view>
-
-
-<view class='bottom-menu'>
-  <view class="navigator-arrow"></view>
-  <view class='bottom-menu-follow'>关注</view>
-  <view class='bottom-menu-wechat'>微信</view>
-  <view class='bottom-menu-phone'>电话</view>
-</view>
+<import src="../module/bottom-menu/bottom-menu.wxml" />
+<template is="bottom-menu" />

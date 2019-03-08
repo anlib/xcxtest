@@ -1,8 +1,8 @@
 const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
-const followList = require('../module/myinfo/follow/follow.js');
 const cd = require('../module/common/config-data.js');
+
 //初始化可接受科目选择
 let subjectDataInit = cd.subjectDataInit;
 Page({
@@ -18,6 +18,7 @@ Page({
       '-1': '我的',
       '0': '我的',
       1: '完善资料',
+      111: '完善资料', //我的资料进行修改
       2: '完善资料',
       3: '我的',
       11: '设置姓名',
@@ -49,36 +50,16 @@ Page({
   onLoad: function(options) {
     //get 后端 身份 选择值
     var openid = app.globalData.openid;
-    //openid = '1551752958247';
     //console.log(openid);
     if (!openid) {
-      
+      //
+      return;
     }
     var p = {
       'openid': openid
     };
     //从后端读出老师资料，赋值flag前台展示标识
     this.searchTeacher(p);
-
-    // 下面部分还没有处理
-    //从端取数据
-    //subjectDataInit = subjectDataInit;
-/*
-    var teacherDetail = {
-      avatar: "../../image/avatar_01.png",
-      teacherName: "张老师",
-      graduation: "大学生/毕业生",
-      auth: "已认证",
-      genderPic: "../../image/gender_1.png",
-      distance: "0.77km",
-      score: 4.5,
-      lastLongin: "7分钟前",
-      price: "￥300/小时 起",
-    };
-*/
-    this.setData({
-      subjectData: subjectDataInit,
-    });
     //设置抬头标题
     //console.log(flag)
     wx.setNavigationBarTitle({
@@ -95,7 +76,7 @@ Page({
     //初始页面选择身份url跳转
     var flagData = e.currentTarget.dataset.flagdata;
     if (flagData == 'first') {
-      //post set 后端 选择身份 
+      //post set 后端 选择身份
       var p = {
         'id': this.data.id,
         'myflag': flag
@@ -103,20 +84,25 @@ Page({
       this.updateTeacher(p);
     }
     if (flagData == 'teacherBase') {
-      //post set 后端 完善老师资料
-      var p = {
-        'id': this.data.id,
-        'myflag': 3
-      };
-      this.updateTeacher(p);
+      //console.log(flag)
+      if (flag == 1){//第一次修改
+        //post set 后端完善老师资料状态
+        var p = {
+          'id': this.data.id,
+          'myflag': 3
+        };
+        this.updateTeacher(p);
+      }
       flag = 3;
     }
-    //需要动态数据调整，暂时赋值；
-    if (flag == 123) {
-      followList.followList(this);
+    if (e.currentTarget.dataset.myflag){
+      var myflag = e.currentTarget.dataset.myflag;
+    } else{
+      var myflag = this.data.myflag;
     }
     this.setData({
       flag: flag,
+      myflag: myflag
     });
     wx.setNavigationBarTitle({
       title: this.data.flagName[this.data.flag]
@@ -210,7 +196,7 @@ Page({
     //console.log('form发生了submit事件，携带数据为：', e.detail.value);
     if (e.detail.value) {
       // post 提交 e.detail.value 到后端
-      console.log(this.data.myflag);
+      //console.log(this.data.myflag);
       var p = {
         'id': this.data.id,
         'teacher': e.detail.value.name
@@ -224,7 +210,7 @@ Page({
     }
     this.setData({
       flag: flag,
-      formData: e.detail.value.name
+      formDataName: e.detail.value.name
     });
   },
 //修改可授时间
@@ -244,7 +230,7 @@ Page({
     if (e.detail.target.dataset.flag) {
       flag = parseInt(e.detail.target.dataset.flag);
     }
-    console.log(this.data.myflag);
+    //console.log(this.data.myflag);
     this.setData({
       flag: flag,
       formDataTime: e.detail.value.teachTime
@@ -259,6 +245,7 @@ Page({
     //console.log(this.data.myflag)
     this.setData({
       flag: this.data.myflag,
+      formDataName: this.data.formDataName,
     })
   },
 
@@ -267,10 +254,10 @@ Page({
    */
   bindDateChange(e) {
     //post 后端
-    console.log(e.detail.value);
+    //console.log(e.detail.value);
     if (e.detail.value) {
       // post 提交 e.detail.value 到后端
-      console.log(this.data.myflag);
+      //console.log(this.data.myflag);
       var p = {
         'id': this.data.id,
         'birthday': e.detail.value
@@ -317,15 +304,15 @@ Page({
    * 选择器 （性别，城市）
    */
   bindPickerChange(e) {
-    console.log('picker发送选择改变，genderSelected携带值为', e.detail.value);
-    console.log('picker发送选择改变，region携带值为', e.currentTarget.dataset.type);
+    //console.log('picker发送选择改变，genderSelected携带值为', e.detail.value);
+    //console.log('picker发送选择改变，region携带值为', e.currentTarget.dataset.type);
     var type = e.currentTarget.dataset.type;
     var value = e.detail.value;
     var input = e.currentTarget.dataset.input;
     //post 后端 
     if (e.detail.value) {
       // post 提交 e.detail.value 到后端
-      console.log(this.data.myflag);
+      //console.log(this.data.myflag);
       var p = {
         'id': this.data.id
       };
@@ -385,7 +372,7 @@ Page({
         var list = res.data;
         //如果没数据
         if (!list[0]) {
-          console.log('没数据');
+          //console.log('没数据');
           that.insertTeacher(p);
           return;
         } else {
@@ -397,10 +384,14 @@ Page({
           } else if (teacherDetail['gender'] == '女'){
             genderSelected = 1;
           }
+          //console.log(teacherDetail['gender']);          
           teacherDetail['genderPic'] = cd.dataDict.genderPic[teacherDetail['gender']];
           var region = ['', teacherDetail['city'], teacherDetail['area']];
-          var pricedf = '￥' + teacherDetail['price'] + '元/' + teacherDetail['pricetime'];
-          console.log(pricedf);
+          var pricedf = that.data.pricedf;
+          if (teacherDetail['price']){
+            pricedf = '￥' + teacherDetail['price'] + '元/' + teacherDetail['pricetime'];
+          }
+          //console.log(pricedf);
           that.setData({
             formDataName: teacherDetail['teacher'],
             formDataTime: teacherDetail['teachtime'],
@@ -452,8 +443,8 @@ Page({
    * 更新老师资料
    */
   updateTeacher: function(p) {
-    console.log('updateTeacher:');
-    console.log(p); //需要id为条件的；
+    //console.log('updateTeacher:');
+    //console.log(p); //需要id为条件的；
     if (p == undefined) {
       return;
     }
@@ -468,8 +459,8 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log("update res.data");
-        console.log(res.data);
+        //console.log("update res.data");
+        //console.log(res.data);
         that.setData({
           //flag: res.data['myflag'],
           //myflag: res.data['myflag'],
@@ -482,9 +473,9 @@ Page({
    * 联系TA
    */
   linkTa(e) {
-    console.log('发送选择改变，id携带值为', e.currentTarget.dataset.id);
+    //console.log('发送选择改变，id携带值为', e.currentTarget.dataset.id);
     var back = followList.linkTa(e, this);
-
   },
+
 
 })
