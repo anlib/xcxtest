@@ -27,10 +27,8 @@
       <view class='detail-price'>￥{{teacherDetail.price}}/{{teacherDetail.pricetime}}</view>
     </view>
   </view>
-
 </view>
 <view class='detail-ext'>
-
   <view class='detail-cell'>
     <view class='detail-cell-cell'>
       <view class='detail-cell-line'> </view>
@@ -51,14 +49,15 @@
       <view class='detail-cell-subject'> {{item.school}} {{item.subject}} {{item.content}}</view>
     </view>
   </view>
-
   <view class='detail-cell'>
     <view class='detail-cell-cell'>
       <view class='detail-cell-line'> </view>
       <view class='detail-cell-title'> 教学特点 </view>
     </view>
     <view class='detail-cell-cell'>
-      <view class='detail-cell-subject'>{{teacherDetail.style}}</view>
+      <view class='detail-cell-subject'>
+      {{teacherDetail.style ? teacherDetail.style : ''}}
+      </view>
     </view>
   </view>
 

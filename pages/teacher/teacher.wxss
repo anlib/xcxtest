@@ -128,6 +128,8 @@
 /* 毕业院校 */
 
 .detail-ext {
+  width: 100%;
+  height: auto;
   background: #fff;
   margin: 15rpx 0;
   border-top: 1rpx solid #e5e5e5;

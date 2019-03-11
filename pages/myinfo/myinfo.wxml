@@ -6,7 +6,7 @@
     <view class='name-value' data-flag='11' data-myflag='{{flag}}' bindtap='setFlag'>
       {{formDataName ? formDataName : '请输入您的真实姓名'}}
     </view>
-    <view class="navigator-arrow" data-flag='11' bindtap='setFlag'></view>
+    <view class="navigator-arrow" data-flag='11' data-myflag='{{flag}}' bindtap='setFlag'></view>
   </view>
   <view class='name-cell'>
     <view class='name-name'>出生日期</view>
@@ -41,10 +41,10 @@
   </view>
   <view class='name-cell'>
     <view class='name-name'>可授课时间</view>
-    <view class='name-value' data-flag='13' bindtap='setFlag'>
+    <view class='name-value' data-flag='13' data-myflag='{{flag}}' bindtap='setFlag'>
       {{formDataTime ? formDataTime : '请输入您可授课的时间'}}
     </view>
-    <view class="navigator-arrow"></view>
+    <view class="navigator-arrow" data-flag='13' data-myflag='{{flag}}' bindtap='setFlag'></view>
   </view>
   <view class='name-cell'>
     <view class='name-name'>课时费</view>
@@ -55,13 +55,6 @@
       <view class="navigator-arrow"></view>
     </picker>
   </view>
-  <!-- 带箭头的样式
-  <view class='name-cell'>
-    <view class='name-name'>姓名</view>
-    <view class='name-value'>展示给家长的昵称</view>
-    <view class="navigator-arrow"></view>
-  </view>
-  -->
   <button class='commit-data' type="primary" bindtap='setFlag' data-flagdata='teacherBase' data-flag='{{myflag}}'>完 成</button>
 </view>
 
@@ -106,9 +99,9 @@
   <view class='base-info modify-cell'>
     <vime class='cancel modify-cell-commit' data-flag='1' bindtap='subjectCancel'>取消</vime>
     <vime class='commit modify-cell-commit' data-flag='1' bindtap='subjectcommit'>完成</vime>
-    <!--   <button type="primary" class="modify-cell-button">完成</button> -->
   </view>
 </view>
+
 <!-- 修改授课时间 -->
 <view hidden="{{flag == 13 ? false : true}}">
   <form catchsubmit="formSubmitTime" catchreset="formReset">
@@ -118,7 +111,7 @@
     </view>
     <view class='name-cell name-modify'>
       <view class='name-input'>
-        <input name='teachTime'></input>
+        <input name='teachTime' value="{{formDataTime ? formDataTime : ''}}"></input>
       </view>
     </view>
     <view class='modify-prompt'>

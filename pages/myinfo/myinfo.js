@@ -249,6 +249,7 @@ Page({
     this.setData({
       flag: this.data.myflag,
       formDataName: this.data.formDataName,
+      formDataTime: this.data.formDataTime,      
     })
   },
 
@@ -396,8 +397,9 @@ Page({
           }
           //console.log(pricedf);
           that.followCount(list[0]['id']);//被关注数
-          that.followList(list[0]['id']);
-          that.scoreCount(list[0]['id']);//评论数          
+          that.followList(list[0]['id']);//显示5个关注
+          that.scoreCount(list[0]['id']);//评论数
+          that.certificateList(list[0]['id']);  //证书数       
           that.setData({
             formDataName: teacherDetail['teacher'],
             formDataTime: teacherDetail['teachtime'],
@@ -442,7 +444,7 @@ Page({
           return false;
         } else {
           //console.log(list[0]['count']);
-          that.data.teacherDetail['count'] = list[0]['count'];
+          that.data.teacherDetail['followCount'] = list[0]['count'];
           that.setData({
             teacherDetail: that.data.teacherDetail
           })
@@ -531,7 +533,7 @@ Page({
    */
   scoreCount: function (id) {
     var p = {
-      "touserid": id
+      "listpid": id
     }
     //console.log(p);
     var that = this;
@@ -552,7 +554,7 @@ Page({
           return false;
         } else {
           //console.log(list[0]['count']);
-          that.data.teacherDetail['count'] = list[0]['count'];
+          that.data.teacherDetail['scoreCount'] = list[0]['count'];
           that.setData({
             teacherDetail: that.data.teacherDetail
           })
@@ -561,7 +563,36 @@ Page({
     })
   },
 
-
+  /*
+   * 评价数量
+   */
+  certificateList: function (id) {
+    //从后端取数据
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherCertificate/pid/' + id,
+      method: 'POST',
+      data: {},
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        var certificateList = new Array();
+        for (var i = 0; i < res.data.length && i < 3; i++) {
+          certificateList[i] = new Array();
+          certificateList[i] = srcUrl + res.data[i]['certificate'] + '.jpg';
+        }
+        that.data.teacherDetail['certificateCount'] = res.data.length;
+        that.data.teacherDetail['certificateList'] = certificateList;
+        console.log(that.data.teacherDetail);
+        that.setData({
+          teacherDetail: that.data.teacherDetail
+        })
+      }
+    })
+  },
 
   /*
    * 新增老师
@@ -622,21 +653,15 @@ Page({
     })
   },
 
-
   /* 
    * 图片预览
    */
   previewImage(e) {
     const current = e.target.dataset.src;
-    //待 waiting code
-    //var certificate = this.data.certificate;
-    //for (var x in certificate) {
-    //  certificate[x] = certificate[x]['certificate'];
-    //}
-    //console.log(certificate);
+    var certificateList = this.data.teacherDetail['certificateList'];
     wx.previewImage({
       current,
-      //urls: certificate
+      urls: certificateList
     })
   },
 

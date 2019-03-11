@@ -30,13 +30,12 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
         //console.log(res.data);
         var teacherDetail = res.data;
         for (var x in teacherDetail) {
-          teacherDetail[x]['certificate'] = srcUrl + teacherDetail[x]['certificate'];
+          teacherDetail[x]['certificate'] = srcUrl + teacherDetail[x]['certificate'] + '.jpg';
         }
-        //console.log(teacherDetail);
         that.setData({
           teacherDetail: teacherDetail,
         })
@@ -50,7 +49,7 @@ Page({
   uploadImg: function() {
     var teacherDetailLength = this.data.teacherDetail.length;
     //console.log(teacherDetail.length);
-    if (teacherDetailLength > 20){
+    if (teacherDetailLength > 20) {
       wx.showToast({
         title: '最多可加21张',
         icon: 'success',
@@ -91,21 +90,16 @@ Page({
         //console.log(res.data.length);
         if (res.data.length > 2) {
           successUp++; //成功+1
-          //等修改
-          //console.log(res.data);
-          var list = new Array();
-          list['certificate'] = new Array();
-          list['certificate'].push(imgPaths[count]);
+          var list = new Object();
+          list['certificate'] = srcUrl + JSON.parse(res.data) + '.jpg';
           var teacherDetail = that.data.teacherDetail;
-          //console.log(teacherDetail);
-          console.log(list);
-          teacherDetail = list.concat(teacherDetail);
-          console.log(teacherDetail);
+          teacherDetail.unshift(list);
           that.setData({
             teacherDetail: teacherDetail,
           })
-          var teacherDetailLength = teacherDetail.length;
-          if (teacherDetailLength > 20) {
+          //console.log(teacherDetail);
+          //console.log(teacherDetail.length);
+          if (teacherDetail.length > 20) {
             wx.showToast({
               title: '最多可加21张',
               icon: 'success',

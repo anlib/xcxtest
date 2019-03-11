@@ -2,10 +2,10 @@
   "pages": [
     "pages/myinfo/myinfo",
     "pages/index/index",
+    "pages/teacher/teacher",
     "pages/follow/follow",
     "pages/transaction/transaction",
     "pages/score/score",
-    "pages/teacher/teacher",
     "pages/certificate/certificate",
     "pages/demo/question-ask/question-ask",
     "pages/demo/testcity/testcity",

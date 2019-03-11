@@ -103,11 +103,9 @@ Page({
                 teacherDetail: dt
               })
             }
-
           })
         }
-        console.log(dt);
-
+        //console.log(dt);
         if (dt == null) {
           var toastText = '获取数据失败' + res.data.errMsg;
           wx.showToast({

@@ -1,6 +1,4 @@
-<!-- 交易 transaction -->
 <view class='transaction-cell' wx:for='{{transactionList}}' wx:key='unique'>
-
   <view class='transaction-cell-date'>{{item.posttime}}</view>
   <view class='transaction-cell-detail'>
     <block wx:if="{{item.type==1}}">
