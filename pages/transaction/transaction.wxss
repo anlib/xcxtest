@@ -31,6 +31,30 @@
   border-radius: 12rpx;
 }
 
+.detail-graduation-tch {
+  background: #58bbe1;
+  color: #fff;
+  float: left;
+  margin-left: 8rpx;
+  margin-top: 8rpx;
+  width: 92rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
+.detail-graduation-std {
+  background: #6ac89a;
+  color: #fff;
+  float: left;
+  margin-right: 8rpx;
+  margin-top: 8rpx;
+  width: 142rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
 .detail-right-row {
   float: left;
   height: 60rpx;

@@ -130,7 +130,7 @@
 <!-- 教师身份我的界面 -->
 <view hidden="{{flag == 3 ? false : true}}">
   <import src="../module/myinfo/teacher-detail/teacher-detail.wxml" />
-  <template is="teacher-detail" data='{{teacherDetail, srcUrl}}' />
+  <template is="teacher-detail" data='{{teacherDetail, teacherFollow, srcUrl}}' />
 </view>
 
 <!-- 学生身份完善资料 -->

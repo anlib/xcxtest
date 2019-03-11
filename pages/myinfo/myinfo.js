@@ -45,6 +45,7 @@ Page({
     priceData: cd.priceData,
     //priceDataIndex: [3, 0],
     pricedf: '每课时费用(人民币)',
+    followCount: 0,
   },
 
   /**
@@ -55,7 +56,6 @@ Page({
     var openid = app.globalData.openid;
     //console.log(openid);
     if (!openid) {
-      //
       return;
     }
     var p = {
@@ -88,7 +88,7 @@ Page({
     }
     if (flagData == 'teacherBase') {
       //console.log(flag)
-      if (flag == 1){//第一次修改
+      if (flag == 1) { //第一次修改
         //post set 后端完善老师资料状态
         var p = {
           'id': this.data.id,
@@ -98,9 +98,9 @@ Page({
       }
       flag = 3;
     }
-    if (e.currentTarget.dataset.myflag){
+    if (e.currentTarget.dataset.myflag) {
       var myflag = e.currentTarget.dataset.myflag;
-    } else{
+    } else {
       var myflag = this.data.myflag;
     }
     this.setData({
@@ -216,7 +216,7 @@ Page({
       formDataName: e.detail.value.name
     });
   },
-//修改可授时间
+  //修改可授时间
   formSubmitTime(e) {
     //console.log(e)
     //console.log('form发生了submit事件，携带数据为：', e.detail.value);
@@ -382,19 +382,22 @@ Page({
           //Teacher - data 赋值 coding wating
           var teacherDetail = list[0];
           var genderSelected = null;
-          if (teacherDetail['gender'] == '男'){
+          if (teacherDetail['gender'] == '男') {
             genderSelected = 0;
-          } else if (teacherDetail['gender'] == '女'){
+          } else if (teacherDetail['gender'] == '女') {
             genderSelected = 1;
           }
           //console.log(teacherDetail['gender']);          
           teacherDetail['genderPic'] = cd.dataDict.genderPic[teacherDetail['gender']];
           var region = ['', teacherDetail['city'], teacherDetail['area']];
           var pricedf = that.data.pricedf;
-          if (teacherDetail['price']){
+          if (teacherDetail['price']) {
             pricedf = '￥' + teacherDetail['price'] + '元/' + teacherDetail['pricetime'];
           }
           //console.log(pricedf);
+          that.followCount(list[0]['id']);//被关注数
+          that.followList(list[0]['id']);
+          that.scoreCount(list[0]['id']);//评论数          
           that.setData({
             formDataName: teacherDetail['teacher'],
             formDataTime: teacherDetail['teachtime'],
@@ -412,6 +415,153 @@ Page({
       }
     })
   },
+
+  /*
+   * 关注数量
+   */
+  followCount: function(id) {
+    var p = {
+      "touserid": id
+    }
+    //console.log(p);
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/count',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        //console.log(res.data);
+        var list = res.data;
+        //如果没数据
+        if (!list[0]) {
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log(list[0]['count']);
+          that.data.teacherDetail['count'] = list[0]['count'];
+          that.setData({
+            teacherDetail: that.data.teacherDetail
+          })
+        }
+      }
+    })
+  },
+
+  /*
+   * 5个关注
+   */
+  followList: function(id) {
+    var p = {
+      "touserid": id
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/list/1/5',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        //console.log(res.data);
+        var list = res.data;
+        //如果没数据
+        if (!list[0]) {
+          //console.log('没数据');
+          return false;
+        } else {
+          var ids = [];
+          for (var x in list) {
+            ids.push(list[x]['fromuserid']);
+          }
+          var p = {
+            "ids": ids
+          }
+          //console.log(p);
+          that.teacherList(p);
+        }
+      }
+    })
+  },
+
+  /*
+   * 展示5个关注
+   */
+  teacherList: function(p) {
+    if (!p) {
+      return;
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacher/list/1/5',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        //console.log("teacherList{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        //如果没数据
+        if (!list[0]) {
+          //console.log('没数据');
+          return false;
+        } else {
+          var teacherFollow = res.data;
+          for (var x in teacherFollow) {
+            teacherFollow[x]['avatar'] = srcUrl + teacherFollow[x]['avatar'];
+          }
+          that.setData({
+            teacherFollow: teacherFollow,
+          })
+        }
+      }
+    })
+  },
+
+  /*
+   * 评价数量
+   */
+  scoreCount: function (id) {
+    var p = {
+      "touserid": id
+    }
+    //console.log(p);
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherScore/count',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log(res.data);
+        var list = res.data;
+        //如果没数据
+        if (!list[0]) {
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log(list[0]['count']);
+          that.data.teacherDetail['count'] = list[0]['count'];
+          that.setData({
+            teacherDetail: that.data.teacherDetail
+          })
+        }
+      }
+    })
+  },
+
+
 
   /*
    * 新增老师
@@ -464,18 +614,18 @@ Page({
       success: function(res) {
         //console.log("update res.data");
         //console.log(res.data);
-        that.setData({
+        //that.setData({
           //flag: res.data['myflag'],
           //myflag: res.data['myflag'],
-        })
+        //})
       }
     })
   },
 
 
   /* 
-     * 图片预览
-     */
+   * 图片预览
+   */
   previewImage(e) {
     const current = e.target.dataset.src;
     //待 waiting code
@@ -490,7 +640,7 @@ Page({
     })
   },
 
-//微信支付，暂时不做
+  //微信支付，暂时不做
   requestPayment() {
     const self = this
 
@@ -500,7 +650,7 @@ Page({
 
     // 此处需要先调用wx.login方法获取code，然后在服务端调用微信接口使用code换取下单用户的openId
     // 具体文档参考https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html?t=20161230#wxloginobject
-    app.getUserOpenId(function (err, openid) {
+    app.getUserOpenId(function(err, openid) {
       if (!err) {
         wx.request({
           url: paymentUrl,

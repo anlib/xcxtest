@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/transaction/transaction",
+    "pages/myinfo/myinfo",
     "pages/index/index",
     "pages/follow/follow",
-    "pages/myinfo/myinfo",
+    "pages/transaction/transaction",
     "pages/score/score",
     "pages/teacher/teacher",
     "pages/certificate/certificate",
