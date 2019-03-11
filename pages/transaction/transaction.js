@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js');
 //初始化可接受科目选择
 let subjectDataInit = null;
 Page({
@@ -31,13 +32,13 @@ Page({
     });
   },
 
-  /* 
-   * 联系TA
+  /**
+   * 返回前一页
    */
-  linkTa(e) {
-    console.log('发送选择改变，id携带值为', e.currentTarget.dataset.id);
-    var back = followList.linkTa(e, this);
+  goBack: util.goBack,
 
-  },
-
+  /* 
+   * 联系Ta
+   */
+ 
 })

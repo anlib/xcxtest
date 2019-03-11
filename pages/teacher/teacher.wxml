@@ -83,7 +83,7 @@
       <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
         <swiper-item wx:for="{{certificate}}" wx:key="unique">
           <view>
-            <image mode='aspectFit' class='detail-certificate' src='{{srcUrl}}{{item.certificate}}'></image>
+            <image mode='aspectFit' class='detail-certificate' src='{{item.certificate}}' bindtap="previewImage"></image>
           </view>
         </swiper-item>
       </swiper>

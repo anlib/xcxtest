@@ -1,5 +1,4 @@
-<import src="../module/bottom-menu/bottom-menu.wxml" />
-<import src="../module/foot/foot.wxml" />
+
 <view class='detail-ext'>
   <view class='detail-cell'>
     <view class='detail-cell-cell'>
@@ -27,6 +26,7 @@
   <view class='bottom-menu-place'></view>
 </view>
 
-
-<template is="foot" data='{{listBottom}}'/>
+<import src="../module/myinfo/bottom-menu/bottom-menu.wxml" />
 <template is="bottom-menu" />
+<import src="../module/foot/foot.wxml" />
+<template is="foot" data='{{listBottom}}'/>

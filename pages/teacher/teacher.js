@@ -19,6 +19,7 @@ Page({
     circular: true, //是否采用衔接滑动
     interval: 5000, //间隔时间
     duration: 1000,
+    certificate: null,
   },
 
   /**
@@ -80,7 +81,10 @@ Page({
         var university = res.data['university']; //毕业院校
         var experience = res.data['experience']; //教育经历
         var certificate = res.data['certificate']; //证书
-        var teacherScore = res.data['score']; //
+        var teacherScore = res.data['score']; //评分
+        for (var x in certificate) {
+          certificate[x]['certificate'] = srcUrl + certificate[x]['certificate'];
+        }
         for (var x in teacherScore) {
           teacherScore[x]['content'] = teacherScore[x]['content'].replace(/<br\/>/g, '\n');
         }
@@ -128,12 +132,23 @@ Page({
   /* 
    * 联系TA
    */
-  linkTa(e) {
-    console.log('发送选择改变，id携带值为', e.currentTarget.dataset.id);
-    var back = followList.linkTa(e, this);
-
+ 
+  /* 
+   * 图片预览
+   */
+  previewImage(e) {
+    const current = e.target.dataset.src;
+    var certificate = this.data.certificate;
+    for (var x in certificate) {
+      certificate[x] = certificate[x]['certificate'];
+    }
+    //console.log(certificate);
+    wx.previewImage({
+      current,
+      urls: certificate
+    })
   },
-
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

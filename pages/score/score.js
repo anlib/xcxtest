@@ -62,7 +62,6 @@ Page({
       currentPage: this.data.currentPage + 1,
     });
     this.searchTeacherScore(this.data.listpid);
-
     setTimeout(function() {
       wx.stopPullDownRefresh();
     }, 2000);
@@ -78,6 +77,19 @@ Page({
         wx.hideToast()
       }
     })
+  },
+
+  /**
+    * 页面上拉触底事件的处理函数
+    */
+  onReachBottom: function () {
+    this.setData({
+      currentPage: this.data.currentPage + 1,
+    });
+    this.searchTeacherScore(this.data.listpid);
+    setTimeout(function () {
+      wx.stopPullDownRefresh();
+    }, 2000);
   },
 
   /**

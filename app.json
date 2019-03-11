@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/follow/follow",
+    "pages/transaction/transaction",
     "pages/index/index",
+    "pages/follow/follow",
     "pages/myinfo/myinfo",
     "pages/score/score",
     "pages/teacher/teacher",
-    "pages/transaction/transaction",
     "pages/certificate/certificate",
     "pages/demo/question-ask/question-ask",
     "pages/demo/testcity/testcity",

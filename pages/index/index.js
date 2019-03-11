@@ -142,6 +142,8 @@ Page({
       menu: this.data.menu,
       showNavIndex: '',
       pxopen: false,
+      currentPage: 1, //选择从第一页开始
+      teacherList: null, //选择列表数据清空
     });
     //console.log(this.data.menu);
     this.searchTeacher();
@@ -175,6 +177,8 @@ Page({
       formData: e.detail.value,
       showNavIndex: '',
       pxopen: false,
+      currentPage: 1, //选择从第一页开始
+      teacherList: null, //选择列表数据清空
     });
     this.searchTeacher();
   },

@@ -1,5 +1,4 @@
 <!-- 交易 transaction -->
-<import src="../module/bottom-menu/bottom-menu.wxml" />
 <view class='transaction-cell'>
   <view class='transaction-cell-date'>2019-2-21 12:12:12</view>
   <view class='transaction-cell-detail'>
@@ -9,30 +8,32 @@
       <view class="{{ teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation}}</view>
     </view>
     <view class='detail-right-row'>
-      <view class='detail-grade'>微信联系方式(VIP免费查看）</view>
-      <view class='detail-price'>评价老师</view>
+      <view class='detail-link'>微信联系方式(VIP免费查看）</view>
+      <view class='detail-score'>评价老师</view>
     </view>
-
-    <view class='detail-right-row'>
-      <view class='detail-grade'>账单总额</view>
+    <view class='detail-row'>
+      <view class='detail-bill'>账单总额</view>
       <view class='detail-price'>￥0.00</view>
     </view>
   </view>
 </view>
+
+
 
 <view class='transaction-cell'>
   <view class='transaction-cell-date'>2019-2-21 12:12:12</view>
   <view class='transaction-cell-detail'>
-    <view class='detail-right-row'>
-      <view class='detail-name'>VIP会员1个月</view>
-      <view class='detail-grade'>可在1个月内免费查看联系方式，不限次数</view>
+    <view class='detail-row .bodernone'>
+      <view class='detail-vip'>VIP会员1个月</view>
+      <view class='detail-link'>可在1个月内免费查看联系方式，不限次数</view>
     </view>
-    <view class='detail-right-row'>
-      <view class='detail-grade'>账单总额</view>
+    <view class='detail-row'>
+      <view class='detail-bill'>账单总额</view>
       <view class='detail-price'>￥0.00</view>
     </view>
   </view>
 </view>
 
 
+<import src="../module/myinfo/bottom-menu/bottom-menu.wxml" />
 <template is="bottom-menu" />

@@ -1,10 +1,10 @@
 <view class='certificate-detail'>
   <block wx:for="{{teacherDetail}}" wx:key="unique">
-    <image class='detail-certificate' src='{{item.certificate}}'></image>
+    <image class='detail-certificate' src='{{item.certificate}}' bindtap="previewImage"></image>
   </block>
-  <view class='detail-certificate-add' bindtap='chooseImage'>
+  <view class='detail-certificate-add' bindtap='uploadImg'>
     +
   </view>
 </view>
-<import src="../module/bottom-menu/bottom-menu.wxml" />
+<import src="../module/myinfo/bottom-menu/bottom-menu.wxml" />
 <template is="bottom-menu" />

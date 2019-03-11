@@ -51,6 +51,29 @@ function goBack () {
     delta: 2
   })
 }
+
+/* 
+ * 用联系TA的微信
+ */
+function wechatTa(tel) {
+  console.log('发送选择改变，tel携带值为' + tel);
+ 
+}
+
+/* 
+ * 用联系TA的电话
+ */
+function phoneTa(phone) {
+  console.log('发送选择改变，phone携带值为' + phone);
+    wx.makePhoneCall({
+      phoneNumber: phone,
+      success() {
+        console.log('成功拨打电话')
+      }
+    })
+
+}
+
 /*
  * 返回接口给应用程序
  */
@@ -59,4 +82,6 @@ module.exports = {
   formatTime: formatTime,
   distance: distance,
   goBack: goBack,
+  wechatTa: wechatTa,
+  phoneTa: phoneTa,
 }

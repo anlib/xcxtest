@@ -2,6 +2,7 @@ const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const cd = require('../module/common/config-data.js');
+const paymentUrl = require('../module/common/config-wechat').paymentUrl
 
 //初始化可接受科目选择
 let subjectDataInit = cd.subjectDataInit;
@@ -10,6 +11,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: false,
+    srcUrl: srcUrl,
     id: null, //老师id
     motto: '微信遮罩层显示',
     flag: -1, //页面显示标识，和后端数据没关系
@@ -469,13 +472,65 @@ Page({
     })
   },
 
+
   /* 
-   * 联系TA
-   */
-  linkTa(e) {
-    //console.log('发送选择改变，id携带值为', e.currentTarget.dataset.id);
-    var back = followList.linkTa(e, this);
+     * 图片预览
+     */
+  previewImage(e) {
+    const current = e.target.dataset.src;
+    //待 waiting code
+    //var certificate = this.data.certificate;
+    //for (var x in certificate) {
+    //  certificate[x] = certificate[x]['certificate'];
+    //}
+    //console.log(certificate);
+    wx.previewImage({
+      current,
+      //urls: certificate
+    })
   },
 
+//微信支付，暂时不做
+  requestPayment() {
+    const self = this
+
+    self.setData({
+      loading: true
+    })
+
+    // 此处需要先调用wx.login方法获取code，然后在服务端调用微信接口使用code换取下单用户的openId
+    // 具体文档参考https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html?t=20161230#wxloginobject
+    app.getUserOpenId(function (err, openid) {
+      if (!err) {
+        wx.request({
+          url: paymentUrl,
+          data: {
+            openid
+          },
+          method: 'POST',
+          success(res) {
+            console.log('unified order success, response is:', res)
+            const payargs = res.data.payargs
+            wx.requestPayment({
+              timeStamp: payargs.timeStamp,
+              nonceStr: payargs.nonceStr,
+              package: payargs.package,
+              signType: payargs.signType,
+              paySign: payargs.paySign
+            })
+
+            self.setData({
+              loading: false
+            })
+          }
+        })
+      } else {
+        console.log('err:', err)
+        self.setData({
+          loading: false
+        })
+      }
+    })
+  }
 
 })
