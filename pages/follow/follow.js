@@ -14,6 +14,7 @@ Page({
     srcUrl: srcUrl,
     currentPage: 1,
     pageSize: 7,
+    userid: app.globalData.teacherDetail['id'],
   },
 
   /**
@@ -47,7 +48,7 @@ Page({
       return;
     }
     var p = {
-      "touserid": id
+      "fromuserid": id
     }
     //console.log(p);
     var currentPage = this.data.currentPage;
@@ -75,7 +76,7 @@ Page({
         } else {
           var ids = [];
           for (var x in list) {
-            ids.push(list[x]['fromuserid']);
+            ids.push(list[x]['touserid']);
           }
           var p = {
             "ids": ids
@@ -85,44 +86,101 @@ Page({
         }
       }
     })
-   
-    /*
-    var list = [{
-        id: 1,
-        followed: 1,
-        avatar: "../../image/avatar_01.png",
-        teacherName: "张老师",
-        genderPic: "../../image/gender_1.png",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "初中",
-        subject: ["语文", "英语"],
-        auth: "已认证",
-        link: false,
-      },
-      {
-        id: 2,
-        followed: 1,
-        avatar: "../../image/avatar_01.png",
-        genderPic: "../../image/gender_2.png",
-        teacherName: "李老师",
-        university: "北京外国语大学",
-        education: "本科",
-        graduation: "大学生/毕业生",
-        grade: "音乐",
-        subject: ["钢琴", "小提琴", "尤克里里"],
-        auth: "已认证",
-        link: "13000000000",
-      },
-    ];
-
-    that.setData({
-      followList: followList,
-    });
-    //*/
   },
 
+  /* 
+     * 如果没有关注则关注，关注则取消
+     */
+  follow: function (e) {
+    var touserid = e.currentTarget.dataset.touserid;
+    var followData = e.currentTarget.dataset.followdata;
+    //console.log(touserid);
+    //console.log(followData);
+    if (followData == '关注') {
+      this.toFollow(touserid);
+    } else {
+      this.followDel(touserid);
+    }
+  },
+  /* 
+   * 关注Ta
+   */
+  toFollow: function (touserid) {
+    var p = {
+      'touserid': touserid,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/add',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log("followAdd{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list['insertId']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log('数据已添加,关注成功');
+          var teacherList = that.data.teacherList;
+          for (var x in teacherList) {
+            if (teacherList[x]['id'] == touserid) {
+              teacherList[x]['followData'] = '已关注';
+            }
+          }
+          that.setData({
+            teacherList: teacherList,
+          })
+        }
+      }
+    })
+  },
+
+  /* 
+  * 去掉关注Ta
+  */
+  followDel: function (touserid) {
+    var p = {
+      'touserid': touserid,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/del',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log("followDel{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list['effectCount']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log('数据已删除,关注成功');
+          var teacherList = that.data.teacherList;
+          for (var x in teacherList) {
+            if (teacherList[x]['id'] == touserid){
+              teacherList[x]['followData'] = '关注';
+            }
+          }
+          that.setData({
+            teacherList: teacherList,
+          })
+        }
+      }
+    })
+  },
 
   /**
    * 返回前一页
@@ -132,10 +190,12 @@ Page({
   /* 
    * 联系Ta
    */
-  wechatTa: util.wechatTa,
+  wechatTa: function (e) {
+    var wechat = '10086';
+    util.wechatTa(wechat);
+  },
   phoneTa: function (e) {
     var phone = '10086';
     util.phoneTa(phone);
   },
-
 })

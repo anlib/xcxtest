@@ -48,7 +48,7 @@ function distance(la1, lo1, la2, lo2) {
   */
 function goBack () {
   wx.navigateBack({
-    delta: 2
+    delta: 1
   })
 }
 

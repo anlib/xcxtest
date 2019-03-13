@@ -226,42 +226,6 @@ Page({
    */
   onReady: function() {
     //list赋值
-    /* 静态测试数据
-    var teacherList = [{
-        'id': 1,
-        avatar: "../../image/avatar_01.png",
-        gender: "../../image/gender_2.png",
-        distance: "0.77km",
-        teacher: "李老师",
-        university: "北京外国语大学",
-        education: "本科",
-        graduation: "大学生/毕业生",
-        grade: "音乐",
-        taught: "钢琴 小提琴 尤克里里",
-        auth: "已认证",
-        price: "500",
-        pricetime: "小时"
-      },
-      {
-        'id': 2,
-        avatar: "../../image/avatar_01.png",
-        teacher: "张老师",
-        gender: "../../image/gender_2.png",
-        distance: "0.77km",
-        university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-        education: "本科",
-        graduation: "专职教师",
-        grade: "小学",
-        taught: "语文 英语",
-        auth: "已认证",
-        price: "200",
-        pricetime: "45分钟"
-      },
-    ];
-    this.setData({
-      teacherList: teacherList
-    })
-    //*/
     //* 动态读取数据
     this.searchTeacherBase();
   },

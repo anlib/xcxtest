@@ -99,15 +99,15 @@
     </view>
     <view class='detail-cell-cell'>
       <view class='detail-score-count'>
-      {{teacherDetail.score ? teacherDetail.score:'暂无评'}}分
+        {{teacherDetail.score ? teacherDetail.score + '分' :'暂无'}}
       </view>
       <view class='detail-cell-score'>
-<block wx:for="{{teacherDetail.scoreImg-0}}" wx:key="index">
-<image class='detail-score' src='../../image/score-light.png'></image>
-</block>
-<block wx:for="{{5-teacherDetail.scoreImg-0}}" wx:key="index">
-<image class='detail-score' src='../../image/score-gray.png'></image>
-</block>
+        <block wx:for="{{teacherDetail.scoreImg-0}}" wx:key="index">
+          <image class='detail-score' src='../../image/score-light.png'></image>
+        </block>
+        <block wx:for="{{5-teacherDetail.scoreImg-0}}" wx:key="index">
+          <image class='detail-score' src='../../image/score-gray.png'></image>
+        </block>
       </view>
     </view>
   </view>
@@ -127,5 +127,4 @@
   </navigator>
   <view class='bottom-menu-place'></view>
 </view>
-
-<template is="bottom-menu" />
+<template is="bottom-menu"  data='{{bottomData}}' />

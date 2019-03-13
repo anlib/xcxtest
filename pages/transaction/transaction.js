@@ -143,5 +143,12 @@ Page({
   /* 
    * 联系Ta
    */
-
+  wechatTa: function (e) {
+    var wechat = '10086';
+    util.wechatTa(wechat);
+  },
+  phoneTa: function (e) {
+    var phone = '10086';
+    util.phoneTa(phone);
+  },
 })

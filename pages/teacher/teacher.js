@@ -3,7 +3,6 @@ const util = require('../../utils/util.js');
 const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
-
 //初始化可接受科目选择
 let subjectDataInit = null;
 Page({
@@ -20,6 +19,11 @@ Page({
     interval: 5000, //间隔时间
     duration: 1000,
     certificate: null,
+    bottomData: {
+      'follow': '关注',
+      wechatTa: '微信',
+      phoneTa: '电话'
+    },
   },
 
   /**
@@ -39,10 +43,12 @@ Page({
       return;
     }
     this.setData({
-      id: id
+      id: id,
+      userid: app.globalData.teacherDetail['id'],
     })
     //console.log(id);
     this.getTeacher(id);
+    this.followed();
     //*/
   },
 
@@ -71,7 +77,7 @@ Page({
         }
         if (dt) {
           dt['avatar'] = srcUrl + dt['avatar'];
-          dt['grade'] =  dt['grade'] ? dt['grade'].replace(/,/g, ' ') : '';
+          dt['grade'] = dt['grade'] ? dt['grade'].replace(/,/g, ' ') : '';
           dt['taught'] = dt['taught'] ? dt['taught'].replace(/,/g, ' ') : '';
           dt['gender'] = cd.dataDict.genderPic[dt['gender']];
           dt['scoreImg'] = Math.round(dt['score'] / 2);
@@ -108,11 +114,6 @@ Page({
     })
   },
 
-
-  /* 
-   * 联系TA
-   */
- 
   /* 
    * 图片预览
    */
@@ -128,53 +129,134 @@ Page({
       urls: certificate
     })
   },
-  
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
 
+  /**
+   * 返回前一页
+   */
+  goBack: util.goBack,
+
+  /* 
+   * 联系Ta
+   */
+  wechatTa: function(e) {
+    var wechat = '10086';
+    util.wechatTa(wechat);
+  },
+  phoneTa: function(e) {
+    var phone = '10086';
+    util.phoneTa(phone);
   },
 
-  /**
-   * 生命周期函数--监听页面显示
+  /* 
+   * 是否已经关注Ta
    */
-  onShow: function() {
-
+  followed: function() {
+    var p = {
+      'touserid': this.data.id,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/count',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        //console.log("followCount{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list[0]['count']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          that.data.bottomData['follow'] = '已关注';
+          that.setData({
+            bottomData: that.data.bottomData,
+          })
+        }
+      }
+    })
+  },
+  /* 
+   * 如果没有关注则关注，关注则取消
+   */
+  follow: function(e) {
+    if (this.data.bottomData['follow'] == '已关注') {
+      this.followDel();
+    } else {
+      this.toFollow();
+    }
+  },
+  /* 
+   * 关注Ta
+   */
+  toFollow: function() {
+    var p = {
+      'touserid': this.data.id,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/add',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        //console.log("followAdd{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list['insertId']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log('数据已添加,关注成功');
+          that.data.bottomData['follow'] = '已关注';
+          that.setData({
+            bottomData: that.data.bottomData,
+          })
+        }
+      }
+    })
+  },
+  /* 
+   * 去掉关注Ta
+   */
+  followDel: function(e) {
+    var p = {
+      'touserid': this.data.id,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/del',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        //console.log("followDel{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list['effectCount']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log('数据已删除,关注成功');
+          that.data.bottomData['follow'] = '关注';
+          that.setData({
+            bottomData: that.data.bottomData,
+          })
+        }
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })

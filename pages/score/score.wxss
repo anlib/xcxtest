@@ -1,7 +1,6 @@
-/* 引用css */
-@import "../module/bottom-menu/bottom-menu.wxss";
-@import "../module/foot/foot.wxss";
-
+page {
+  background-color:#FFF;
+}
 .detail-ext {
   background: #fff;
   margin: 0;
@@ -86,7 +85,6 @@
 }
 
 .detail-navigator {
-  display: flex;
   justify-content: center;
 }
 
@@ -104,3 +102,6 @@
   margin-left: 20rpx;
   border: 1rpx solid #25b972;
 }
+/* 引用css */
+@import "../module/bottom-menu/bottom-menu.wxss";
+@import "../module/foot/foot.wxss";

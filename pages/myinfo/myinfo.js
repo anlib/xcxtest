@@ -126,7 +126,7 @@ Page({
    */
   subjectcommit: function(e) {
     var items = this.data.subjectData;
-    console.log(items)
+    //console.log(items)
     // 循环取出为true subjectData;
     var grade = new Array();
     var taught = new Array();
@@ -176,7 +176,7 @@ Page({
     //post 后端 subjectPost
     if (subjectValue) {
       // post 提交 e.detail.value 到后端
-      console.log(this.data.myflag);
+      //console.log(this.data.myflag);
       var p = {
         'id': this.data.id,
         'grade': grade,
@@ -423,7 +423,7 @@ Page({
    */
   followCount: function(id) {
     var p = {
-      "touserid": id
+      "fromuserid": id
     }
     //console.log(p);
     var that = this;
@@ -458,7 +458,7 @@ Page({
    */
   followList: function(id) {
     var p = {
-      "touserid": id
+      "fromuserid": id
     }
     var that = this;
     wx.request({
@@ -479,7 +479,7 @@ Page({
         } else {
           var ids = [];
           for (var x in list) {
-            ids.push(list[x]['fromuserid']);
+            ids.push(list[x]['touserid']);
           }
           var p = {
             "ids": ids
@@ -578,7 +578,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
-        console.log(res.data);
+        //console.log(res.data);
         var certificateList = new Array();
         for (var i = 0; i < res.data.length && i < 3; i++) {
           certificateList[i] = new Array();
@@ -586,7 +586,7 @@ Page({
         }
         that.data.teacherDetail['certificateCount'] = res.data.length;
         that.data.teacherDetail['certificateList'] = certificateList;
-        console.log(that.data.teacherDetail);
+        //console.log(that.data.teacherDetail);
         that.setData({
           teacherDetail: that.data.teacherDetail
         })
@@ -684,7 +684,7 @@ Page({
           },
           method: 'POST',
           success(res) {
-            console.log('unified order success, response is:', res)
+            //console.log('unified order success, response is:', res)
             const payargs = res.data.payargs
             wx.requestPayment({
               timeStamp: payargs.timeStamp,
@@ -700,7 +700,7 @@ Page({
           }
         })
       } else {
-        console.log('err:', err)
+        //console.log('err:', err)
         self.setData({
           loading: false
         })

@@ -1,8 +1,8 @@
 <template name="bottom-menu">
   <view class='bottom-menu'>
     <view class="navigator-arrow" bindtap='goBack'></view>
-    <view class='bottom-menu-follow' bindtap='follow'>关注</view>
-    <view class='bottom-menu-wechat' bindtap='wechatTa'>微信</view>
-    <view class='bottom-menu-phone' bindtap='phoneTa'>电话</view>
+    <view class='bottom-menu-follow' bindtap='follow'>{{bottomData.follow}}</view>
+    <view class='bottom-menu-wechat' bindtap='wechatTa'>{{bottomData.wechatTa}}</view>
+    <view class='bottom-menu-phone' bindtap='phoneTa'>{{bottomData.phoneTa}}</view>
   </view>
 </template>
