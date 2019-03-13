@@ -1,0 +1,80 @@
+<!-- teacher-detail -->
+<template name="teacher-detail">
+  <view class='detail-top'>
+    <view class='detail-item'>
+      <image class='detail-avatar' src='{{teacherDetail.avatar ? srcUrl + teacherDetail.avatar : "../../image/avatar_place.png"}}'></image>
+      <view class="detail-right  {{index==0 ? 'border-top-none' : ''}}">
+        <view class='detail-right-row'>
+          <view class='detail-name'>{{teacherDetail.teacher?teacherDetail.teacher:'暂无'}}</view>
+          <image class='detail-gender' src='{{teacherDetail.genderPic}}'></image>
+        </view>
+        <view class='detail-right-row'>
+          <view class="{{teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation?teacherDetail.graduation:'教师'}}</view>
+          <view class='detail-auth'>{{teacherDetail.auth?teacherDetail.auth:'未认证'}}</view>
+        </view>
+        <view class='detail-right-row'>
+          <view class='detail-university'>评分： {{teacherDetail.score?teacherDetail.score + '分':'暂无评分'}}</view>
+        </view>
+        <view class='detail-right-row'>
+          <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
+          <view class='detail-distance'>{{teacherDetail.distance}}</view>
+          <view class='detail-price'>
+            {{teacherDetail.price ? '￥' + teacherDetail.price + '元/' + teacherDetail.pricetime : ''}}</view>
+        </view>
+      </view>
+      <view class='detail-bottom-row' bindtap="requestPayment" loading="{{loading}}">
+        <view class='detail-vip'>我的VIP会员</view>
+        <view class='detail-vip-price'>会员首月仅12元</view>
+        <view class="navigator-arrow detail-vip-arrow"></view>
+      </view>
+    </view>
+  </view>
+  <view class='detail-list'>
+    <view class='detail-cell' data-flag='111' bindtap='setFlag'>
+      <image class="detail-icon" src='../../image/mydata-base.png'></image>
+      <view class='detail-mydata'>我的资料</view>
+      <view class="navigator-arrow"></view>
+    </view>
+    <view class='detail-cell'>
+      <navigator class='detail-navigator' url="../follow/follow?id={{teacherDetail.id}}" hover-class="navigator-hover">
+        <image class="detail-icon" src='../../image/mydata-follow.png'></image>
+        <view class='detail-follow'>我的关注</view>
+        <view class='detail-follow-count'>({{teacherDetail.followCount}})</view>
+        <view class='detail-mydata-icon'>
+          <block wx:for="{{teacherFollow}}" wx:key="unique">
+            <image class="detail-follow-avatar" src='{{item.avatar}}'></image>
+          </block>
+        </view>
+        <view class="navigator-arrow"></view>
+      </navigator>
+    </view>
+    <view class='detail-cell'>
+      <navigator class='detail-navigator' url="../transaction/transaction?id={{teacherDetail.id}}" hover-class="navigator-hover">
+        <image class="detail-icon" src='../../image/mydata-transaction.png'></image>
+        <view class='detail-mydata'>我的交易</view>
+        <view class="navigator-arrow"></view>
+      </navigator>
+    </view>
+    <view class='detail-cell'>
+      <navigator class='detail-navigator' url="../score/score?id={{teacherDetail.id}}" hover-class="navigator-hover">
+        <image class="detail-icon" src='../../image/mydata-appraise.png'></image>
+        <view class='detail-follow'>我的评价</view>
+        <view class='detail-appraise-count'>({{teacherDetail.scoreCount}})</view>
+        <view class="navigator-arrow"></view>
+      </navigator>
+    </view>
+    <view class='detail-cell border-bottom-none'>
+      <navigator class='detail-navigator' url="../certificate/certificate?id={{teacherDetail.id}}" hover-class="navigator-hover">
+        <image class="detail-icon" src='../../image/mydata-certificate.png'></image>
+        <view class='detail-follow'>我的证书</view>
+        <view class='detail-appraise-count'>({{teacherDetail.certificateCount}})</view>
+        <view class="navigator-arrow"></view>
+      </navigator>
+    </view>
+    <view class='detail-cell-certificate'>
+      <block wx:for="{{teacherDetail.certificateList}}" wx:key="unique">
+        <image class='detail-certificate' src='{{item}}' bindtap="previewImage"></image>
+      </block>
+    </view>
+  </view>
+</template>

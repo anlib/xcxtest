@@ -41,7 +41,7 @@ Page({
     this.setData({
       id: id
     })
-    console.log(id);
+    //console.log(id);
     this.getTeacher(id);
     //*/
   },

@@ -95,7 +95,7 @@
         <image class='list-avatar' src='{{item.avatar}}'></image>
         <view class="list-right  {{index==0 ? 'border-top-none' : ''}}">
           <view class='list-right-row'>
-            <view class='list-name'>{{item.teacher}}</view>
+            <view class='list-name'>{{item.teacher ? item.teacher : '暂无设置'}}</view>
             <image class='list-gender' src='{{item.gender}}'></image>
             <view class='list-distance'>{{item.distance}}km</view>
           </view>

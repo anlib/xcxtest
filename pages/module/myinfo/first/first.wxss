@@ -1,0 +1,50 @@
+
+/* 初始化第一步设置身份 */
+.first-set {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* 设置展示图片大小 */
+
+.first-set-bg {
+  width: 650rpx;
+  height: 825rpx;
+}
+
+.first-set-teacher {
+  z-index: 1;
+  position: absolute;
+  margin: 275rpx 0 60rpx -140rpx;
+  width: 240rpx;
+  height: 90rpx;
+  background: #25b972;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #fff;
+  font-size: 36rpx;
+}
+
+.first-set-student {
+  z-index: 1;
+  position: absolute;
+  margin: 275rpx 0 0 140rpx;
+  width: 240rpx;
+  height: 90rpx;
+  background: #e0633a;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #fff;
+  font-size: 36rpx;
+}

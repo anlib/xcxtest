@@ -1,18 +1,20 @@
-
 <view class='detail-ext'>
   <view class='detail-cell'>
     <view class='detail-cell-cell'>
-      <view class='detail-score-count'>{{teacherDetail.score}}分</view>
+      <view class='detail-score-count'>
+        {{teacherDetail.score ? teacherDetail.score : '暂无评'}}分
+      </view>
       <view class='detail-cell-score'>
-        <image class='detail-score' src='../../image/score-light.png'></image>
-        <image class='detail-score' src='../../image/score-light.png'></image>
-        <image class='detail-score' src='../../image/score-light.png'></image>
-        <image class='detail-score' src='../../image/score-light.png'></image>
-        <image class='detail-score' src='../../image/score-gray.png'></image>
+<block wx:for="{{teacherDetail.scoreImg-0}}" wx:key="index">
+<image class='detail-score' src='../../image/score-light.png'></image>
+</block>
+<block wx:for="{{5-teacherDetail.scoreImg-0}}" wx:key="index">
+<image class='detail-score' src='../../image/score-gray.png'></image>
+</block>
       </view>
     </view>
   </view>
-  <view class='detail-score-cell'  wx:for="{{teacherScore}}" wx:key="unique">
+  <view class='detail-score-cell' wx:for="{{teacherScore}}" wx:key="unique">
     <image class='detail-score-avatar' src='../../image/avatar_place.png'></image>
     <view class='detail-score-detail'>
       <view class='detail-score-user'>{{item.username}}</view>
@@ -20,7 +22,7 @@
       <view class='detail-score-date'>{{item.date}}</view>
     </view>
     <view class='detail-score-content'>
-     {{item.content}}
+      {{item.content}}
     </view>
   </view>
   <view class='bottom-menu-place'></view>
@@ -29,4 +31,4 @@
 <import src="../module/myinfo/bottom-menu/bottom-menu.wxml" />
 <template is="bottom-menu" />
 <import src="../module/foot/foot.wxml" />
-<template is="foot" data='{{listBottom}}'/>
+<template is="foot" data='{{listBottom}}' />

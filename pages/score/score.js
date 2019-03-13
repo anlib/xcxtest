@@ -103,9 +103,10 @@ Page({
       method: 'GET',
       data: {},
       success: function(res) {
-        console.log(res.data);
+        //console.log(res.data);
         var dt = res.data['teacher'][0];
-        console.log(dt);
+        dt['scoreImg'] = Math.round(dt['score'] / 2);
+        //console.log(dt);
         that.setData({
           teacherDetail: dt,
         })
@@ -128,7 +129,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log(res.data);
+        //console.log(res.data);
         var list = res.data;
         //console.log(list[0]);
         //如果没数据

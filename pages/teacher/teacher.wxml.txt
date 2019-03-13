@@ -1,6 +1,7 @@
-<!-- 教师 detail -->
+﻿<!-- 教师 detail -->
 <import src="../module/bottom-menu/bottom-menu.wxml" />
 <view class='detail-base'>
+
   <image class='detail-avatar' src='{{teacherDetail.avatar}}'></image>
   <view class="detail-right  {{index==0 ? 'border-top-none' : ''}}">
     <view class='detail-right-row'>
@@ -10,10 +11,12 @@
       <image class='detail-gender' src='../../image/score-gray.png'></image>
       {{teacherDetail.score?teacherDetail.score:'暂无评分'}}
     </view>
+
     <view class='detail-right-row'>
       <view class="{{ teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation ? teacherDetail.graduation :'未设置'}}</view>
       <view class='detail-auth'>{{teacherDetail.auth ? teacherDetail.auth :'未设置'}}</view>
     </view>
+
     <view class='detail-right-row'>
       <view class='detail-grade'>{{teacherDetail.grade}}</view>
       <view class='detail-subject'>{{teacherDetail.taught}}</view>
@@ -22,7 +25,7 @@
     </view>
     <view class='detail-right-row'>
       <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
-      <view class='detail-distance'>{{teacherDetail.distance}}km</view>
+      <view class='detail-distance'> ? {{teacherDetail.distance}}km</view>
       <view class='detail-price'>
         <block wx:if="{{teacherDetail.price}}">
           ￥{{teacherDetail.price}}/{{teacherDetail.pricetime}}

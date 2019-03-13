@@ -1,0 +1,6 @@
+<!-- 初始设置身份 -->
+<template name="first">
+  <image class="first-set-bg" src='../../image/first-set.png'></image>
+  <view class='first-set-teacher' bindtap='setFlag' data-flag='1' data-flagdata='first'>教师</view>
+  <view class='first-set-student' bindtap='setFlag' data-flag='2' data-flagdata='first'>学生</view>
+</template>

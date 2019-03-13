@@ -1,4 +1,5 @@
 @import "../module/bottom-menu/bottom-menu.wxss";
+
 .detail-base {
   width: 690rpx;
   height: 200rpx;
@@ -55,13 +56,6 @@
   margin-right: 8rpx;
   /* font-weight: bold; */
 }
-
-/*
-.detail-subject {
-  float: left;
-  margin-right: 8rpx;
-}
-*/
 
 .detail-graduation-tch {
   background: #58bbe1;
@@ -163,9 +157,7 @@
 .detail-cell-title {
   font-weight: bold;
 }
-.detail-cell-subject{
-  
-}
+
 .detail-certificate {
   width: 100%;
   height: 350rpx;
@@ -173,8 +165,10 @@
 
 .detail-score-count {
   height: 80rpx;
-  margin: 10rpx 10rpx 10rpx 80rpx;
+  margin: 0rpx 10rpx 20rpx 80rpx;
   font-size: 50rpx;
+  width: 120rpx;
+  float: left;
 }
 
 .detail-cell-score {
@@ -183,6 +177,7 @@
 }
 
 .detail-score {
+  margin: 13rpx 5rpx 13rpx 5rpx;
   height: 50rpx;
   width: 50rpx;
 }
@@ -227,7 +222,7 @@
   width: 600rpx;
   height: auto;
   display: flex;
-  margin-bottom:30rpx; 
+  margin-bottom: 30rpx;
 }
 
 .detail-navigator {

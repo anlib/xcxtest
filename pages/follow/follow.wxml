@@ -1,0 +1,33 @@
+
+<!-- 教师身份我的界面 -->
+  <view class='list-item' wx:for="{{teacherList}}" wx:key="unique">
+      <image class='list-avatar' src='{{srcUrl}}{{item.avatar}}'></image>
+      <view class="list-right  {{index==0 ? 'border-top-none' : ''}}">
+        <view class='list-right-row'>
+          <view class='list-name'>{{item.teacher}}</view>
+          <image class='list-gender' src='{{item.genderPic}}'></image>
+          <view class='list-followed'>{{item.followed == 1 ? '已关注' : '关注'}}</view>
+        </view>
+        <view class='list-right-row'>
+          <view class='list-university'>{{item.university}}</view>
+          <view class='list-education'>{{item.education}}</view>
+        </view>
+
+        <view class='list-right-row'>
+          <view class='list-grade'>{{item.grade}}</view>
+          <view class='list-subject' wx:for="{{item.subject}}" wx:key="unique">{{item}}</view>
+        </view>
+
+        <view class='list-right-row'>
+          <view class="{{ item.graduation == '专职教师' ? 'list-graduation-tch' : 'list-graduation-std'}}">{{item.graduation}}</view>
+          <view class='list-auth'>{{item.auth}}</view>
+          <view class='list-link' bindtap='linkTa' data-index='{{index}}' data-id='{{item.id}}' data-link='{{item.link}}'>联系TA</view>
+        </view>
+
+      </view>
+    </view>
+
+<import src="../module/foot/foot.wxml" />
+<template is="foot" data='{{listBottom}}'/>
+<import src="../module/bottom-menu/bottom-menu.wxml" />
+<template is="bottom-menu" data="{{item}}" />

@@ -1,0 +1,8 @@
+<template name="bottom-menu">
+  <view class='bottom-menu'>
+    <view class="navigator-arrow" bindtap='goBack'></view>
+    <view class='bottom-menu-follow'></view>
+    <view class='bottom-menu-wechat'>首页</view>
+    <view class='bottom-menu-phone'>我的</view>
+  </view>
+</template>
