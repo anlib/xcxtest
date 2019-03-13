@@ -172,13 +172,13 @@
 }
 
 .detail-score-count {
-  float: left;
+  height: 80rpx;
   margin: 10rpx 10rpx 10rpx 80rpx;
   font-size: 50rpx;
 }
 
 .detail-cell-score {
-  float: left;
+  height: 80rpx;
   margin: 25rpx;
 }
 
