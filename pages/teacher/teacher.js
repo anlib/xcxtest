@@ -26,29 +26,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    /*
     //从端取数据
-    var teacherDetail = {
-      avatar: "../../image/avatar_01.png",
-      teacherName: "张老师",
-      score: '8',
-      distance: "0.77km",
-      university: "澳大利亚美利坚合众国外国语工程总设计部位专攻英语大学",
-      lastLongin: "3分钟前",
-      graduation: "专职教师",
-      grade: "初中",
-      subject: ["语文", "英语"],
-      auth: "已认证",
-      price: "￥300/小时 起",
-    };
-    this.setData({
-      teacherDetail: teacherDetail,
-    });
-    //*/
-
     //* 动态获取该id老师信息
     var id = options.id;
-    //id = 1; 
+    //id = 10; 
     if (!id) {
       wx.showToast({
         title: "请首页进入",
@@ -60,7 +41,7 @@ Page({
     this.setData({
       id: id
     })
-    //console.log(id);
+    console.log(id);
     this.getTeacher(id);
     //*/
   },
@@ -76,7 +57,7 @@ Page({
       method: 'GET',
       data: {},
       success: function(res) {
-        console.log(res.data);
+        //console.log(res.data);
         var dt = res.data['teacher'][0];
         var university = res.data['university']; //毕业院校
         var experience = res.data['experience']; //教育经历
@@ -86,13 +67,14 @@ Page({
           certificate[x]['certificate'] = srcUrl + certificate[x]['certificate'];
         }
         for (var x in teacherScore) {
-          teacherScore[x]['content'] = teacherScore[x]['content'].replace(/<br\/>/g, '\n');
+          teacherScore[x]['content'] = teacherScore[x]['content'] ? teacherScore[x]['content'].replace(/<br\/>/g, '\n') : '';
         }
         if (dt) {
           dt['avatar'] = srcUrl + dt['avatar'];
-          dt['grade'] = dt['grade'].replace(/,/g, ' ');
-          dt['taught'] = dt['taught'].replace(/,/g, ' ');
+          dt['grade'] =  dt['grade'] ? dt['grade'].replace(/,/g, ' ') : '';
+          dt['taught'] = dt['taught'] ? dt['taught'].replace(/,/g, ' ') : '';
           dt['gender'] = cd.dataDict.genderPic[dt['gender']];
+          dt['scoreImg'] = Math.round(dt['score'] / 2);
           dt['distance'] = '';
           //获取地理位置
           wx.getLocation({
