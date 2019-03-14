@@ -43,6 +43,7 @@
   text-align: center;
   border-radius: 5rpx;
 }
+
 .detail-graduation-std {
   background: #6ac89a;
   color: #fff;
@@ -55,17 +56,20 @@
   text-align: center;
   border-radius: 5rpx;
 }
+
 .detail-right-row {
   float: left;
   height: 60rpx;
   width: 600rpx;
 }
+
 .detail-link {
   height: 40rpx;
   width: 440rpx;
   float: left;
   font-size: 22rpx;
 }
+
 .detail-bill {
   height: 40rpx;
   width: 440rpx;
@@ -83,7 +87,8 @@
   text-align: center;
   border: solid 1rpx rgb(219, 113, 0);
   margin-top: -20rpx;
-} 
+}
+
 .detail-row {
   float: left;
   width: 100%;
@@ -93,9 +98,11 @@
   border-top: solid 1rpx #eee;
   border-bottom: solid 1rxp #eee;
 }
-.bodernone{
+
+.bodernone {
   border: none;
 }
+
 .detail-right.border-top-none {
   border-top: 0;
 }
@@ -118,4 +125,94 @@
   font-size: 30rpx;
   float: left;
   width: 100%;
+}
+
+/* 评价 */
+
+.score-teacher-score {
+  float: left;
+  max-width: 300rpx;
+  height: 80rpx;
+  margin: 40rpx 25rpx 10rpx 100rpx;
+}
+
+.score-teacher-count {
+  float: left;
+  width: 80rpx;
+  height: 80rpx;
+  margin: 40rpx 25rpx 10rpx 25rpx;
+  font-size: 40rpx;
+}
+
+.score-teacher-image {
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.content-cell {
+  border-top: 1rpx solid #e5e5e5;
+  width: 100%;
+  height: 300rpx;
+  padding: 25rpx 0 25rpx 0;
+  background: #fff;
+}
+.content-textarea{
+  float:left;
+  margin-left:30rpx; 
+  width: 90%;
+  height: 200rpx;
+  border: 1rpx solid #e5e5e5;
+  padding: 6rpx 10rpx 6rpx 10rpx;
+}
+.score-textarea{
+  width: 100%;
+  height: 200rpx;
+}
+.score-textarea::after{
+  width: 100%;
+  height: 200rpx;
+}
+.modify-prompt {
+  color: #999;
+  background: #fff;
+  border-bottom: 1rpx solid #e5e5e5;
+  padding: 3rpx 6rpx 20rpx 20rpx;
+}
+
+.modify-cell {
+  height: 90rpx;
+  padding: 0rpx;
+  background: none;
+}
+
+.cancel {
+  float: left;
+  width: 160rpx;
+  height: 60rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #25b972;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+}
+
+.cancel::after {
+  border: none;
+}
+
+.commit {
+  float: right;
+  width: 160rpx;
+  height: 60rpx;
+  background: #25b972;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #fff;
+  font-size: 30rpx;
+  margin-right: 20rpx;
 }

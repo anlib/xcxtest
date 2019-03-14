@@ -2,6 +2,7 @@ const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const util = require('../../utils/util.js');
+const cd = require('../module/common/config-data.js');
 //初始化可接受科目选择
 let subjectDataInit = null;
 Page({
@@ -14,14 +15,85 @@ Page({
     srcUrl: srcUrl,
     currentPage: 1,
     pageSize: 7,
+    scoreImgList: { 1: 'gray', 2: 'gray', 3: 'gray', 4: 'gray', 5:'gray'}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var teacherDetail = wx.getStorageSync('teacherDetail');
+    var id = teacherDetail.id;
+    if (app.globalData.userid == id) {
+      this.setData({
+        isMyself: true,
+        bottomData: cd.bottomDataisMyself,
+        id: id,
+      });
+    } else {
+      //本页只能用户本人查看操作
+      return;
+    }
     //从端取数据transaction
     this.transactionList();
+  },
+  //显示提交评价页面
+  scoreFlag: function(e) {
+    this.setData({
+      scoreFlag: true,
+      bottomHidden: true,
+      forteacher: parseInt(e.currentTarget.dataset.forteacher)
+    })
+  },
+  //点击分数和星星
+  scoreCount: function(e) {
+    //console.log(e);
+    var count = e.currentTarget.dataset.count;
+    console.log(count);
+    console.log(this.data.scoreImgList[count]);
+
+    if (this.data.scoreImgList[count] == 'gray'){
+      this.data.scoreImgList[count] = 'light';
+    } else {
+      this.data.scoreImgList[count] = 'gray';
+    }
+
+    this.setData({
+      scoreImgList: this.data.scoreImgList
+    })
+  },
+
+  /* 
+   * 提交form
+   */
+  formSubmit(e) {
+    console.log(e)
+    console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    if (e.detail.value) {
+      // post 提交 e.detail.value 到后端
+      //console.log(this.data.myflag);
+      var p = {
+        'id': this.data.id,
+        'teacher': e.detail.value.name
+      };
+      //post 提交 this.updateTeacher(p);
+    }
+    console.log('flag：', e.detail.target.dataset.flag);
+    this.setData({
+      scoreFlag: false,
+      bottomHidden: false,
+      textareaData: ''
+    });
+  },
+  /* 
+   * 重置form表单
+   */
+  formReset(e) {
+    //重新赋值全局变量
+    this.setData({
+      scoreFlag: false,
+      bottomHidden: false,
+    })
   },
 
   /**
@@ -88,7 +160,7 @@ Page({
             data: p,
             //contentType: 'application/json;charset=utf-8',
             //header: {
-             // 'Content-Type': 'application/json'
+            // 'Content-Type': 'application/json'
             //},
             success: function(res) {
               //console.log("teacherList{res.data}:");
@@ -115,9 +187,9 @@ Page({
                   transactionList[x]['teacher'] = teacherListTemp[id]['teacher'];
                   transactionList[x]['avatar'] = srcUrl + teacherListTemp[id]['avatar'];
                   transactionList[x]['graduation'] = teacherListTemp[id]['graduation'];
-                  if (transactionList[x]['type'] == 2){
+                  if (transactionList[x]['type'] == 2) {
                     transactionList[x]['typeVal'] = '个月';
-                  } 
+                  }
                   if (transactionList[x]['type'] == 3) {
                     transactionList[x]['typeVal'] = '年';
                   }
@@ -143,11 +215,11 @@ Page({
   /* 
    * 联系Ta
    */
-  wechatTa: function (e) {
+  wechatTa: function(e) {
     var wechat = '10086';
     util.wechatTa(wechat);
   },
-  phoneTa: function (e) {
+  phoneTa: function(e) {
     var phone = '10086';
     util.phoneTa(phone);
   },

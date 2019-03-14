@@ -1,5 +1,5 @@
 <template name="bottom-menu">
-  <view class='bottom-menu'>
+  <view class='bottom-menu' hidden='{{bottomHidden?bottomHidden:""}}'>
     <view class="navigator-arrow" bindtap='goBack'></view>
     <view class='bottom-menu-follow' bindtap='follow'>{{bottomData.bottomDataOne}}</view>
     <block wx:if='{{isMyself}}'>

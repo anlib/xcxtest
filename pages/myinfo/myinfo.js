@@ -210,7 +210,6 @@ Page({
           that.uploadOne(res.tempFilePaths);
         },
       });
-
   },
 
   /**
@@ -218,15 +217,15 @@ Page({
    */
   uploadOne(imgPaths) {
     var that = this;
-    var p = { "id": this.data.id };
     wx.uploadFile({
-      url: serverUrl + '/teacher/upload',
+      url: serverUrl + '/teacher/upload/' + this.data.id,
       filePath: imgPaths[0],
       name: 'file', //示例，使用顺序给文件命名
+      data: {},
       success: function (res) {
         console.log(res.data);
         if (res.data.length > 2) {
-          that.data.teacherDetail['avatar'] = JSON.parse(res.data) + '.jpg'; // 目前暂不加srcUrl +，后续修改 
+          that.data.teacherDetail['avatar'] = JSON.parse(res.data) + '.jpg?' + Math.random(); // 目前暂不加srcUrl +，后续修改 
           that.setData({
             teacherDetail: that.data.teacherDetail,
           })

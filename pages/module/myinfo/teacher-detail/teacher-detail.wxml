@@ -13,7 +13,7 @@
           <view class='detail-auth'>{{teacherDetail.auth?teacherDetail.auth:'未认证'}}</view>
         </view>
         <view class='detail-right-row'>
-          <view class='detail-university'>评分： {{teacherDetail.score?teacherDetail.score + '分':'暂无评分'}}</view>
+          <view class='detail-university'>评分： {{teacherDetail.score?teacherDetail.score + '分':'暂无'}}</view>
         </view>
         <view class='detail-right-row'>
           <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
