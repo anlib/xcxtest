@@ -29,5 +29,5 @@
 
 <import src="../module/foot/foot.wxml" />
 <template is="foot" data='{{listBottom}}'/>
-<import src="../module/myinfo/bottom-menu/bottom-menu.wxml" />
-<template is="bottom-menu" data="{{item}}" />
+<import src="../module/bottom-menu/bottom-menu.wxml" />
+<template is="bottom-menu" data="{{bottomData,isMyself}}" />

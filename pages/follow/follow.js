@@ -3,6 +3,7 @@ const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const ts = require('../module/myinfo/teacher-server/teacher-server.js');
 const util = require('../../utils/util.js');
+const cd = require('../module/common/config-data.js');
 
 Page({
   /**
@@ -21,8 +22,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var teacherDetail = wx.getStorageSync('teacherDetail');
+    var id = teacherDetail.id;
+    if (app.globalData.userid == id) {
+      this.setData({
+        isMyself: true,
+        bottomData: cd.bottomDataisMyself,
+        id: id,
+      });
+    } else {
+      //本页只能用户本人查看操作
+      return;
+    }
     //需要动态数据调整，暂时赋值；
-    this.followList();
+    this.followList(id);
   },
 
   /**
@@ -39,21 +52,15 @@ Page({
     }, 2000);
   },
 
-  followList: function() {
-    //ids需要后端读数据
-    var that = this;
-    var teacherDetail = wx.getStorageSync('teacherDetail');
-    var id = teacherDetail.id;
-    if (!id) {
-      return;
-    }
+  followList: function(id) {
+    //后端读数据
     var p = {
       "fromuserid": id
     }
     //console.log(p);
     var currentPage = this.data.currentPage;
     var pageSize = this.data.pageSize;
-    //var myThis = this;
+    var that = this;
     wx.request({
       url: serverUrl + 'teacherFollow/list/' + currentPage + '/' + pageSize,
       method: 'POST',

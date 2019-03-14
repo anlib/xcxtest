@@ -2,6 +2,7 @@ const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const util = require('../../utils/util.js');
+const cd = require('../module/common/config-data.js');
 //初始化可接受科目选择
 let subjectDataInit = null;
 Page({
@@ -9,18 +10,32 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isMyself: null,
     //分页设置
     currentPage: 1,
     pageSize: 5,
+    bottomData: cd.bottomData,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    //从端取数据
     var listpid = options.id;
+    this.setData({
+      id: listpid,
+      userid: app.globalData.teacherDetail['id'],
+    })
+    //是否我自己(我的主页)
+    //console.log(app.globalData.userid == listpid)
+    if (app.globalData.userid == listpid){
+      this.setData({
+        isMyself: true,
+        bottomData: cd.bottomDataisMyself,
+      })
+    }
     //listpid = 1;
+    //从后端取数据
     if (!listpid) {
       wx.showToast({
         title: "请首页进入",
@@ -31,6 +46,7 @@ Page({
     }
     this.searchTeacherScore(listpid);
     this.getTeacher(listpid);
+    this.followed();//是否关注
     this.setData({
       listpid: listpid,
     });
@@ -174,5 +190,117 @@ Page({
   phoneTa: function (e) {
     var phone = '10086';
     util.phoneTa(phone);
+  },
+
+  /* 
+   * 是否已经关注Ta
+   */
+  followed: function () {
+    var p = {
+      'touserid': this.data.id,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/count',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log("followCount{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list[0]['count']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          that.data.bottomData['bottomDataOne'] = '已关注';
+          that.setData({
+            bottomData: that.data.bottomData,
+          })
+        }
+      }
+    })
+  },
+  /* 
+   * 如果没有关注则关注，关注则取消
+   */
+  follow: function (e) {
+    if (this.data.bottomData['bottomDataOne'] == '已关注') {
+      this.followDel();
+    } else {
+      this.toFollow();
+    }
+  },
+  /* 
+   * 关注Ta
+   */
+  toFollow: function () {
+    var p = {
+      'touserid': this.data.id,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/add',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log("followAdd{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list['insertId']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log('数据已添加,关注成功');
+          that.data.bottomData['bottomDataOne'] = '已关注';
+          that.setData({
+            bottomData: that.data.bottomData,
+          })
+        }
+      }
+    })
+  },
+  /* 
+   * 去掉关注Ta
+   */
+  followDel: function (e) {
+    var p = {
+      'touserid': this.data.id,
+      'fromuserid': this.data.userid
+    }
+    var that = this;
+    wx.request({
+      url: serverUrl + 'teacherFollow/del',
+      method: 'POST',
+      data: p,
+      contentType: 'application/json;charset=utf-8',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        //console.log("followDel{res.data}:");
+        //console.log(res.data);
+        var list = res.data;
+        if (!list['effectCount']) { //如果没数据
+          //console.log('没数据');
+          return false;
+        } else {
+          //console.log('数据已删除,关注成功');
+          that.data.bottomData['bottomDataOne'] = '关注';
+          that.setData({
+            bottomData: that.data.bottomData,
+          })
+        }
+      }
+    })
   },
 })

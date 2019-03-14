@@ -1,8 +1,18 @@
 <template name="bottom-menu">
   <view class='bottom-menu'>
     <view class="navigator-arrow" bindtap='goBack'></view>
-    <view class='bottom-menu-follow' bindtap='follow'>{{bottomData.follow}}</view>
-    <view class='bottom-menu-wechat' bindtap='wechatTa'>{{bottomData.wechatTa}}</view>
-    <view class='bottom-menu-phone' bindtap='phoneTa'>{{bottomData.phoneTa}}</view>
+    <view class='bottom-menu-follow' bindtap='follow'>{{bottomData.bottomDataOne}}</view>
+    <block wx:if='{{isMyself}}'>
+      <navigator class='detail-navigator' url="../index/index" open-type="switchTab">
+        <view class='bottom-menu-wechat'>{{bottomData.bottomDataTwo}}</view>
+      </navigator>
+      <navigator class='detail-navigator' url="../myinfo/myinfo" open-type="switchTab">
+        <view class='bottom-menu-phone'>{{bottomData.bottomDataThree}}</view>
+      </navigator>
+    </block>
+    <block wx:else>
+      <view class='bottom-menu-wechat' bindtap='wechatTa'>{{bottomData.bottomDataTwo}}</view>
+      <view class='bottom-menu-phone' bindtap='phoneTa'>{{bottomData.bottomDataThree}}</view>
+    </block>
   </view>
 </template>

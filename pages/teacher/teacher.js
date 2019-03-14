@@ -1,8 +1,8 @@
-const cd = require('../module/common/config-data.js');
-const util = require('../../utils/util.js');
 const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
+const cd = require('../module/common/config-data.js');
+const util = require('../../utils/util.js');
 //初始化可接受科目选择
 let subjectDataInit = null;
 Page({
@@ -19,11 +19,7 @@ Page({
     interval: 5000, //间隔时间
     duration: 1000,
     certificate: null,
-    bottomData: {
-      'follow': '关注',
-      wechatTa: '微信',
-      phoneTa: '电话'
-    },
+    bottomData: cd.bottomData,
   },
 
   /**
@@ -172,7 +168,7 @@ Page({
           //console.log('没数据');
           return false;
         } else {
-          that.data.bottomData['follow'] = '已关注';
+          that.data.bottomData['bottomDataOne'] = '已关注';
           that.setData({
             bottomData: that.data.bottomData,
           })
@@ -184,7 +180,7 @@ Page({
    * 如果没有关注则关注，关注则取消
    */
   follow: function(e) {
-    if (this.data.bottomData['follow'] == '已关注') {
+    if (this.data.bottomData['bottomDataOne'] == '已关注') {
       this.followDel();
     } else {
       this.toFollow();
@@ -216,7 +212,7 @@ Page({
           return false;
         } else {
           //console.log('数据已添加,关注成功');
-          that.data.bottomData['follow'] = '已关注';
+          that.data.bottomData['bottomDataOne'] = '已关注';
           that.setData({
             bottomData: that.data.bottomData,
           })
@@ -250,7 +246,7 @@ Page({
           return false;
         } else {
           //console.log('数据已删除,关注成功');
-          that.data.bottomData['follow'] = '关注';
+          that.data.bottomData['bottomDataOne'] = '关注';
           that.setData({
             bottomData: that.data.bottomData,
           })

@@ -2,6 +2,7 @@ const app = getApp();
 const serverUrl = app.globalData.serverUrl; //初始服务器地址
 const srcUrl = app.globalData.srcUrl; //初始服务器地址
 const util = require('../../utils/util.js');
+const cd = require('../module/common/config-data.js');
 Page({
   /**
    * 页面的初始数据
@@ -14,12 +15,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    //console.log(app.globalData.teacherDetail);
     var teacherDetail = app.globalData.teacherDetail;
     var pid = teacherDetail['id'];
-    this.setData({
-      pid: pid,
-    })
+    console.log(app.globalData.userid == pid);
+    if (app.globalData.userid == pid) {
+      this.setData({
+        isMyself: true,
+        bottomData: cd.bottomDataisMyself,
+        pid: pid,
+      });
+
+      console.log(this.data.bottomData);
+    } else {
+      //本页只能用户本人查看操作
+      return;
+    }
     //从后端取数据
     var that = this;
     wx.request({

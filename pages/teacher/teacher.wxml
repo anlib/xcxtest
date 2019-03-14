@@ -6,9 +6,10 @@
     <view class='detail-right-row'>
       <view class='detail-name'>
         {{teacherDetail.teacher?teacherDetail.teacher:'未设置'}}
+</view>
+      <view class='detail-score-txt'>
+       评分: {{teacherDetail.score?teacherDetail.score + '':'暂无'}}
       </view>
-      <image class='detail-gender' src='../../image/score-gray.png'></image>
-      {{teacherDetail.score?teacherDetail.score:'暂无评分'}}
     </view>
     <view class='detail-right-row'>
       <view class="{{ teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation ? teacherDetail.graduation :'未设置'}}</view>
@@ -127,4 +128,4 @@
   </navigator>
   <view class='bottom-menu-place'></view>
 </view>
-<template is="bottom-menu"  data='{{bottomData}}' />
+<template is="bottom-menu"  data='{{bottomData,isMyself}}' />

@@ -1,23 +1,6 @@
-/*
- * 更新老师资料
- */
-function updateTeacher(p, serverUrl) {
-  //console.log('updateTeacher:');
-  //console.log(p); //需要id为条件的；
-  if (p == undefined) {
-    return;
-  }
-  //* 动态读取数据
-  wx.request({
-    url: serverUrl + 'teacher/update',
-    method: 'POST',
-    data: p,
-    contentType: 'application/json;charset=utf-8',
-    header: {
-      'Content-Type': 'application/json'
-    }
-  })
-}
+const util = require('../../../../utils/util.js');
+const md5 = require('../../../../utils/md5.js');
+
 /* 
  * 动态读取数据
  */
@@ -69,10 +52,48 @@ function setTeacherList(list, that) {
 }
 
 /* 
+ * 动态读取本登录用户数据（Teacher）
+ */
+function appjsTeacher(openid, serverUrl, otherThis) {
+  var p = {
+    'openid': openid,
+    'lastlongin': util.formatDateTime(new Date())
+  };
+  //console.log('appjs Teacher{p}:', p);
+  var that = this;
+  wx.request({
+    url: serverUrl + 'teacher/list/1/1',
+    method: 'POST',
+    data: p,
+    contentType: 'application/json;charset=utf-8',
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function (res) {
+      //console.log(res.data);
+      var list = res.data;
+      //如果没数据
+      if (!list[0]) {
+        //console.log('没数据');
+        that.insertTeacher(p, serverUrl, otherThis);
+        return;
+      } else {
+        //缓存用户信息
+        wx.setStorageSync("teacherDetail", list[0]);
+        //设置本地session为md5的openid
+        wx.setStorageSync('sessionOpenid', md5.hex_md5(md5.hex_md5(openid + otherThis.globalData.salt)));
+        //更新登录时间
+        that.updateTeacher(p, serverUrl);
+      }
+    }
+  })
+}
+
+/* 
  * 动态读取数据
  */
-function searchTeacher(p, serverUrl, appjsThis) {
-  //console.log('searchTeacher{p}:'); console.log(p);
+function getOneTeacher(p, serverUrl, appjsThis) {
+  //console.log('search Teacher{p}:', p);
   if (!p) {
     return;
   }
@@ -86,18 +107,18 @@ function searchTeacher(p, serverUrl, appjsThis) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      //console.log("searchTeacher{res.data}:");
+      //console.log("getOne Teacher{res.data}:");
       //console.log(res.data);
       var list = res.data;
       //如果没数据
       if (!list[0]) {
         //console.log('没数据');
-        that.insertTeacher(p, serverUrl);
         return;
       } else {
+        //缓存用户信息
         wx.setStorageSync("teacherDetail", list[0]);
-        appjsThis.globalData.teacherDetail = list[0];
-        that.updateTeacher(p, serverUrl);
+        //设置本地session为md5的openid
+        wx.setStorageSync('sessionOpenid', md5.hex_md5(md5.hex_md5(openid + otherThis.globalData.salt)));
       }
     }
   })
@@ -106,10 +127,11 @@ function searchTeacher(p, serverUrl, appjsThis) {
 /*
  * 新增老师
  */
-function insertTeacher(p, serverUrl) {
+function insertTeacher(p, serverUrl, otherThis) {
   if (p == undefined) {
     return;
   }
+  var that = this;
   //* 动态读取数据
   wx.request({
     url: serverUrl + 'teacher/add',
@@ -119,13 +141,72 @@ function insertTeacher(p, serverUrl) {
     header: {
       'Content-Type': 'application/json'
     },
+    success: function (res) {
+      that.getOneTeacher(p, serverUrl, otherThis) 
+    }
+  })
+}
+/*
+ * 更新老师资料
+ */
+function updateTeacher(p, serverUrl) {
+  //console.log('updateTeacher:');
+  //console.log(p); //需要id为条件的；
+  if (p == undefined) {
+    return;
+  }
+  //* 动态读取数据
+  wx.request({
+    url: serverUrl + 'teacher/update',
+    method: 'POST',
+    data: p,
+    contentType: 'application/json;charset=utf-8',
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function (res) {
+      //console.log(res);
+    }
+  })
+}
+
+/* 
+ * 动态读取数据
+ */
+function getOneTeacher(p, serverUrl, appjsThis) {
+  //console.log('search Teacher{p}:', p);
+  if (!p) {
+    return;
+  }
+  var that = this;
+  wx.request({
+    url: serverUrl + 'teacher/list/1/1',
+    method: 'POST',
+    data: p,
+    contentType: 'application/json;charset=utf-8',
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function (res) {
+      //console.log("getOne Teacher{res.data}:", res.data);
+      var list = res.data;
+      //如果没数据
+      if (!list[0]) {
+        //console.log('没数据');
+        return;
+      } else {
+        wx.setStorageSync("teacherDetail", list[0]);
+        //设置本地session为md5的openid
+        wx.setStorageSync('sessionOpenid', md5.hex_md5(md5.hex_md5(openid + otherThis.globalData.salt)));
+      }
+    }
   })
 }
 
 //这样暴露接口，这里不暴露是不能引用的，
 module.exports = {
   teacherList: teacherList,
-  searchTeacher: searchTeacher,
+  appjsTeacher: appjsTeacher,
   insertTeacher: insertTeacher,
   updateTeacher: updateTeacher,
   setTeacherList: setTeacherList

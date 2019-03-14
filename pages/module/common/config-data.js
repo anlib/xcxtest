@@ -38,49 +38,49 @@ var menuSubjectData = [{
 
 //供选择的可授科目
 subjectDataInit = [{
-  "i": "小学",
-  "v": [{
-    'name': '数学',
+    "i": "小学",
+    "v": [{
+        'name': '数学',
+      },
+      {
+        'name': '英语',
+      },
+      {
+        'name': '语文',
+      }
+    ],
   },
   {
-    'name': '英语',
+    "i": "初中",
+    "v": [{
+        'name': '数学',
+      },
+      {
+        'name': '英语',
+      },
+      {
+        'name': '语文',
+      },
+      {
+        'name': '物理',
+      },
+      {
+        'name': '化学',
+      },
+      {
+        'name': '地理',
+      },
+      {
+        'name': '历史',
+      }
+    ],
   },
   {
-    'name': '语文',
-  }
-  ],
-},
-{
-  "i": "初中",
-  "v": [{
-    'name': '数学',
+    "i": "高中",
+    "v": [{
+      'name': '数学',
+    }],
   },
-  {
-    'name': '英语',
-  },
-  {
-    'name': '语文',
-  },
-  {
-    'name': '物理',
-  },
-  {
-    'name': '化学',
-  },
-  {
-    'name': '地理',
-  },
-  {
-    'name': '历史',
-  }
-  ],
-},
-{
-  "i": "高中",
-  "v": [{
-    'name': '数学',
-  }],
-},
 ];
 //menutop 获取地区
 menuAreaData = ["不限", "东城", "西城", "崇文", "宣武", "朝阳", "丰台", "石景山", "海淀", "门头沟", "房山", "通州", "顺义", "昌平", "大兴", "怀柔", "平谷", "密云", "延庆"];
@@ -123,7 +123,18 @@ scheduleData = [
   ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
   ["全天", "上午", "下午", "晚上"]
 ];
-
+//自定义底部菜单显示文字
+bottomData = {
+  'bottomDataOne': '关注',
+  'bottomDataTwo': '微信',
+  'bottomDataThree': '电话'
+};
+//自定义底部菜单显示文字 isMyself
+bottomDataisMyself = {
+  'bottomDataOne': '',
+  'bottomDataTwo': '首页',
+  'bottomDataThree': '我的'
+};
 /* 
  * index background
  */
@@ -160,19 +171,28 @@ function menuExperience() {
 function dataDict() {
   return dataDict;
 }
+
 function priceData() {
   return priceData;
 }
+
 function scheduleData() {
   return scheduleData;
 }
+
 function genderArray() {
   return genderArray;
 }
+
 function subjectDataInit() {
   return subjectDataInit;
 }
-
+function bottomData() {
+  return bottomData;
+}
+function bottomDataisMyself() {
+  return bottomDataisMyself;
+}
 
 //这样暴露接口，这里不暴露是不能引用的，
 module.exports = {
@@ -188,5 +208,7 @@ module.exports = {
   scheduleData: scheduleData,
   genderArray: genderArray,
   subjectDataInit: subjectDataInit,
+  bottomData: bottomData,
+  bottomDataisMyself: bottomDataisMyself,
   
 }

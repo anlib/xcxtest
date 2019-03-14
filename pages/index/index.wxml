@@ -1,6 +1,5 @@
 <import src="../module/head/head.wxml" />
 <import src="../module/foot/foot.wxml" />
-
 <view class="container">
   <view class="page-body">
     <!-- 幻灯片 -->

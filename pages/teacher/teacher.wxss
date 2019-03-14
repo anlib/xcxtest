@@ -41,7 +41,12 @@
   font-size: 30rpx;
   float: left;
   max-width: 350rpx;
-  margin-right: 8rpx;
+  margin-right: 10rpx;
+}
+.detail-score-txt{
+  float: right;
+  height: 38rpx;
+  line-height: 38rpx;  
 }
 
 .detail-gender {
