@@ -17,15 +17,14 @@ Page({
   onLoad: function(options) {
     var teacherDetail = app.globalData.teacherDetail;
     var pid = teacherDetail['id'];
-    console.log(app.globalData.userid == pid);
+    //console.log(app.globalData.userid == pid);
     if (app.globalData.userid == pid) {
       this.setData({
         isMyself: true,
         bottomData: cd.bottomDataisMyself,
         pid: pid,
       });
-
-      console.log(this.data.bottomData);
+      //console.log(this.data.bottomData);
     } else {
       //本页只能用户本人查看操作
       return;
@@ -92,7 +91,7 @@ Page({
       title: '正在上传第' + count + '张',
     })
     wx.uploadFile({
-      url: serverUrl + '/teacherCertificate/upload/' + pid, //仅为示例，非真实的接口地址
+      url: serverUrl + '/teacherCertificate/upload/' + pid,
       filePath: imgPaths[count],
       name: 'file', //示例，使用顺序给文件命名
       success: function(res) {

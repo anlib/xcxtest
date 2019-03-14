@@ -2,7 +2,7 @@
 <template name="teacher-detail">
   <view class='detail-top'>
     <view class='detail-item'>
-      <image class='detail-avatar' src='{{teacherDetail.avatar ? srcUrl + teacherDetail.avatar : "../../image/avatar_place.png"}}'></image>
+      <image class='detail-avatar' src='{{teacherDetail.avatar ? srcUrl + teacherDetail.avatar : "../../image/avatar_place.png"}}'  bindtap='setAvatar'></image>
       <view class="detail-right  {{index==0 ? 'border-top-none' : ''}}">
         <view class='detail-right-row'>
           <view class='detail-name'>{{teacherDetail.teacher?teacherDetail.teacher:'暂无'}}</view>

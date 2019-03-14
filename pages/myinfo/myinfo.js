@@ -13,7 +13,7 @@ Page({
   data: {
     loading: false,
     srcUrl: srcUrl,
-    id: null, //老师id
+    id: null, //用户id
     motto: '微信遮罩层显示',
     flag: -1, //页面显示标识，和后端数据没关系
     //myflag: 0, //注册流程状态，初始:0,老师1,学生2
@@ -61,6 +61,12 @@ Page({
     var p = {
       'openid': openid
     };
+    //是否等状态
+    if (app.globalData.userid == app.globalData.teacherDetail['id']) {
+      this.setData({
+        id: app.globalData.teacherDetail['id'],
+      });
+    }
     //从后端读出老师资料，赋值flag前台展示标识
     this.searchTeacher(p);
     //设置抬头标题
@@ -190,6 +196,45 @@ Page({
       flag: parseInt(e.currentTarget.dataset.flag),
     })
   },
+
+  /* 
+   * 修改头像
+   */
+  setAvatar:function(e){
+      var that = this;
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function (res) {
+          that.uploadOne(res.tempFilePaths);
+        },
+      });
+
+  },
+
+  /**
+   * 上传
+   */
+  uploadOne(imgPaths) {
+    var that = this;
+    var p = { "id": this.data.id };
+    wx.uploadFile({
+      url: serverUrl + '/teacher/upload',
+      filePath: imgPaths[0],
+      name: 'file', //示例，使用顺序给文件命名
+      success: function (res) {
+        console.log(res.data);
+        if (res.data.length > 2) {
+          that.data.teacherDetail['avatar'] = JSON.parse(res.data) + '.jpg'; // 目前暂不加srcUrl +，后续修改 
+          that.setData({
+            teacherDetail: that.data.teacherDetail,
+          })
+        }
+      }
+    })
+  },
+
   /* 
    * 提交form
    */
@@ -668,11 +713,9 @@ Page({
   //微信支付，暂时不做
   requestPayment() {
     const self = this
-
     self.setData({
       loading: true
     })
-
     // 此处需要先调用wx.login方法获取code，然后在服务端调用微信接口使用code换取下单用户的openId
     // 具体文档参考https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html?t=20161230#wxloginobject
     app.getUserOpenId(function(err, openid) {
