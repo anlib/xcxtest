@@ -143,7 +143,9 @@ Page({
           return;
         }
         for (var x in list) {
-          list[x]['content'] = list[x]['content'].replace(/<br\/>/g, '\n');
+          if (list[x]['content']){
+            list[x]['content'] = list[x]['content'].replace(/<br\/>/g, '\n');
+          }
         }
         that.setTeacherSroceList(list);
         if (list == null) {

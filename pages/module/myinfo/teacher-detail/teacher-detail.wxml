@@ -2,24 +2,30 @@
 <template name="teacher-detail">
   <view class='detail-top'>
     <view class='detail-item'>
-      <image class='detail-avatar' src='{{teacherDetail.avatar ? srcUrl + teacherDetail.avatar : "../../image/avatar_place.png"}}'  bindtap='setAvatar'></image>
+      <image class='detail-avatar' src='{{teacherDetail.avatar ? srcUrl + teacherDetail.avatar : "../../image/avatar_place.png"}}' bindtap='setAvatar'></image>
       <view class="detail-right  {{index==0 ? 'border-top-none' : ''}}">
         <view class='detail-right-row'>
           <view class='detail-name'>{{teacherDetail.teacher?teacherDetail.teacher:'暂无'}}</view>
           <image class='detail-gender' src='{{teacherDetail.genderPic}}'></image>
         </view>
         <view class='detail-right-row'>
-          <view class="{{teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation?teacherDetail.graduation:'教师'}}</view>
-          <view class='detail-auth'>{{teacherDetail.auth?teacherDetail.auth:'未认证'}}</view>
+          <block wx:if='{{teacherDetail.myflag!=2}}'>
+            <view class="{{teacherDetail.graduation == '专职教师' ? 'detail-graduation-tch' : 'detail-graduation-std'}}">{{teacherDetail.graduation?teacherDetail.graduation:'教师'}}</view>
+            <view class='detail-auth'>{{teacherDetail.auth?teacherDetail.auth:'未认证'}}</view>
+          </block>
         </view>
         <view class='detail-right-row'>
-          <view class='detail-university'>评分： {{teacherDetail.score?teacherDetail.score + '分':'暂无'}}</view>
+          <block wx:if='{{teacherDetail.myflag!=2}}'>
+            <view class='detail-university'>评分： {{teacherDetail.score?teacherDetail.score + '分':'暂无'}}</view>
+          </block>
         </view>
         <view class='detail-right-row'>
-          <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
-          <view class='detail-distance'>{{teacherDetail.distance}}</view>
-          <view class='detail-price'>
-            {{teacherDetail.price ? '￥' + teacherDetail.price + '元/' + teacherDetail.pricetime : ''}}</view>
+          <block wx:if='{{teacherDetail.myflag!=2}}'>
+            <view class='detail-grade'>{{teacherDetail.lastLongin}}</view>
+            <view class='detail-distance'>{{teacherDetail.distance}}</view>
+            <view class='detail-price'>
+              {{teacherDetail.price ? '￥' + teacherDetail.price + '元/' + teacherDetail.pricetime : ''}}</view>
+          </block>
         </view>
       </view>
       <view class='detail-bottom-row' bindtap="requestPayment" loading="{{loading}}">
@@ -30,7 +36,7 @@
     </view>
   </view>
   <view class='detail-list'>
-    <view class='detail-cell' data-flag='111' bindtap='setFlag'>
+    <view class='detail-cell' data-flag='{{teacherDetail.myflag!=2 ? 111 : 222}}' bindtap='setFlag'>
       <image class="detail-icon" src='../../image/mydata-base.png'></image>
       <view class='detail-mydata'>我的资料</view>
       <view class="navigator-arrow"></view>
@@ -55,26 +61,28 @@
         <view class="navigator-arrow"></view>
       </navigator>
     </view>
-    <view class='detail-cell'>
-      <navigator class='detail-navigator' url="../score/score?id={{teacherDetail.id}}" hover-class="navigator-hover">
-        <image class="detail-icon" src='../../image/mydata-appraise.png'></image>
-        <view class='detail-follow'>我的评价</view>
-        <view class='detail-appraise-count'>({{teacherDetail.scoreCount}})</view>
-        <view class="navigator-arrow"></view>
-      </navigator>
-    </view>
-    <view class='detail-cell border-bottom-none'>
-      <navigator class='detail-navigator' url="../certificate/certificate?id={{teacherDetail.id}}" hover-class="navigator-hover">
-        <image class="detail-icon" src='../../image/mydata-certificate.png'></image>
-        <view class='detail-follow'>我的证书</view>
-        <view class='detail-appraise-count'>({{teacherDetail.certificateCount}})</view>
-        <view class="navigator-arrow"></view>
-      </navigator>
-    </view>
-    <view class='detail-cell-certificate'>
-      <block wx:for="{{teacherDetail.certificateList}}" wx:key="unique">
-        <image class='detail-certificate' src='{{item}}' bindtap="previewImage"></image>
-      </block>
-    </view>
+    <block wx:if='{{teacherDetail.myflag!=2}}'>
+      <view class='detail-cell'>
+        <navigator class='detail-navigator' url="../score/score?id={{teacherDetail.id}}" hover-class="navigator-hover">
+          <image class="detail-icon" src='../../image/mydata-appraise.png'></image>
+          <view class='detail-follow'>我的评价</view>
+          <view class='detail-appraise-count'>({{teacherDetail.scoreCount}})</view>
+          <view class="navigator-arrow"></view>
+        </navigator>
+      </view>
+      <view class='detail-cell border-bottom-none'>
+        <navigator class='detail-navigator' url="../certificate/certificate?id={{teacherDetail.id}}" hover-class="navigator-hover">
+          <image class="detail-icon" src='../../image/mydata-certificate.png'></image>
+          <view class='detail-follow'>我的证书</view>
+          <view class='detail-appraise-count'>({{teacherDetail.certificateCount}})</view>
+          <view class="navigator-arrow"></view>
+        </navigator>
+      </view>
+      <view class='detail-cell-certificate'>
+        <block wx:for="{{teacherDetail.certificateList}}" wx:key="unique">
+          <image class='detail-certificate' src='{{item}}' bindtap="previewImage"></image>
+        </block>
+      </view>
+    </block>
   </view>
 </template>

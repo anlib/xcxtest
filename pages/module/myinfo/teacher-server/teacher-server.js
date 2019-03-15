@@ -89,41 +89,6 @@ function appjsTeacher(openid, serverUrl, otherThis) {
   })
 }
 
-/* 
- * 动态读取数据
- */
-function getOneTeacher(p, serverUrl, appjsThis) {
-  //console.log('search Teacher{p}:', p);
-  if (!p) {
-    return;
-  }
-  var that = this;
-  wx.request({
-    url: serverUrl + 'teacher/list/1/1',
-    method: 'POST',
-    data: p,
-    contentType: 'application/json;charset=utf-8',
-    header: {
-      'Content-Type': 'application/json'
-    },
-    success: function(res) {
-      //console.log("getOne Teacher{res.data}:");
-      //console.log(res.data);
-      var list = res.data;
-      //如果没数据
-      if (!list[0]) {
-        //console.log('没数据');
-        return;
-      } else {
-        //缓存用户信息
-        wx.setStorageSync("teacherDetail", list[0]);
-        //设置本地session为md5的openid
-        wx.setStorageSync('sessionOpenid', md5.hex_md5(md5.hex_md5(openid + otherThis.globalData.salt)));
-      }
-    }
-  })
-}
-
 /*
  * 新增老师
  */
@@ -173,11 +138,12 @@ function updateTeacher(p, serverUrl) {
 /* 
  * 动态读取数据
  */
-function getOneTeacher(p, serverUrl, appjsThis) {
+function getOneTeacher(p, serverUrl, otherThis) {
   //console.log('search Teacher{p}:', p);
   if (!p) {
     return;
   }
+  var openid = p.openid;
   var that = this;
   wx.request({
     url: serverUrl + 'teacher/list/1/1',
@@ -188,7 +154,7 @@ function getOneTeacher(p, serverUrl, appjsThis) {
       'Content-Type': 'application/json'
     },
     success: function (res) {
-      //console.log("getOne Teacher{res.data}:", res.data);
+      //console.log("getOne Teacher{res.data}:", res.data, openid);
       var list = res.data;
       //如果没数据
       if (!list[0]) {
@@ -209,5 +175,6 @@ module.exports = {
   appjsTeacher: appjsTeacher,
   insertTeacher: insertTeacher,
   updateTeacher: updateTeacher,
-  setTeacherList: setTeacherList
+  setTeacherList: setTeacherList,
+  getOneTeacher: getOneTeacher,
 }

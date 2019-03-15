@@ -133,7 +133,26 @@ border: none;
   margin-left: 20rpx;
 }
 
-/* 设置背景遮罩层样式 - 暂无 */
+.name-value-phone {
+  float: left;
+  width: 360rpx;
+  text-align: right;
+  color: #999999;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 32rpx;
+  background: #fff;
+  margin: 0rpx;
+  padding: 0px;
+  border-radius: 0px;
+}
+
+.name-value-phone::after {
+  border: none;
+  border-radius: 0px;
+}
+
+
 
 /* 引用关注等css */
 @import "../module/myinfo/first/first.wxss" ;

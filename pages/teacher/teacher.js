@@ -143,12 +143,6 @@ Page({
     util.phoneTa(phone);
   },
 
-  getPhoneNumber: function (e) {
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
-  },
-
   /* 
    * 是否已经关注Ta
    */

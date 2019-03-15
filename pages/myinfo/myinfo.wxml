@@ -1,6 +1,6 @@
 <!-- 教师身份完善资料 -->
-<view hidden="{{(flag == 1 || flag == 111) ? false : true}}">
-  <view class='base-info'>基本信息 </view>
+<view hidden="{{(flag == 1 || flag == 111 || flag == 2 || flag == 222 ) ? false : true}}">
+  <view class='base-info'>基本信息</view>
   <view class='name-cell'>
     <view class='name-name'>姓名</view>
     <view class='name-value' data-flag='11' data-myflag='{{flag}}' bindtap='setFlag'>
@@ -24,13 +24,27 @@
   </view>
   <view class='name-cell'>
     <view class='name-name'>所在城市</view>
-    <picker mode="region" bindchange="bindPickerChange" value="{{region}}" data-type='region' data-input='area' >
+    <picker mode="region" bindchange="bindPickerChange" value="{{region}}" data-type='region' data-input='area'>
       <view class='name-value'>
-       {{!region[1] && !region[2] ? '请选择' : region[0] + region[1] + region[2] }}
-       </view>
+        {{!region[1] && !region[2] ? '请选择' : region[0] + region[1] + region[2] }}
+      </view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
+  <view class='name-cell'>
+    <view class='name-name'>手机</view>
+    <button class='name-value-phone' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">添加您的手机号码</button>
+    <view class="navigator-arrow"></view>
+  </view>
+  <view class='name-cell'>
+    <view class='name-name'>微信</view>
+    <view class='name-value'>
+      {{wechatNum ? wechatNum : '添加您的微信号'}}
+    </view>
+    <view class="navigator-arrow"></view>
+  </view>
+  
+  <block wx:if='{{flag == 1 || flag == 111}}'>
   <view class='base-info'>授课相关 </view>
   <view class='name-cell'>
     <view class='name-name'>可授科目</view>
@@ -48,13 +62,13 @@
   </view>
   <view class='name-cell'>
     <view class='name-name'>课时费</view>
-    <picker mode="multiSelector" bindchange="bindPickerChange" value="{{priceDataIndex}}" range="{{priceData}}" data-type='price'  data-input='price'>
+    <picker mode="multiSelector" bindchange="bindPickerChange" value="{{priceDataIndex}}" range="{{priceData}}" data-type='price' data-input='price'>
       <view class='name-value'>
-      {{priceData[0][price[0]]}}
-      {{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : pricedf}}</view>
+        {{priceData[0][price[0]]}} {{price ? '￥' + priceData[0][price[0]] + '元/' + priceData[1][price[1]] : pricedf}}</view>
       <view class="navigator-arrow"></view>
     </picker>
   </view>
+  </block>
   <button class='commit-data' type="primary" bindtap='setFlag' data-flagdata='teacherBase' data-flag='{{myflag}}'>完 成</button>
 </view>
 
@@ -128,18 +142,18 @@
 
 <!-- 学生身份完善资料 -->
 <!-- 
-<view hidden="{{flag == 123 ? false : true}}">
-  <import src="../module/myinfo/follow/follow.wxml" />
+<view hidden="{{flag == 2 ? false : true}}">
+  <import src="../module/myinfo/teacher-detail/teacher-detail.wxml" />
   <template is="follow" data='{{followList,flag}}' />
 </view>
 -->
 <!-- 学生身份完善资料 -->
 <view hidden="{{flag == 2 ? false : true}}">
-  学生
+  
 </view>
 
 <!-- 初始设置身份 -->
 <view class="first-set" hidden="{{flag == 0 ? false : true}}">
   <import src="../module/myinfo/first/first.wxml" />
-  <template is="first"/>
+  <template is="first" />
 </view>

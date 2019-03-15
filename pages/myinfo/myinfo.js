@@ -23,6 +23,7 @@ Page({
       1: '完善资料',
       111: '完善资料', //我的资料进行修改
       2: '完善资料',
+      222: '完善资料',
       3: '我的',
       11: '设置姓名',
       12: '可授科目',
@@ -200,16 +201,16 @@ Page({
   /* 
    * 修改头像
    */
-  setAvatar:function(e){
-      var that = this;
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success: function (res) {
-          that.uploadOne(res.tempFilePaths);
-        },
-      });
+  setAvatar: function(e) {
+    var that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function(res) {
+        that.uploadOne(res.tempFilePaths);
+      },
+    });
   },
 
   /**
@@ -222,8 +223,8 @@ Page({
       filePath: imgPaths[0],
       name: 'file', //示例，使用顺序给文件命名
       data: {},
-      success: function (res) {
-        console.log(res.data);
+      success: function(res) {
+        //console.log(res.data);
         if (res.data.length > 2) {
           that.data.teacherDetail['avatar'] = JSON.parse(res.data) + '.jpg?' + Math.random(); // 目前暂不加srcUrl +，后续修改 
           that.setData({
@@ -293,7 +294,7 @@ Page({
     this.setData({
       flag: this.data.myflag,
       formDataName: this.data.formDataName,
-      formDataTime: this.data.formDataTime,      
+      formDataTime: this.data.formDataTime,
     })
   },
 
@@ -395,6 +396,19 @@ Page({
       subjectNext: e.currentTarget.dataset.nav,
     });
   },
+  
+  /**
+   * 获取手机号码
+   */
+  getPhoneNumber: function(e) {
+    wx.login({
+      success: function(data) {
+        console.log(e.detail.errMsg)
+        console.log(e.detail.iv)
+        console.log(e.detail.encryptedData)
+      }
+    })
+  },
 
   /**
    * 自定义查询老师的处理函数
@@ -440,10 +454,11 @@ Page({
             pricedf = '￥' + teacherDetail['price'] + '元/' + teacherDetail['pricetime'];
           }
           //console.log(pricedf);
-          that.followCount(list[0]['id']);//被关注数
-          that.followList(list[0]['id']);//显示5个关注
-          that.scoreCount(list[0]['id']);//评论数
-          that.certificateList(list[0]['id']);  //证书数       
+          that.followCount(list[0]['id']); //被关注数
+          that.followList(list[0]['id']); //显示5个关注
+          that.scoreCount(list[0]['id']); //评论数
+          that.certificateList(list[0]['id']); //证书数 
+          var flag = list[0]['myflag'] == 2 ? 3 : list[0]['myflag'];     
           that.setData({
             formDataName: teacherDetail['teacher'],
             formDataTime: teacherDetail['teachtime'],
@@ -453,7 +468,7 @@ Page({
             region: region,
             pricedf: pricedf,
             id: list[0]['id'],
-            flag: list[0]['myflag'],
+            flag: flag,
             myflag: list[0]['myflag'],
             teacherDetail: teacherDetail,
           })
@@ -575,7 +590,7 @@ Page({
   /*
    * 评价数量
    */
-  scoreCount: function (id) {
+  scoreCount: function(id) {
     var p = {
       "listpid": id
     }
@@ -589,7 +604,7 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
         //console.log(res.data);
         var list = res.data;
         //如果没数据
@@ -610,7 +625,7 @@ Page({
   /*
    * 评价数量
    */
-  certificateList: function (id) {
+  certificateList: function(id) {
     //从后端取数据
     var that = this;
     wx.request({
@@ -621,7 +636,7 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
         //console.log(res.data);
         var certificateList = new Array();
         for (var i = 0; i < res.data.length && i < 3; i++) {
@@ -690,8 +705,8 @@ Page({
         //console.log("update res.data");
         //console.log(res.data);
         //that.setData({
-          //flag: res.data['myflag'],
-          //myflag: res.data['myflag'],
+        //flag: res.data['myflag'],
+        //myflag: res.data['myflag'],
         //})
       }
     })

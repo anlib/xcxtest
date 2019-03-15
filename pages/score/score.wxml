@@ -22,7 +22,7 @@
       <view class='detail-score-date'>{{item.date}}</view>
     </view>
     <view class='detail-score-content'>
-      {{item.content}}
+      {{item.content? item.content:'没写评论'}}
     </view>
   </view>
   <view class='bottom-menu-place'></view>
