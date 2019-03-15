@@ -1,0 +1,218 @@
+/* 引用css */
+@import "../module/bottom-menu/bottom-menu.wxss";
+
+.transaction-cell {
+  width: 100%;
+  height: auto;
+}
+
+.transaction-cell-date {
+  width: 100%;
+  height: 40rpx;
+  font-size: 22rpx;
+  background: #eee;
+  color: #999;
+  padding: 40rpx 0 10rpx 30rpx;
+}
+
+.transaction-cell-detail {
+  background: #fff;
+  padding: 10rpx 30rpx 0rpx 30rpx;
+  width: auto;
+  height: 200rpx;
+}
+
+.transaction-cell-avatar {
+  float: left;
+  height: 80rpx;
+  width: 80rpx;
+  margin: 20rpx 16rpx 20rpx 0rpx;
+  border: 1rxp solid #ccc;
+  border-radius: 12rpx;
+}
+
+.detail-graduation-tch {
+  background: #58bbe1;
+  color: #fff;
+  float: left;
+  margin-left: 8rpx;
+  margin-top: 8rpx;
+  width: 92rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
+
+.detail-graduation-std {
+  background: #6ac89a;
+  color: #fff;
+  float: left;
+  margin-right: 8rpx;
+  margin-top: 8rpx;
+  width: 142rpx;
+  height: 28rpx;
+  font-size: 20rpx;
+  text-align: center;
+  border-radius: 5rpx;
+}
+
+.detail-right-row {
+  float: left;
+  height: 60rpx;
+  width: 600rpx;
+}
+
+.detail-link {
+  height: 40rpx;
+  width: 440rpx;
+  float: left;
+  font-size: 22rpx;
+}
+
+.detail-bill {
+  height: 40rpx;
+  width: 440rpx;
+  float: left;
+  font-size: 22rpx;
+}
+
+.detail-score {
+  float: left;
+  height: 30rpx;
+  width: 140rpx;
+  border-radius: 12rpx;
+  color: rgb(219, 113, 0);
+  padding: 0rpx 10rpx 15rpx 10rpx;
+  text-align: center;
+  border: solid 1rpx rgb(219, 113, 0);
+  margin-top: -20rpx;
+}
+
+.detail-row {
+  float: left;
+  width: 100%;
+  height: auto;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+  border-top: solid 1rpx #eee;
+  border-bottom: solid 1rxp #eee;
+}
+
+.bodernone {
+  border: none;
+}
+
+.detail-right.border-top-none {
+  border-top: 0;
+}
+
+.detail-name {
+  font-size: 30rpx;
+  float: left;
+  max-width: 350rpx;
+}
+
+.detail-price {
+  float: right;
+  text-align: right;
+  width: 200rpx;
+  font-size: 28rpx;
+  padding-right: 20rpx;
+}
+
+.detail-vip {
+  font-size: 30rpx;
+  float: left;
+  width: 100%;
+}
+
+/* 评价 */
+
+.score-teacher-score {
+  float: left;
+  max-width: 300rpx;
+  height: 80rpx;
+  margin: 40rpx 25rpx 10rpx 100rpx;
+}
+
+.score-teacher-count {
+  float: left;
+  width: 120rpx;
+  height: 80rpx;
+  margin: 40rpx 25rpx 10rpx 25rpx;
+  font-size: 40rpx;
+}
+
+.score-teacher-image {
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.content-cell {
+  border-top: 1rpx solid #e5e5e5;
+  width: 100%;
+  height: 300rpx;
+  padding: 25rpx 0 25rpx 0;
+  background: #fff;
+}
+.content-textarea{
+  float:left;
+  margin-left:30rpx; 
+  width: 90%;
+  height: 200rpx;
+  border: 1rpx solid #e5e5e5;
+  padding: 6rpx 10rpx 6rpx 10rpx;
+}
+.score-textarea{
+  width: 100%;
+  height: 200rpx;
+}
+.score-textarea::after{
+  width: 100%;
+  height: 200rpx;
+}
+.modify-prompt {
+  color: #999;
+  background: #fff;
+  border-bottom: 1rpx solid #e5e5e5;
+  padding: 3rpx 6rpx 20rpx 20rpx;
+}
+
+.modify-cell {
+  height: 90rpx;
+  padding: 0rpx;
+  background: none;
+}
+
+.cancel {
+  float: left;
+  width: 160rpx;
+  height: 60rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #25b972;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+}
+
+.cancel::after {
+  border: none;
+}
+
+.commit {
+  float: right;
+  width: 160rpx;
+  height: 60rpx;
+  background: #25b972;
+  border-radius: 30rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #fff;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+}

@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/statement/statement",
     "pages/myinfo/myinfo",
-    "pages/index/index",
     "pages/teacher/teacher",
     "pages/follow/follow",
     "pages/score/score",
