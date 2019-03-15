@@ -256,7 +256,7 @@ Page({
    */
   onPullDownRefresh: function() {
     wx.showToast({
-      title: 'loading...',
+      title: '加载...',
       icon: 'loading'
     });
     this.setData({

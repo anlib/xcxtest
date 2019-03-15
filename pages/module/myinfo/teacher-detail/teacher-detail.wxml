@@ -49,7 +49,7 @@
       </navigator>
     </view>
     <view class='detail-cell'>
-      <navigator class='detail-navigator' url="../transaction/transaction?id={{teacherDetail.id}}" hover-class="navigator-hover">
+      <navigator class='detail-navigator' url="../statement/statement?id={{teacherDetail.id}}" hover-class="navigator-hover">
         <image class="detail-icon" src='../../image/mydata-transaction.png'></image>
         <view class='detail-mydata'>我的交易</view>
         <view class="navigator-arrow"></view>
