@@ -10,7 +10,8 @@
     "pages/demo/question-ask/question-ask",
     "pages/demo/testcity/testcity",
     "pages/demo/test/test",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/demo/webview/webview"
   ],
   "window": {
     "backgroundTextStyle": "light",
