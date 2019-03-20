@@ -12,7 +12,7 @@
     </block>
     <block wx:else>
       <view class='bottom-menu-wechat' bindtap='wechatTa'>{{bottomData.bottomDataTwo}}</view>
-      <view bindtap='phoneTa'>{{bottomData.bottomDataThree}}</view>
+      <view class='bottom-menu-phone' bindtap='phoneTa'>{{bottomData.bottomDataThree}}</view>
     </block>
   </view>
 </template>
