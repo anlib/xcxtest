@@ -138,10 +138,10 @@ bottomDataisMyself = {
 //评价星星显示图
 scoreImgList = {
   1: 'gray',
-    2: 'gray',
-      3: 'gray',
-        4: 'gray',
-          5: 'gray'
+  2: 'gray',
+  3: 'gray',
+  4: 'gray',
+  5: 'gray'
 };
 /* 
  * index background
@@ -195,12 +195,15 @@ function genderArray() {
 function subjectDataInit() {
   return subjectDataInit;
 }
+
 function bottomData() {
   return bottomData;
 }
+
 function bottomDataisMyself() {
   return bottomDataisMyself;
 }
+
 function scoreImgList() {
   return scoreImgList;
 }
@@ -222,5 +225,5 @@ module.exports = {
   bottomData: bottomData,
   bottomDataisMyself: bottomDataisMyself,
   scoreImgList: scoreImgList,
-  
+
 }
