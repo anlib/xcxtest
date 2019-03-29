@@ -286,4 +286,12 @@ Page({
     var phone = '10086';
     util.phoneTa(phone);
   },
+
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

@@ -90,8 +90,8 @@ App({
     serverUrl: 'https://www.ylj.com/cp-springboot/',
     srcUrl: 'http://www.ylj.com/',
     //微信的账号配置信息
-    appid: 'wx11949ca5579cda89',
-    secret: '2b55dadc6cedee08a9f26b80f7bb6e08',
+    appid: 'wxd97ceaf006df07ba',
+    secret: '3d07c5dc92fad6a997b96c980d9ad252',
     //特定设置
     salt: 'suanzhezhineng', //加密盐值
   }
